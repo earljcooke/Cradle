@@ -18,16 +18,18 @@
 <%@ include file="../navbar.jspf" %>
 <div class="container w-100 mt-4" >
 
+    <h2>Personal Information</h2>
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <p> <%= "Reading ID: " + referral.getReferralReadingId()%></p>
+                <p> <%= "Reading ID: " + referral.getReadingId()%></p>
                 <p> <%= "Name: " + referral.getFirstName() + " " + referral.getLastName()%></p>
                 <p> <%= "Age: " + referral.getAgeYears()%></p>
                 <p> <%= "Sex: " + referral.getSex()%></p>
             </div>
         </div>
     </div>
+    <h2>Referred Health Centre</h2>
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -38,6 +40,7 @@
         </div>
     </div>
 
+    <h2>Address Information</h2>
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -49,6 +52,7 @@
             </div>
         </div>
     </div>
+    <h2>Blood Pressure and Heart Rate</h2>
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -65,8 +69,9 @@
     <h2>Other Messages</h2>
     <p> <%=referral.getOtherInformationMessage()%></p>
 
-    <button type="button" onclick="editButton()"> Edit </button>
+
     <form action="${pageContext.request.contextPath}/referral/referralSaved" method="post">
+        <input type="hidden" name="readingId" value="<%=referral.getReadingId()%>"/>
         <input type="hidden" name="firstName" value="<%=referral.getFirstName()%>"/>
         <input type="hidden" name="lastName" value="<%=referral.getLastName()%>"/>
         <input type="hidden" name="ageYears" value="<%=referral.getAgeYears()%>"/>
@@ -85,10 +90,10 @@
         <input type="hidden" name="actionAlreadyTaken" value="<%=referral.getActionAlreadyTaken()%>"/>
         <input type="hidden" name="otherInformationMessage" value="<%=referral.getOtherInformationMessage()%>"/>
 
+        <button type="button" onclick="editButton()"> Edit </button>
         <button type="submit"> Save </button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
-    <button type="button"> Send Text Message </button>
 </div>
 </body>
 

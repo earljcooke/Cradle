@@ -13,4 +13,6 @@ public interface ReadingRepository extends CrudRepository<Reading, Long> {
     public Reading findByReadingId(Long id);
     public List<Reading> findAll();
 
+    public Reading findReadingByFirstNameAndLastNameAndAgeYearsAndBpSystolicAndBpDiastolicAndHeartRateBPM(String firstName, String lastName, Integer ageYears, Integer bpSystolic, Integer bpDiastolic, Integer heartRateBPM);
+
 }

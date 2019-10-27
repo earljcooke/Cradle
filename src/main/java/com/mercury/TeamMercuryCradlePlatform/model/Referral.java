@@ -10,7 +10,7 @@ public class Referral {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "referral_id")
-    private Integer referralId;
+    private Long referralId;
 
     @Column(name = "referred_health_centre")
     private String referredHealthCentre = null;
@@ -31,16 +31,17 @@ public class Referral {
     @Column(name = "other_information_message")
     private String otherInformationMessage = null;
 
-    @Column(name = "referral_reading_id")
-    private Integer referralReadingId = 0;
-
     //reading info
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "reading_id", referencedColumnName = "reading_id")
     private Reading reading;
 
     public Reading getReading() {
         return reading;
+    }
+
+    public Long getReadingId() {
+        return reading.getReadingId();
     }
 
     public void setReading(Reading reading) {
@@ -105,19 +106,17 @@ public class Referral {
     public Referral() {
     }
 
-    public Referral(String firstName, String lastName, Integer ageYears, String vhtName, String referredHealthCentre, Integer referralReadingId) {
+    public Referral(String firstName, String lastName, Integer ageYears, String vhtName, String referredHealthCentre) {
         this.referredHealthCentre = referredHealthCentre;
         this.vhtName = vhtName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.ageYears = ageYears;
-        this.referralReadingId = referralReadingId;
     }
 
 
     public Referral(String referredHealthCentre,
                     LocalDate dateTimeSent,
-                    Integer referralReadingId,
                     String vhtName,
                     String reasonOfReferral,
                     String actionAlreadyTaken,
@@ -136,7 +135,6 @@ public class Referral {
                     Integer householdNumber) {
         this.referredHealthCentre = referredHealthCentre;
         this.dateTimeSent = dateTimeSent;
-        this.referralReadingId = referralReadingId;
         this.vhtName = vhtName;
         this.reasonOfReferral = reasonOfReferral;
         this.actionAlreadyTaken = actionAlreadyTaken;
@@ -155,11 +153,12 @@ public class Referral {
         this.householdNumber = householdNumber;
     }
 
-    public Integer getReferralId() {
+
+    public Long getReferralId() {
         return referralId;
     }
 
-    public void setReferralId(Integer referralId) {
+    public void setReferralId(Long referralId) {
         this.referralId = referralId;
     }
 
@@ -306,13 +305,5 @@ public class Referral {
 
     public void setHouseholdNumber(Integer householdNumber) {
         this.householdNumber = householdNumber;
-    }
-
-    public Integer getReferralReadingId() {
-        return referralReadingId;
-    }
-
-    public void setReferralReadingId(Integer referralReadingId) {
-        this.referralReadingId = referralReadingId;
     }
 }

@@ -67,7 +67,6 @@
             <h2> Not referred</h2>
             <p> <%= ReadingAnalysis.analyze(reading).isReferralToHealthCentreRecommended()? "Referral recommended" : "Referral not recommended"%>
                 <%
-                    session.setAttribute("readingId", reading.readingId.intValue());
                     session.setAttribute("firstName",reading.firstName);
                     session.setAttribute("lastName", reading.lastName);
                     session.setAttribute("ageYears", reading.ageYears);
@@ -77,7 +76,7 @@
                     session.setAttribute("analysis", ReadingAnalysis.analyze(reading).name());
                 %>
                 <a href="${pageContext.request.contextPath}/referral/addReferral">
-                    <button type="button">Send referral</button>
+                    <button type="button" id="secondaryButton" onclick="triggerButton()">Send referral</button>
                 </a>
             </p>
 
@@ -100,7 +99,7 @@
                 <input type="hidden" name="bpDiastolic" value="<%=reading.bpDiastolic%>"/>
                 <input type="hidden" name="heartRateBPM" value="<%=reading.heartRateBPM%>"/>
                 <input type="hidden" name="dateTimeTaken" value="<%=reading.dateTimeTaken.toString()%>">
-                <button type="submit"> Save </button>
+                <button type="submit" id="primaryButton"> Save </button>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
@@ -116,6 +115,10 @@
 
         function editButton() {
             window.history.back();
+        }
+
+        function triggerButton() {
+            document.getElementById('primaryButton').click();
         }
 
     </script>

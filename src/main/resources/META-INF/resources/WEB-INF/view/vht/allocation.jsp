@@ -1,14 +1,24 @@
+<%@ page import="com.mercury.TeamMercuryCradlePlatform.model.User" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
+
+<%
+    ArrayList<User> listOfVHT = (ArrayList<User>) request.getAttribute("listOfVHT");
+%>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Patient Allocation</title>
     <!-- Native scripts -->
-    <link rel="stylesheet" type="text/css" href="/css/vht.css">
-    <link rel="stylesheet" type="text/css" href="/css/navfunc.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/css/welcome.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/vht.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/navfunc.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/welcome.css">
 
 
     <!-- Imported scripts -->
@@ -27,44 +37,41 @@
 <br>
 
 
-<form>
+<form id="allocationForm" action="${pageContext.request.contextPath}/submitAllocation" method="post">
   <div class="head-style">
     <h1 > Allocate patients from</h1>
   </div>
 
-  <br>
-  <div style="text-align:center;">
-    <div class="btn-group">
-      <button id="firstAVHT" class="btn btn-primary dropdown-toggle btn-select" data-toggle="dropdown" href="#">Select the First VHT <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">I</a></li>
-        <li><a class="dropdown-item" href="#"> II</a></li>
-        <li><a class="dropdown-item" href="#"> III</a></li>
-      </ul>
+    <br>
+
+    <div style="text-align:center;" >
+            <select id = "firstVHT" name="firstVHT" class="btn btn-primary dropdown-toggle btn-select btn-lg">
+                <c:forEach items="<%=listOfVHT%>" var = "vht">
+                    <option>${vht.userId} - ${vht.firstName} ${vht.lastName}</option>
+                </c:forEach>
+            </select>
+
+            <div class="divider"> &nbsp; TO &nbsp; </div>
+
+            <select id = "secondVHT" name="secondVHT"  class="btn btn-primary dropdown-toggle btn-select btn-lg">
+                <c:forEach items="<%=listOfVHT%>" var = "vht">
+                    <option>${vht.userId} - ${vht.firstName} ${vht.lastName}</option>
+                </c:forEach>
+            </select>
     </div>
 
-    <div class="divider"> &nbsp; &nbsp; TO </div>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 
-    <div class="btn-group">
-      <button id="secondAVHT" class="btn btn-primary dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Select the Second VHT <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#"> IV</a></li>
-      </ul>
-    </div>
+<br>
+<br>
+<div style="text-align:center;">
 
-
-  <br>
-  <br>
-  <br>
- <div style="text-align:center;">
-
-           <button id="mig_confirm" type="button" class="btn btn-success btn-lg" onclick="confirmAllocation()">
-                  CONFIRM
-           </button>
+    <button id="mig_confirm" type="submit" form="allocationForm" class="btn btn-success btn-lg" onclick="return confirmAllocation()" value="Submit">
+        CONFIRM
+    </button>
 
 </div>
-  </div>
-</form>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -72,6 +79,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
-<script src="/js/allocation.js"></script>
+<script src="${pageContext.request.contextPath}/js/allocation.js"></script>
 
 </html>

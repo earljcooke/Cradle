@@ -1,8 +1,12 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
 
 import com.mercury.TeamMercuryCradlePlatform.model.Patient;
+import com.mercury.TeamMercuryCradlePlatform.model.SupervisorPatientPair;
 import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
+import com.mercury.TeamMercuryCradlePlatform.repository.SupervisorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +23,11 @@ import static java.lang.System.exit;
 public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
+    private SupervisorRepository supervisorRepository;
 
-    public PatientController(PatientRepository patientRepository) {
+    public PatientController(PatientRepository patientRepository, SupervisorRepository supervisorRepository) {
         this.patientRepository = patientRepository;
+        this.supervisorRepository = supervisorRepository;
     }
 
     @RequestMapping(value = "/patientlist", method = RequestMethod.GET)
@@ -80,6 +86,10 @@ public class PatientController {
             }
         } else if (action.equals("add")) {
             patientRepository.save(patient);
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = userDetails.getUsername();
+            SupervisorPatientPair supervisorPatientPair = new SupervisorPatientPair(username, patient.getPatientId().toString());
+            supervisorRepository.save(supervisorPatientPair);
         } else {
             exit(1);
         }

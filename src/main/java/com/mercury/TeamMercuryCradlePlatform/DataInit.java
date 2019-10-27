@@ -6,11 +6,13 @@ import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import com.mercury.TeamMercuryCradlePlatform.model.User;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
+import com.mercury.TeamMercuryCradlePlatform.repository.SupervisorRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.UserRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,11 +23,14 @@ public class DataInit implements CommandLineRunner {
     private UserRepository userRepository;
     private PatientRepository patientRepository;
     private ReadingRepository readingRepository;
+    private SupervisorRepository supervisorRepository;
 
-    public DataInit(UserRepository userRepository, PatientRepository patientRepository, ReadingRepository readingRepository) {
+    public DataInit(UserRepository userRepository,
+                    PatientRepository patientRepository, ReadingRepository readingRepository, SupervisorRepository supervisorRepository) {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.readingRepository = readingRepository;
+        this.supervisorRepository = supervisorRepository;
     }
 
     @Override

@@ -4,7 +4,6 @@
 <html>
 
 <%
-    Integer referralReadingId = (Integer)session.getAttribute("readingId");
     String firstName = (String)session.getAttribute("firstName");
     String lastName = (String)session.getAttribute("lastName");
     Integer ageYears = (Integer)session.getAttribute("ageYears");
@@ -32,10 +31,6 @@
                 </div>
 
                 <%--Patient Info--%>
-                <div class="form-group">
-                    <label for="referralReadingId">Reading ID: </label>
-                    <input type="text" class="form-control" id="referralReadingId" name="referralReadingId" value="<%=referralReadingId%>"><br>
-                </div>
                 <div class="form-group">
                     <label for="firstName">First Name: </label>
                     <input type="text" class="form-control" id="firstName" name="firstName" value="<%=firstName%>"><br>

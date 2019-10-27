@@ -22,7 +22,7 @@ var txt = '{"patients":[' +
     '"uploadImages":true}]' +
     '}';
 patientsObjects = JSON.parse(txt);
-const patientlist = [];
+patientlist = [];
 for (var i = 0; i < patientsObjects.patients.length; i++)
 {
     patientlist[i] =

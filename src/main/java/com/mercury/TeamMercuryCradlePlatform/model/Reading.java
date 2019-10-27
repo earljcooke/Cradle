@@ -96,6 +96,9 @@ public class Reading {
     @Transient public String referralHealthCentre;
     @Transient public String referralComment;
 
+    @OneToOne(mappedBy = "reading", cascade= CascadeType.PERSIST)
+    private Referral referral;
+
     // temporary values
     @Transient transient private long temporaryFlags = 0;
     @Transient transient public boolean userHasSelectedNoSymptoms;
