@@ -97,21 +97,21 @@ public class Reading {
     @Transient public String gpsLocationOfReading;
 
     @JsonIgnore
-    @Transient public ZonedDateTime dateUploadedToServer;
+    public ZonedDateTime dateUploadedToServer;
     @Transient public String dateUploadedToServerString;
 
     // retest & follow-up
     @Transient public List<Long> retestOfPreviousReadingIds;   // oldest first
 
     @JsonIgnore
-    @Transient public ZonedDateTime dateRecheckVitalsNeeded;
+    public ZonedDateTime dateRecheckVitalsNeeded;
     @Transient public String dateRecheckVitalsNeededString;
 
     @Transient private Boolean isFlaggedForFollowup;
 
     // referrals
     @JsonIgnore
-    @Transient public ZonedDateTime referralMessageSendTime;
+    public ZonedDateTime referralMessageSendTime;
     @Transient public String referralMessageSendTimeString;
 
     @Transient public String referralHealthCentre;

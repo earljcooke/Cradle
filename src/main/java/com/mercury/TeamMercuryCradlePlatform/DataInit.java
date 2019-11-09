@@ -9,11 +9,8 @@ import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,25 +54,29 @@ public class DataInit implements CommandLineRunner {
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION, "dead"),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "1",
                 130, 100, 90,
-                ZonedDateTime.now());
+                ZonedDateTime.of(LocalDateTime.of(2019, 4, 5, 9, 30),  ZoneId.systemDefault()));
+        reading.dateUploadedToServer = reading.dateTimeTaken;
 
         Reading reading2 = new Reading("Ricky", "Owen", 29,
                 Collections.singletonList(Strings.SYMPTOM_NO_SYMPTOMS),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_WEEKS, "7",
                 90, 60, 60,
-                ZonedDateTime.now());
+                ZonedDateTime.of(LocalDateTime.of( 2019,6,1,3,15), ZoneId.systemDefault()));
+        reading2.dateUploadedToServer = reading2.dateTimeTaken;
 
         Reading reading3 = new Reading("Ricky", "Owen", 29,
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION, "not dead"),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "1",
                 80, 70, 120,
                 ZonedDateTime.now());
+        reading3.dateUploadedToServer = reading3.dateTimeTaken;
 
         Reading reading4 = new Reading("Ricky", "Owen", 29,
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "1",
                 200, 150, 180,
-                ZonedDateTime.now());
+                ZonedDateTime.of(LocalDateTime.of( 2019,7,5,19,30), ZoneId.systemDefault()));
+        reading4.dateUploadedToServer = reading4.dateTimeTaken;
 
         List<Reading> readings = Arrays.asList(reading, reading2, reading3, reading4);
 
