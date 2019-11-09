@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import org.threeten.bp.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class DataInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        User admin = new User("1234", "John", "Lee", "test@test.com", "ADMIN", "1234567890");
+        User admin = new User("justTesting", "John", "Lee", "test@test.com", "ADMIN", "1234567890");
         User vht = new User("1234", "Yoon", "Lee", "test2@test.com","VHT,ADMIN,HEALTHWORKER", "9999999999");
         User healthWorker = new User("1234", "Megan","Fox", "test3@test.com", "ADMIN,HEALTHWORKER", "0001111111");
 
@@ -57,25 +57,25 @@ public class DataInit implements CommandLineRunner {
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION, "dead"),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "1",
                 130, 100, 90,
-                ZonedDateTime.of(LocalDate.of( 2019,4,5), LocalTime.of(9,30), ZoneId.systemDefault()));
+                ZonedDateTime.now());
 
         Reading reading2 = new Reading("Ricky", "Owen", 29,
                 Collections.singletonList(Strings.SYMPTOM_NO_SYMPTOMS),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_WEEKS, "7",
                 90, 60, 60,
-                ZonedDateTime.of(LocalDate.of( 2019,5,30), LocalTime.of(20,45), ZoneId.systemDefault()));
+                ZonedDateTime.now());
 
         Reading reading3 = new Reading("Ricky", "Owen", 29,
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION, "not dead"),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "1",
                 80, 70, 120,
-                ZonedDateTime.of(LocalDate.of( 2019,6,1), LocalTime.of(3,15), ZoneId.systemDefault()));
+                ZonedDateTime.now());
 
         Reading reading4 = new Reading("Ricky", "Owen", 29,
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "1",
                 200, 150, 180,
-                ZonedDateTime.of(LocalDate.of( 2019,7,5), LocalTime.of(19,30), ZoneId.systemDefault()));
+                ZonedDateTime.now());
 
         List<Reading> readings = Arrays.asList(reading, reading2, reading3, reading4);
 

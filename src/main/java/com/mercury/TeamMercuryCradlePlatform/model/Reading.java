@@ -1,12 +1,18 @@
 package com.mercury.TeamMercuryCradlePlatform.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.gson.annotations.SerializedName;
 import com.mercury.TeamMercuryCradlePlatform.Strings;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.temporal.ChronoUnit;
+
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -45,11 +51,12 @@ public class Reading {
     // db
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "reading_id") public Long readingId;
-    public ZonedDateTime dateLastSaved;
+    @Column(name = "reading_id") @SerializedName("reading_id") public Long readingId;
+    @Transient public ZonedDateTime dateLastSaved;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_Id", referencedColumnName = "patient_Id")
+    @JsonIgnore
     private Patient patient;
 
     public Patient getPatient() {
@@ -82,20 +89,35 @@ public class Reading {
     @Column(name = "by_diastolic") public Integer bpDiastolic; // second number (bottom)
     @Column(name = "hear_rate_bpm") public Integer heartRateBPM;
 
-    @Column(name = "data_time_taken") public ZonedDateTime dateTimeTaken;
+    @Column(name = "data_time_taken")
+    @JsonIgnore
+    public ZonedDateTime dateTimeTaken;
+    @Transient public String dateTimeTakenString;
+
     @Transient public String gpsLocationOfReading;
+
+    @JsonIgnore
     @Transient public ZonedDateTime dateUploadedToServer;
+    @Transient public String dateUploadedToServerString;
 
     // retest & follow-up
     @Transient public List<Long> retestOfPreviousReadingIds;   // oldest first
+
+    @JsonIgnore
     @Transient public ZonedDateTime dateRecheckVitalsNeeded;
+    @Transient public String dateRecheckVitalsNeededString;
+
     @Transient private Boolean isFlaggedForFollowup;
 
     // referrals
+    @JsonIgnore
     @Transient public ZonedDateTime referralMessageSendTime;
+    @Transient public String referralMessageSendTimeString;
+
     @Transient public String referralHealthCentre;
     @Transient public String referralComment;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "reading")
     private Referral referral;
 
@@ -194,6 +216,7 @@ public class Reading {
     /**
      * Accessors
      */
+    @JsonIgnore
     public WeeksAndDays getGestationalAgeInWeeksAndDays() {
         // Handle not set:
         if (gestationalAgeUnit == null || gestationalAgeValue == null
@@ -220,6 +243,7 @@ public class Reading {
         }
     }
 
+    @JsonIgnore
     public String getGestationWeekDaysString(){
         if(gestationalAgeUnit == GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE){
             return Strings.GESTATION_UNIT_NOT_PREGNANT;
@@ -229,11 +253,14 @@ public class Reading {
         }
     }
 
+    @JsonIgnore
     public String getTimeYYYYMMDD() {
-        return DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(dateTimeTaken);
+        // Todo fix this function
+        return dateTimeTaken.toString();
+//        return DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(dateTimeTaken);
     }
 
-
+    @JsonIgnore
     public String getTimeTakenAmPm(){
 
         String time = "";
@@ -254,31 +281,38 @@ public class Reading {
 
 
     // referred
+    @JsonIgnore
     public boolean isReferredToHealthCentre() {
         return referralMessageSendTime != null;
     }
+    @JsonIgnore
     public void setReferredToHealthCentre(String healthCentre, ZonedDateTime time) {
         referralHealthCentre = healthCentre;
         referralMessageSendTime = time;
     }
 
     // follow-up
+    @JsonIgnore
     public boolean isFlaggedForFollowup() {
         return Util.isTrue(isFlaggedForFollowup);
     }
+    @JsonIgnore
     public void setFlaggedForFollowup(Boolean flaggedForFollowup) {
         isFlaggedForFollowup = flaggedForFollowup;
     }
 
     // upload
+    @JsonIgnore
     public boolean isUploaded() {
         return dateUploadedToServer != null;
     }
 
     // recheck vitals
+    @JsonIgnore
     public boolean isRetestOfPreviousReading() {
         return retestOfPreviousReadingIds != null && retestOfPreviousReadingIds.size() > 0;
     }
+    @JsonIgnore
     public void addIdToRetestOfPreviousReadings(List<Long> retestOfPreviousReadingIds, Long readingId) {
         if (this.retestOfPreviousReadingIds == null) {
             this.retestOfPreviousReadingIds = new ArrayList<>();
@@ -292,32 +326,37 @@ public class Reading {
         // dd most recent
         this.retestOfPreviousReadingIds.add(readingId);
     }
+    @JsonIgnore
     public boolean isNeedRecheckVitals() {
         return dateRecheckVitalsNeeded != null;
     }
+    @JsonIgnore
     public boolean isNeedRecheckVitalsNow() {
         return isNeedRecheckVitals()
                 && dateRecheckVitalsNeeded.isBefore(ZonedDateTime.now());
     }
 
     @JsonIgnore
-    public long getMinutesUntilNeedRecheckVitals() {
-        if (!isNeedRecheckVitals()) {
-            throw new UnsupportedOperationException("No number of minutes for no recheck");
-        }
+//    public long getMinutesUntilNeedRecheckVitals() {
+//        if (!isNeedRecheckVitals()) {
+//            throw new UnsupportedOperationException("No number of minutes for no recheck");
+//        }
+//
+//        if (isNeedRecheckVitalsNow()) {
+//            return 0;
+//        } else {
+//            long seconds = ChronoUnit.SECONDS.between(ZonedDateTime.now(), dateRecheckVitalsNeeded);
+//            return (seconds + 59) / 60;
+//        }
+//    }
 
-        if (isNeedRecheckVitalsNow()) {
-            return 0;
-        } else {
-            long seconds = ChronoUnit.SECONDS.between(ZonedDateTime.now(), dateRecheckVitalsNeeded);
-            return (seconds + 59) / 60;
-        }
-    }
+
 
     private void setSymptomsString(List<String> symptoms){
         this.symptomsString = String.join(",", symptoms);
     }
 
+    @JsonIgnore
     public void addSymptom(String value){
         this.symptoms.add(value);
         setSymptomsString(this.symptoms);
@@ -335,15 +374,19 @@ public class Reading {
     /**
      * Temporary Flags
      */
+    @JsonIgnore
     public void setATemporaryFlag(long flagMask) {
         temporaryFlags |= flagMask;
     }
+    @JsonIgnore
     public void clearATemporaryFlag(long flagMask) {
         temporaryFlags &= ~flagMask;
     }
+    @JsonIgnore
     public boolean isATemporaryFlagSet(long flagMask) {
         return (temporaryFlags & flagMask) != 0;
     }
+    @JsonIgnore
     public void clearAllTemporaryFlags() {
         temporaryFlags = 0;
     }
@@ -413,6 +456,7 @@ public class Reading {
         setSymptomsString(this.symptoms);
     }
 
+    @JsonIgnore
     public void setSymptomsList(String otherSymptoms){
         if(this.symptoms.size() == 0){
             this.addSymptom(Strings.SYMPTOM_NO_SYMPTOMS);
@@ -423,6 +467,7 @@ public class Reading {
             }
         }
     }
+
 
     public void setGestationalAgeUnit(String gestationalAgeUnit) {
         if(gestationalAgeUnit.compareTo(Strings.GESTATION_UNIT_WEEKS) == 0){
@@ -452,10 +497,12 @@ public class Reading {
         this.heartRateBPM = heartRateBPM;
     }
 
+    @JsonIgnore
     public Referral getReferral() {
         return referral;
     }
 
+    @JsonIgnore
     public void setReferral(Referral referral) {
         this.referral = referral;
     }
