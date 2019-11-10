@@ -30,14 +30,15 @@ body {
   margin: 0px;
   width: 100%;
   height: 100%;
+  display: table;
 }
 
 .navbar-container {
   float: left;
   width: 15%;
-  height: 100%;
   background-color: rgb(14, 177, 136);
   color: white;
+  height: 100%;
 }
 
 .navbar-title {
@@ -86,11 +87,11 @@ body {
 }
 
 .content-container {
-  float: right;
+  float: left;
   width: 85%;
-  height: 100%;
-  background-color: rgb(243, 243, 243);
   color: rgb(88, 88, 88);
+  background-color: rgb(243, 243, 243);
+  height: 100%;
 }
 
 .content-header {

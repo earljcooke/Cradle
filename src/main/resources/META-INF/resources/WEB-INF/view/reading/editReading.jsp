@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.mercury.TeamMercuryCradlePlatform.model.Reading" %>
 <%@ page import="com.mercury.TeamMercuryCradlePlatform.Strings" %>
+<%@ page import="com.mercury.TeamMercuryCradlePlatform.model.GestationalAgeUnit" %>
 <!DOCTYPE html>
 <html>
 
@@ -11,34 +12,48 @@
 %>
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <title>Edit Reading</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
+    <link rel='stylesheet' href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </head>
 <body>
 
-<%@ include file="../navbar.jspf" %>
-
-    <div class="container w-100" style="padding: 10px">
+<%@ include file="../navbar/navbar.jspf" %>
+<div class="content-container">
+    <div class="content-header">
+        Create a new reading
+    </div>
+    <div class="content-body">
+        <div class="edit-patient-container">
         <form action="${pageContext.request.contextPath}/reading/update/<%=reading.readingId%>" method="post" id="form">
             <div class="form-group">
                 <div class="row">
                     <input type="hidden" name="id" value="<%=reading.readingId%>"/>
                     <div class="col">
                         <label for="firstName">First Name</label>
-                        <input required type="text" class="form-control" id="firstName" name="firstName" value="<%=reading.firstName%>">
+                        <input disabled required type="text" class="form-control" value="<%=reading.firstName%>">
+                        <input hidden required type="text" class="form-control" id="firstName" name="firstName" value="<%=reading.firstName%>">
                     </div>
                     <div class="col">
                         <label for="lastName">Last Name</label>
-                        <input required type="text" class="form-control" id="lastName" name="lastName" value="<%=reading.lastName%>">
+                        <input disabled required type="text" class="form-control"  value="<%=reading.lastName%>">
+                        <input hidden required type="text" class="form-control" id="lastName" name="lastName" value="<%=reading.lastName%>">
                     </div>
                     <div class="col">
                         <label for="ageYears">Age</label>
-                        <input required type="number" min="0" class="form-control" id="ageYears" name="ageYears" value="<%=reading.ageYears%>">
+                        <input disabled required type="number" min="0" class="form-control" value="<%=reading.ageYears%>">
+                        <input hidden required type="number" min="0" class="form-control" id="ageYears" name="ageYears" value="<%=reading.ageYears%>">
                     </div>
                 </div>
-                <div class="row" style="width: 25%">
+                <div class="row" style="width: 25%; margin-top: 5px">
                     <div class="col">
                         <label for="gestationalAgeValue">Gestational Age</label>
                         <input required type="number" min="0" class="form-control" id="gestationalAgeValue" name="gestationalAgeValue">
@@ -57,8 +72,8 @@
             <div class="form-group" style="width: 25%">
                 <label for="health"></label>
                 <select class="form-control" id="health" name="health" onchange="healthChange()">
-                    <option value="sick">Patient sick</option>
-                    <option value="healthy">Patient healthy</option>
+                    <option value="sick">Patient is sick</option>
+                    <option value="healthy">Patient is healthy</option>
                 </select>
             </div>
             <div class="form-group" id="symptomsSelectorDiv">
@@ -100,28 +115,28 @@
                 <textarea class="form-control" id="otherSymptoms" name="otherSymptoms" rows="2" maxlength="200"></textarea>
             </div>
             <div class="form-group">
-                <label for="bpSystolic">Systolic</label>
-                <input required type="number" min="10" max="300" class="form-control" id="bpSystolic" name="bpSystolic" style="width: 25%" value="<%=reading.bpSystolic%>"/>
-            </div>
-            <div class="form-group">
-                <label for="bpDiastolic">Diastolic</label>
-                <input required type="number" min="10" max="300" class="form-control" id="bpDiastolic" name="bpDiastolic" style="width: 25%" value="<%=reading.bpDiastolic%>">
-            </div>
-            <div class="form-group">
-                <label for="heartRateBPM">Heart rate</label>
-                <input required type="number" min="40" max="200" class="form-control" id="heartRateBPM" name="heartRateBPM" style="width: 25%" value="<%=reading.heartRateBPM%>">
+                <div class="row">
+                    <div class="col">
+                        <label for="bpSystolic">Systolic</label>
+                        <input required type="number" min="10" max="300" class="form-control" id="bpSystolic" name="bpSystolic" value="<%=reading.bpSystolic%>"/>
+                    </div>
+                    <div class="col">
+                        <label for="bpDiastolic">Diastolic</label>
+                        <input required type="number" min="10" max="300" class="form-control" id="bpDiastolic" name="bpDiastolic" value="<%=reading.bpDiastolic%>"/>
+                    </div>
+                    <div class="col">
+                        <label for="heartRateBPM">Heart rate</label>
+                        <input required type="number" min="40" max="200" class="form-control" id="heartRateBPM" name="heartRateBPM" value="<%=reading.heartRateBPM%>">
+                    </div>
+                </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input class="form-group" type="submit" value="Submit" id="submitButton">
         </form>
+        </div>
     </div>
+</div>
 </body>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script type="text/javascript" src="validator.min.js"></script>
 
 
 <script>
@@ -137,10 +152,10 @@
         let gestationalValue = $("#gestationalAgeValue");
         let val = "<c:out value='<%=reading.gestationalAgeUnit%>'/>"
 
-        if(val ===  "<c:out value='<%=Reading.GestationalAgeUnit.GESTATIONAL_AGE_UNITS_WEEKS%>'/>"){
+        if(val ===  "<c:out value='<%=GestationalAgeUnit.GESTATIONAL_AGE_UNITS_WEEKS%>'/>"){
             selectedGestationUnit.prop('selectedIndex', 0);
         }
-        else if(val ===  "<c:out value='<%=Reading.GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS%>'/>"){
+        else if(val ===  "<c:out value='<%=GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS%>'/>"){
             selectedGestationUnit.prop('selectedIndex', 1);
         }
         else{

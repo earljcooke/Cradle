@@ -13,33 +13,48 @@
        Reading reading = (Reading)request.getAttribute("reading");
     %>
 
-    <meta charset="ISO-8859-1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+    <meta charset="utf-8">
+    <title>Edit Reading</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
+    <link rel='stylesheet' href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <body>
+</head>
+
+<body>
 
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-        <%@ include file="../navbar.jspf" %>
-        <div class="container w-100 mt-4" >
+    <%@ include file="../navbar/navbar.jspf" %>
+    <div class="content-container">
+        <div class="content-header">
+           Analysis
+        </div>
+        <div class="content-body">
+            <div class="edit-patient-container">
 
             <h2> <%= reading.firstName + " " + reading.lastName + ", " + reading.ageYears + "y" + " @ " + reading.getGestationWeekDaysString()%></h2>
             <p> <%= reading.getSymptomsString()%></p>
             <h2> <%= reading.getTimeTakenAmPm() + ": " + ReadingAnalysis.analyze(reading).getAnalysisText()%></h2>
 
-            <div class="container">
+            <div class="content-container">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col">
                         <p> <%= "BP: " + reading.bpSystolic + "/" + reading.bpDiastolic%></p>
                         <p> <%= "HR: " + reading.heartRateBPM %></p>
-
                     </div>
-                    <div class="col-sm">
+                    <div class="col">
                         <div class="row">
-                            <div class="col-xs">
+                            <div class="col">
                                 <img src="/images/<%=ReadingAnalysis.analyze(reading).getTrafficLightImg()%>.png" alt="<%=ReadingAnalysis.analyze(reading).getTrafficLightImg()%>">
                             </div>
-                            <div class="col-xs">
+                            <div class="col">
                                 <c:if test="<%= ReadingAnalysis.analyze(reading).getArrowDirection() != null %>">
                                     <img src="/images/<%=ReadingAnalysis.analyze(reading).getArrowDirection()%>.png" alt="<%=ReadingAnalysis.analyze(reading).getArrowDirection()%>">
                                 </c:if>
@@ -48,7 +63,10 @@
                     </div>
                 </div>
             </div>
-
+                <br>
+                <br>
+                <br>
+                <br>
             <h2> Advice</h2>
             <p> <%=ReadingAnalysis.analyze(reading).getBriefText()%></p>
 
@@ -103,7 +121,9 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
-    </body>
+        </div>
+    </div>
+</body>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

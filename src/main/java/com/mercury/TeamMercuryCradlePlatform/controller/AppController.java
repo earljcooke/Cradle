@@ -43,15 +43,4 @@ public class AppController {
         return "index";
     }
 
-    @PreAuthorize("#id == authentication.getPrincipal().getUserId()")
-    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
-    public String getUserInfo(@PathVariable("id") Integer id, Model model) {
-
-        User user = userRepository.findByUserId(id);
-        model.addAttribute("UserId", id);
-        model.addAttribute("FirstName", user.getFirstName());
-        model.addAttribute("LastName", user.getLastName());
-        model.addAttribute("Role", user.getRole());
-        return "profile";
-    }
 }

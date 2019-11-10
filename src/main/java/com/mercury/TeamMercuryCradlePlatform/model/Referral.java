@@ -32,9 +32,10 @@ public class Referral {
     private String otherInformationMessage = null;
 
     //reading info
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "reading_id", referencedColumnName = "reading_id")
     private Reading reading;
+
 
     public Reading getReading() {
         return reading;
@@ -58,7 +59,7 @@ public class Referral {
     private Integer heartRateBPM = 0;
 
     // patient info
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "patient_Id", referencedColumnName = "patient_Id")
     private Patient patient;
 

@@ -2,7 +2,11 @@ package com.mercury.TeamMercuryCradlePlatform.controller;
 
 import com.mercury.TeamMercuryCradlePlatform.Service.ContactService;
 import com.mercury.TeamMercuryCradlePlatform.model.EmailAdmin;
+import com.mercury.TeamMercuryCradlePlatform.model.Reading;
+import com.mercury.TeamMercuryCradlePlatform.model.ReadingAnalysis;
 import com.mercury.TeamMercuryCradlePlatform.model.User;
+import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
+import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -22,15 +28,26 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
     private EmailAdmin emailAdmin;
+    private ReadingRepository readingRepository;
+    private PatientRepository patientRepository;
 
-    public AdminController(UserRepository userRepository, EmailAdmin emailAdmin) {
+    public AdminController(UserRepository userRepository, EmailAdmin emailAdmin, ReadingRepository readingRepository, PatientRepository patientRepository) {
         this.userRepository = userRepository;
         this.emailAdmin = emailAdmin;
+        this.readingRepository = readingRepository;
+        this.patientRepository = patientRepository;
+
     }
 
-    @GetMapping("/index")
-    public List<User> users() {
-        return this.userRepository.findAll();
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView viewAllReadings(){
+
+        List<Reading> readings = this.readingRepository.findAll();
+        for(Reading r : readings){
+            r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
+        }
+        return new ModelAndView("/reading/all").addObject("readingList", readings);
+
     }
 
     @GetMapping("/education")
@@ -44,22 +61,21 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/submitRegistration", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView submitRegistration(User user, @RequestParam String password, @RequestParam String roles) {
+    public @ResponseBody ModelAndView submitRegistration(User user, @RequestParam String password,
+            @RequestParam String roles) {
         User newUser = new User(user, password);
         newUser.setRole(roles);
         userRepository.save(newUser);
 
         emailAdmin.sendRegistrationEmail(password, newUser);
 
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
         modelAndView.addObject("user", user);
         return modelAndView;
     }
 
-
-
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView getAllUsers(){
+    public ModelAndView getAllUsers() {
         return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
     }
 
@@ -80,7 +96,7 @@ public class AdminController {
         ContactService contactService = new ContactService();
         contactService.sendMessage(contactMethod, email, phoneNumber, subject, message);
 
-        return new ModelAndView("/admin/submitMessage");
+        return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
@@ -102,7 +118,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
-    public ModelAndView deleteUserWithId(@PathVariable int id){
+    public ModelAndView deleteUserWithId(@PathVariable int id) {
         this.userRepository.delete(this.userRepository.findByUserId(id));
 
         return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());

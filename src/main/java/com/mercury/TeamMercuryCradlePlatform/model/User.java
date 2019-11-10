@@ -149,6 +149,10 @@ public class User {
         }
     }
 
+    public String getRolesAsString() {
+        return this.roles;
+    }
+
     private String encodePassword(String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.encode(password);

@@ -29,8 +29,6 @@
 
 <body>
 
-<%@ include file="../navbar_admin.jspf" %>
-
 <br>
 <br>
 <br>

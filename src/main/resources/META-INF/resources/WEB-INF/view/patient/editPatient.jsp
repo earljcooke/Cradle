@@ -8,6 +8,9 @@
 <head>
     <meta charset="utf-8">
     <title>AddPatient</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
+    <link rel='stylesheet' href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,10 +20,7 @@
 </head>
 
 <body>
-<%@ include file="../navbar.jspf" %>
-</body>
-
-<body>
+    <%@ include file="../navbar/navbar.jspf" %>
 
     <form action="${pageContext.request.contextPath}/patient/submitPatient" method="post">
         <div class="container w-100" style="padding: 10px">

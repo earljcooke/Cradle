@@ -1,13 +1,31 @@
+<%@ page import="com.mercury.TeamMercuryCradlePlatform.model.*" %>
+<%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
+<%
+    ArrayList<Integer> readingList = (ArrayList<Integer>) request.getAttribute("readingList");
+    ArrayList<Integer> referralList = (ArrayList<Integer>) request.getAttribute("referralList");
+    ArrayList<Integer> complReferralList = (ArrayList<Integer>) request.getAttribute("complReferralList");
+    ArrayList<Integer> pregnantList = (ArrayList<Integer>) request.getAttribute("pregnantList");
+    ArrayList<Integer> pregnantHelpedList = (ArrayList<Integer>) request.getAttribute("pregnantHelpedList");
+%>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>General Report</title>
     <!-- Native scripts -->
-    <link rel="stylesheet" type="text/css" href="/css/navfunc.css">
-    <link rel="stylesheet" type="text/css" href="/css/report.css">
-    <link rel="stylesheet" type="text/css" href="/css/welcome.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/navfunc.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/report.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/welcome.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" crossorigin="anonymous">
 
 
     <!-- Imported scripts -->
@@ -18,7 +36,41 @@
 
 <body>
 
-<%@ include file="../navbar_admin.jspf" %>
+<script>
+    function getStandardLabels() {
+        return ['January', 'February', 'March', 'April',
+            'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    }
+
+    function getData(type) {
+
+    var data = [];
+
+    if (type === 0) {
+        <% for (int i=0; i<readingList.size(); i++) { %>
+            data[<%= i %>] = "<%= readingList.get(i)%>";
+        <% } %>
+    } else if (type === 1) {
+        <% for (int i=0; i<referralList.size(); i++) { %>
+            data[<%= i %>] = "<%= referralList.get(i)%>";
+        <% } %>
+    } else if (type === 2) {
+        <% for (int i=0; i<complReferralList.size(); i++) { %>
+        data[<%= i %>] = "<%= complReferralList.get(i)%>";
+        <% } %>
+    } else if (type === 3) {
+        <% for (int i=0; i<pregnantList.size(); i++) { %>
+        data[<%= i %>] = "<%= pregnantList.get(i)%>";
+        <% } %>
+    } else if (type === 4) {
+        <% for (int i=0; i<pregnantHelpedList.size(); i++) { %>
+        data[<%= i %>] = "<%= pregnantHelpedList.get(i)%>";
+        <% } %>
+    }
+
+
+    return data;
+}</script>
 
 <br>
 <br>
@@ -27,36 +79,161 @@
 
 <button class="collapsible">CRADLE readings recorded</button>
 <div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <canvas id="readingGraph" height="100"></canvas>
+    <script>
+        var ctx = document.getElementById('readingGraph').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: getStandardLabels(),
+                datasets: [{
+                    label: 'CRADLE readings recorded per Month',
+                    data: getData(0),
+                    pointBackgroundColor: 'rgb(228,245,255)',
+                    borderColor: 'rgba(26,47,118, 1)',
+                    pointBorderColor: 'rgba(26,47,118, 1)',
+                    backgroundColor: 'rgba(26,47,118, 1)',
+                    fill: false,
+                    borderWidth: 3
+                }]
+            },
+            options: {}
+        });
+    </script>
 </div>
-<button class="collapsible">Referrals made</button>
+<button class="collapsible">Referrals</button>
 <div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <canvas id="referralGraph" height="100"></canvas>
+    <script>
+        var ctx = document.getElementById('referralGraph').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: getStandardLabels(),
+                datasets: [{
+                    label: 'Referrals made per Month',
+                    data: getData(1),
+                    pointBackgroundColor: 'rgb(255,201,189)',
+                    borderColor: 'rgb(224,113,113)',
+                    pointBorderColor: 'rgb(224,113,113)',
+                    backgroundColor: 'rgb(224,113,113)',
+                    fill: false,
+                    borderWidth: 3
+                },
+                    {
+                        label: 'Referrals that received diagnosis and treatment, per Month',
+                        data: getData(2),
+                        pointBackgroundColor: 'rgb(211,255,205)',
+                        borderColor: 'rgb(36,118,41)',
+                        pointBorderColor: 'rgb(36,118,41)',
+                        backgroundColor: 'rgb(36,118,41)',
+                        fill: false,
+                        borderWidth: 3
+                    }]
+            },
+            options: {}
+        });
+    </script>
 </div>
 <button class="collapsible">Traffic light colours recorded</button>
 <div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <canvas id="trafficLightsGraph" height="100"></canvas>
+    <script>
+        var ctx = document.getElementById('trafficLightsGraph').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: getStandardLabels(),
+                datasets: [{
+                    label: 'Green, per Month',
+                    data: [15, 8, 5, 3, 6, 13, 4, 1,4 ,11, 3, 7, 10],
+                    pointBackgroundColor: 'rgb(211,255,205)',
+                    borderColor: 'rgb(36,118,41)',
+                    pointBorderColor: 'rgb(36,118,41)',
+                    backgroundColor: 'rgb(36,118,41)',
+                    fill: false,
+                    borderWidth: 3
+                },
+                    {
+                        label: 'Yellow down, per Month',
+                        data: [24, 22, 16, 15, 27, 32, 11, 28, 19, 18, 19, 25],
+                        pointBackgroundColor: 'rgb(255,244,162)',
+                        borderColor: 'rgb(226,226,35)',
+                        pointBorderColor: 'rgb(226,226,35)',
+                        backgroundColor: 'rgb(226,226,35)',
+                        fill: false,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Yellow up, per Month',
+                        data: [25, 18, 20, 15, 12, 7, 23, 16, 12, 8, 6, 5],
+                        pointBackgroundColor: 'rgb(255,211,144)',
+                        borderColor: 'rgb(226,155,33)',
+                        pointBorderColor: 'rgb(226,155,33)',
+                        backgroundColor: 'rgb(226,155,33)',
+                        fill: false,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Red down, per Month',
+                        data: [14, 8, 15, 13, 10, 7, 16, 24, 22, 17, 25, 18],
+                        pointBackgroundColor: 'rgb(255,226,247)',
+                        borderColor: 'rgb(174,61,172)',
+                        pointBorderColor: 'rgb(174,61,172)',
+                        backgroundColor: 'rgb(174,61,172)',
+                        fill: false,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Red up, per Month',
+                        data: [3,4,5,2,5,7,7,6,5,2,5,7],
+                        pointBackgroundColor: 'rgb(255,135,134)',
+                        borderColor: 'rgb(182,33,50)',
+                        pointBorderColor: 'rgb(182,33,50)',
+                        backgroundColor: 'rgb(182,33,50)',
+                        fill: false,
+                        borderWidth: 3
+                    }]
+            },
+            options: {}
+        });
+    </script>
 </div>
-<button class="collapsible">Referrals with different traffic light colours</button>
+<button class="collapsible">Pregnant women</button>
 <div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <canvas id="prWRefGraph" height="100"></canvas>
+    <script>
+        var ctx = document.getElementById('prWRefGraph').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: getStandardLabels(),
+                datasets: [{
+                    label: 'Pregnant women referred per Month',
+                    data: getData(3),
+                    pointBackgroundColor: 'rgb(255,203,160)',
+                    borderColor: 'rgb(246,171,40)',
+                    pointBorderColor: 'rgb(246,171,40)',
+                    backgroundColor: 'rgb(246,171,40)',
+                    fill: false,
+                    borderWidth: 3
+                },
+                    {
+                        label: 'Pregnant women assessed per Month',
+                        data: getData(4),
+                        pointBackgroundColor: 'rgb(228,245,255)',
+                        borderColor: 'rgba(26,47,118, 1)',
+                        pointBorderColor: 'rgba(26,47,118, 1)',
+                        backgroundColor: 'rgba(26,47,118, 1)',
+                        fill: false,
+                        borderWidth: 3
+                    }]
+            },
+            options: {}
+        });
+    </script>
 </div>
-<button class="collapsible">Pregnant women assessed</button>
-<div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div>
-<button class="collapsible">Pregnant women referred</button>
-<div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div>
-<button class="collapsible">Referrals who received diagnosis and treatment</button>
-<div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div>
-<button class="collapsible">Blood pressure statistics </button>
-<div class="content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -8,6 +8,9 @@
 <head>
     <meta charset="utf-8">
     <title>AddPatient</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
+    <link rel='stylesheet' href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,41 +20,46 @@
 </head>
 
 <body>
-    <%@ include file="../navbar.jspf" %>
-</body>
-
-<body>
-
-    <form action="${pageContext.request.contextPath}/patient/confirmPatient" method="post">
-        <div class="container w-100" style="padding: 10px">
-            <div class="form-group">
-                <label for="attestationID">Attestation ID: </label>
-                <input required type="text" pattern="NA|[0-9]{11,11}" required title="Please enter a 11 number attestation ID or enter 'NA'" maxlength="11"
-                       class="form-control" id="attestationID" name="attestationID"><br>
-            </div>
-            <div class="form-group">
-                <label for="firstName">First name: </label>
-                <input required type="text" class="form-control" id="firstName" name="firstName"><br>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last name: </label>
-                <input required type="text" class="form-control" id="lastName" name="lastName"><br>
-            </div>
-            <div class="form-group">
-                <label for="country">Country: </label>
-                <input required type="text" class="form-control" id="country" name="country"><br>
-            </div>
-            <div class="form-group">
-                <label for="location">Location: </label>
-                <input required type="text" class="form-control" id="location" name="location"><br>
-            </div>
-            <button type="submit" value="Submit"> Create </button>
-            <p id="status"></p>
-            <p id="patientInfo"></p>
+    <%@ include file="../navbar/navbar.jspf" %>
+    <div class="content-container">
+        <div class="content-header">
+            Add new Patient
         </div>
-        <input type="hidden" name="action" value="add"/>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
+        <div class="content-body">
+            <div class="edit-patient-container">
+                <form action="${pageContext.request.contextPath}/patient/confirmPatient" method="post">
+                    <div class="container w-100" style="padding: 10px">
+                        <div class="form-group">
+                            <label for="attestationID">Attestation ID: </label>
+                            <input required type="text" pattern="NA|[0-9]{11,11}" required title="Please enter a 11 number attestation ID or enter 'NA'" maxlength="11"
+                                   class="form-control" id="attestationID" name="attestationID"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First name: </label>
+                            <input required type="text" class="form-control" id="firstName" name="firstName"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last name: </label>
+                            <input required type="text" class="form-control" id="lastName" name="lastName"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country: </label>
+                            <input required type="text" class="form-control" id="country" name="country"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location: </label>
+                            <input required type="text" class="form-control" id="location" name="location"><br>
+                        </div>
+                        <button type="submit" value="Submit"> Create </button>
+                        <p id="status"></p>
+                        <p id="patientInfo"></p>
+                    </div>
+                    <input type="hidden" name="action" value="add"/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 

@@ -23,36 +23,7 @@
 <body>
 
 <div class="main-container">
-    <!--NAVBAR-->
-    <div class="navbar-container">
-        <div class="navbar-title">
-          Cradle.
-        </div>
-
-        <ul>
-          <li class="navbar-list"><a class="nav-link" href="/admin/index"><span class="glyphicon glyphicon-signal nav-link-icon"></span>Dashboard</a></li>
-          <li class="navbar-list"><a class="nav-link" href="/admin/users"><span class="glyphicon glyphicon-search nav-link-icon"></span>View Users</a></li>
-          <li class="navbar-list">
-            <a class="nav-link" href="/admin/registration"><span class="glyphicon glyphicon-user nav-link-icon"></span>Register Users</a>
-          </li class="navbar-list">
-        </ul>
-
-        <ul>
-          <li class="navbar-list"><a class="nav-link" href="/patient/patientlist"><span class="glyphicon glyphicon-user nav-link-icon"></span>Patients</a></li>
-          <li class="navbar-list"><a class="nav-link" href="/reading/create"><span class="glyphicon glyphicon-file nav-link-icon"></span>Readings</a></li>
-          <li class="navbar-list"><a class="nav-link" href="/admin/education"><span class="glyphicon glyphicon-folder-open nav-link-icon"></span>Education</a></li>
-          <%if (request.getRemoteUser()!= null) {%>
-          <li class="navbar-list">
-            <a
-              class="nav-link"
-              href="/profile/${pageContext.request.userPrincipal.name}"
-              ><span class="glyphicon glyphicon-cog nav-link-icon"></span>Profile</a
-            >
-          </li>
-          <%} %>
-          <li class="navbar-list"><a class="nav-link" href="/logout">< Sign Out ></a></li>
-        </ul>
-      </div> <!--END of NAVBAR-->
+    <%@ include file="../navbar/navbar.jspf" %>
 
       <div class="content-container">
         <div class="content-header">
@@ -95,7 +66,7 @@
                         <div class="form-group row">
                             <label for="phoneNumber" class="col-md-4 col-form-label text-md-right edit-users-label">PHONE #</label>
                             <div class="col-md-6">
-                                <input type="text" id="phoneNumber" class="edit-field" name="phoneNumber" placeholder="Phone Number">
+                                <input type="text" id="phoneNumber" class="edit-field" name="phoneNumber" value="<%=postUser.getPhoneNumber()%>">
                             </div>
                           </div>
                         <div class="form-group row">

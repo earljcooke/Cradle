@@ -79,6 +79,7 @@ public class ReadingController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public ModelAndView updateReadingInDB(@PathVariable(value = "id") long id, Reading reading, @RequestParam(value = "otherSymptoms", defaultValue = "")  String otherSymptoms) {
 
+        System.out.println("update");
         Reading dbReading = readingRepository.findByReadingId(id);
 
         reading.readingId = id;
@@ -86,23 +87,41 @@ public class ReadingController {
         reading.dateTimeTaken = dbReading.dateTimeTaken;
         reading.dateUploadedToServer = dbReading.dateUploadedToServer;
 
+        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
+
+        if (patient != null) {
+            reading.setPatient(patient);
+            readingRepository.save(reading);
+        }
+
         this.readingRepository.save(reading);
         return setUpAllReadingModel();
     }
 
 
-    // View all readings
+//     View all readings
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ModelAndView getAllUsers(){
+    public ModelAndView getAllReadings(){
         return setUpAllReadingModel();
     }
+
+    @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
+    public ModelAndView getReadingsWithPatientId(@PathVariable Long id){
+        List<Reading> readings = this.readingRepository.findReadingsByPatient(patientRepository.findByPatientId(id));
+        System.out.println(readings.size());
+        for(Reading r : readings){
+            r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
+        }
+        return new ModelAndView("/reading/all").addObject("readingList", readings);
+    }
+
 
     // Save a reading after editing from the view all readings table
-    @RequestMapping(value = "/all/edit", method = RequestMethod.POST)
-    public ModelAndView getAllReadings(Reading reading){
-        this.readingRepository.save(reading);
-        return setUpAllReadingModel();
-    }
+//    @RequestMapping(value = "/all/edit", method = RequestMethod.POST)
+//    public ModelAndView getAllReadings(Reading reading){
+//        this.readingRepository.save(reading);
+//        return setUpAllReadingModel();
+//    }
 
     // Edit a reading with the given id
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -124,9 +143,7 @@ public class ReadingController {
         for(Reading r : readings){
             r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
         }
-        return new ModelAndView("/reading/all").addObject("readingList", this.readingRepository.findAll());
+        return new ModelAndView("/reading/all").addObject("readingList", readings);
     }
-
-
 
 }
