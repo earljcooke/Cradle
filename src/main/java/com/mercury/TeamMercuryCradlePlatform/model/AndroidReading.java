@@ -34,9 +34,18 @@ public class AndroidReading {
     private String region;
     private Boolean ocrEnabled;
     private Boolean uploadImages;
+    public List<Long> retestOfPreviousReadingIds;
 
     public AndroidReading() {
 
+    }
+
+    public void setRetestOfPreviousReadingIds(List<Long> list) {
+        retestOfPreviousReadingIds = list;
+    }
+
+    public List<Long> getRetestOfPreviousReadingIds() {
+        return retestOfPreviousReadingIds;
     }
 
     public Integer getAgeYears() {

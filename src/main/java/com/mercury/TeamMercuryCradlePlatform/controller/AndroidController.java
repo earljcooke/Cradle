@@ -22,6 +22,7 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.List;
@@ -42,6 +44,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,23 +97,62 @@ public class AndroidController {
         }
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        File convertFile = new File("C:\\Users\\John\\Desktop\\test\\"  + file.getOriginalFilename());
-        boolean res = convertFile.createNewFile();
+    @RequestMapping(value = "/uploadreading", method = RequestMethod.POST)
+    public ResponseEntity<Reading> createReading(@RequestBody Reading reading) {
+        System.out.println(reading);
+        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
+
+        if(patient != null) {
+            reading.setPatient(patient);
+            readingRepository.save(reading);
+        } else {
+            reading.setPatient(new Patient(reading));
+            readingRepository.save(reading);
+        }
+
+        return new ResponseEntity<>(reading, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/uploadzip", method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadZip(@RequestBody MultipartFile file, HttpServletRequest request) throws IOException {
+        File zip = File.createTempFile(UUID.randomUUID().toString(), "temp");
+        FileOutputStream o = new FileOutputStream(zip);
+        IOUtils.copy(file.getInputStream(), o);
+        o.close();
+
+        String destination = "C:\\Users\\John\\Desktop";
+        try {
+            ZipFile zipFile = new ZipFile(zip);
+            zipFile.extractAll(destination);
+        } catch (ZipException e) {
+            e.printStackTrace();
+        } finally {
+            zip.delete();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> uploadFile(@RequestPart(name = "userDataFile") MultipartFile file, HttpServletRequest request) throws IOException {
+        Path path = Paths.get(".");
+        String pathname = path.toAbsolutePath().toString() + "\\reading";
+        File convertFile = new File(pathname + "\\" + file.getOriginalFilename());
+        //boolean res = convertFile.createNewFile();
+        boolean res = convertFile.getParentFile().mkdirs();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
         fout.close();
 
-        String destination = "C:\\Users\\John\\Desktop\\test";
         try {
             ZipFile zipFile = new ZipFile(convertFile);
-            zipFile.extractAll(destination);
+            zipFile.extractAll(pathname);
 
-            File dataFile = new File(destination + "\\unencrypted\\data.zip");
-            ZipFile dataZipFile = new ZipFile(dataFile);
-            dataZipFile.extractAll(destination);
-            File dir = new File(destination);
+            //File dataFile = new File(pathname + "\\unencrypted\\data.zip");
+            //File dataFile = new File(pathname);
+            //ZipFile dataZipFile = new ZipFile(dataFile);
+            //dataZipFile.extractAll(pathname);
+            File dir = new File(pathname);
             for(File f: dir.listFiles()) {
                 if (f.getName().endsWith((".json"))) {
                     storeJson(f);
@@ -119,7 +162,7 @@ public class AndroidController {
             e.printStackTrace();
         } finally {
             //convertFile.delete();
-            FileUtils.cleanDirectory(new File(destination));
+            FileUtils.cleanDirectory(new File(pathname));
         }
         return new ResponseEntity<>("File uploaded successfully", HttpStatus.OK);
     }
