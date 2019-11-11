@@ -19,6 +19,8 @@
                 class="glyphicon glyphicon-user nav-link-icon"></span>Patients</a></li>
         <li class="navbar-list"><a class="nav-link" href="/reading/create"><span
                 class="glyphicon glyphicon-file nav-link-icon"></span>New Reading</a></li>
+        <li class="navbar-list"><a class="nav-link" href="/referral/referralList"><span
+                class="glyphicon glyphicon-file nav-link-icon"></span>Referrals</a></li>
         <li class="navbar-list"><a class="nav-link" href="/vht/allocation"><span class="glyphicon glyphicon-user nav-link-icon"></span>Patient Allocation</a></li>
         <li class="navbar-list"><a class="nav-link" href="/vht/genreport"><span class="glyphicon glyphicon-dashboard nav-link-icon"></span>Reports</a></li>
         <li class="navbar-list"><a class="nav-link" href="/admin/education"><span

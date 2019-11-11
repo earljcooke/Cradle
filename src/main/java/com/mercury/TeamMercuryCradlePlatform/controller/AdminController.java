@@ -64,6 +64,7 @@ public class AdminController {
     public @ResponseBody ModelAndView submitRegistration(User user, @RequestParam String password,
             @RequestParam String roles) {
         User newUser = new User(user, password);
+        newUser.setEncodedPassword(newUser.getPassword());
         newUser.setRole(roles);
         userRepository.save(newUser);
 
@@ -100,9 +101,12 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
-    public ModelAndView getAllUsers(User user, @RequestParam(value = "roles", defaultValue = "") String roles) {
-
+    public ModelAndView getAllUsers(User user, @RequestParam(value = "roles", defaultValue = "") String roles,
+                                    @RequestParam(value = "password") String password) {
+        System.out.println(user.getPassword());
         user.setRole(roles);
+        user.setPassword(password);
+
         this.userRepository.save(user);
 
         return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());

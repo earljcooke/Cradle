@@ -33,9 +33,8 @@ public class Referral {
 
     //reading info
     @OneToOne
-    @JoinColumn(name = "reading_id", referencedColumnName = "reading_id")
+    @JoinColumn(name = "referral_id")
     private Reading reading;
-
 
     public Reading getReading() {
         return reading;
@@ -60,7 +59,7 @@ public class Referral {
 
     // patient info
     @OneToOne
-    @JoinColumn(name = "patient_Id", referencedColumnName = "patient_Id")
+    @JoinColumn(name = "referral_id")
     private Patient patient;
 
     public Patient getPatient() {

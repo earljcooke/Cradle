@@ -93,41 +93,6 @@ public class AndroidController {
         }
     }
 
-    @RequestMapping(value = "/uploadreading", method = RequestMethod.POST)
-    public ResponseEntity<Reading> createReading(@RequestBody Reading reading) {
-        System.out.println(reading);
-        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
-
-        if(patient != null) {
-            reading.setPatient(patient);
-            readingRepository.save(reading);
-        } else {
-            reading.setPatient(new Patient(reading));
-            readingRepository.save(reading);
-        }
-
-        return new ResponseEntity<>(reading, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/uploadzip", method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadZip(@RequestBody MultipartFile file, HttpServletRequest request) throws IOException {
-        File zip = File.createTempFile(UUID.randomUUID().toString(), "temp");
-        FileOutputStream o = new FileOutputStream(zip);
-        IOUtils.copy(file.getInputStream(), o);
-        o.close();
-
-        String destination = "C:\\Users\\John\\Desktop";
-        try {
-            ZipFile zipFile = new ZipFile(zip);
-            zipFile.extractAll(destination);
-        } catch (ZipException e) {
-            e.printStackTrace();
-        } finally {
-            zip.delete();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         File convertFile = new File("C:\\Users\\John\\Desktop\\test\\"  + file.getOriginalFilename());

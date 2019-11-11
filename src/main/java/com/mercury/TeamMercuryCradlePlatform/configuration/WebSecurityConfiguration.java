@@ -38,7 +38,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
-//
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -64,9 +64,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/vht/**").hasRole("ADMIN")
+                .antMatchers("/vht/**").hasAnyRole("ADMIN", "VHT")
                 .antMatchers("/healthworker/**").hasRole("HEALTHWORKER")
-                .antMatchers("/patients/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
+                .antMatchers("/patient/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
+                .antMatchers("/profile/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
+                .antMatchers("/reading/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
+                .antMatchers("/referral/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
+                .antMatchers("/statistics/**").hasAnyRole("ADMIN", "HEALTHWORKER", "VHT")
                 .and()
             .formLogin()
                 .successHandler(new AuthenticationSuccessHandler() {

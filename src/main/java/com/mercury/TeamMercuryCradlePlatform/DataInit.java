@@ -8,6 +8,7 @@ import com.mercury.TeamMercuryCradlePlatform.repository.*;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDate;
@@ -26,21 +27,24 @@ public class DataInit implements CommandLineRunner {
     private ReadingRepository readingRepository;
     private SupervisorRepository supervisorRepository;
     private ReferralRepository referralRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public DataInit(UserRepository userRepository, PatientRepository patientRepository,
-                    ReadingRepository readingRepository, SupervisorRepository supervisorRepository, ReferralRepository referralRepository) {
+                    ReadingRepository readingRepository, SupervisorRepository supervisorRepository,
+                    ReferralRepository referralRepository) {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.readingRepository = readingRepository;
         this.supervisorRepository = supervisorRepository;
         this.referralRepository = referralRepository;
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
     public void run(String... args) {
-        User admin = new User("1234", "John", "Lee", "test@test.com", "ADMIN", "1234567890");
-        User vht = new User("1234", "Yoon", "Lee", "test2@test.com","VHT,ADMIN,HEALTHWORKER", "9999999999");
-        User healthWorker = new User("1234", "Megan","Fox", "test3@test.com", "ADMIN,HEALTHWORKER", "0001111111");
+        User admin = new User(bCryptPasswordEncoder.encode("1234"), "John", "Lee", "test@test.com", "ADMIN", "1234567890");
+        User vht = new User(bCryptPasswordEncoder.encode("1234"), "Yoon", "Lee", "test2@test.com","VHT,ADMIN,HEALTHWORKER", "9999999999");
+        User healthWorker = new User(bCryptPasswordEncoder.encode("1234"), "Megan","Fox", "test3@test.com", "ADMIN,HEALTHWORKER", "0001111111");
 
         List<User> users = Arrays.asList(admin, vht, healthWorker);
         userRepository.saveAll(users);
