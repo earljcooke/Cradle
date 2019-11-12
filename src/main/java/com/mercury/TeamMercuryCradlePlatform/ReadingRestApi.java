@@ -11,9 +11,12 @@ import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -69,24 +72,24 @@ public class ReadingRestApi {
 
     @GetMapping("/api/reading/all")
     @ResponseStatus (HttpStatus.OK)
-    public String getAllReadings() throws JsonProcessingException {
+    public List<Reading> getAllReadings(){
 
         List<Reading> readingList = readingRepository.findAll();
 
-
-
         for(Reading r : readingList){
-            convertZonedDateTimeToString(r);
+            r.convertZonedDateTimeToString();
+            r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            return mapper.writeValueAsString(readingRepository.findAll());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return readingList;
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.registerModule(new JavaTimeModule());
+//        try {
+//            return mapper.writeValueAsString(readingRepository.findAll());
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     @GetMapping("api/patient/all")
@@ -97,75 +100,34 @@ public class ReadingRestApi {
         return patients;
     }
 
-    @GetMapping("api/test")
+    @PostMapping("api/post/reading")
     @ResponseStatus(HttpStatus.OK)
-    public ZonedDateTime test(){
-        return ZonedDateTime.now();
-    }
+    public Reading addReading(@RequestBody Reading reading){
 
-//    @GetMapping("/api/tokimon/{id}")
-//    @ResponseStatus (HttpStatus.OK)
-//    public Tokimon getTokimonWithId(@PathVariable("id") long id){
-//
-//        System.out.println("Get tokimon:" + id);
-//
-//        TokimonCollection.getInstance().setTokimons(TokimonJsonController.readFromFile());
-//
-//        for(Tokimon tokimon : TokimonCollection.getInstance().getTokimonList()){
-//            if(tokimon.getId() == id){
-//                return tokimon;
-//            }
-//        }
-//        throw new IllegalArgumentException();
-//    }
-//
-//
-//    @PostMapping("api/tokimon/add")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void addTokimon(@RequestBody Tokimon tokimon){
-//
-//        System.out.println("Add tokimon:" + tokimon.getName());
-//
-//        TokimonCollection.getInstance().addTokimonToCollection(tokimon);
-//        TokimonJsonController.writeToFile(TokimonCollection.getInstance().getTokimonList());
-//
-//    }
-//
-//    @DeleteOperation
-//    @DeleteMapping("api/tokimon/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void removeTokimonWithId(@PathVariable("id") long id){
-//        System.out.println("Delete tokimon: " + id);
-//
-//        TokimonCollection.getInstance().setTokimons(TokimonJsonController.readFromFile());
-//        TokimonCollection.getInstance().deleteTokimonFromCollection(id);
-//        TokimonJsonController.writeToFile(TokimonCollection.getInstance().getTokimonList());
-//
-//    }
-//
-//    @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = "ID not found")
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    public void illegalExceptionHandler(){}
-
-    private void convertZonedDateTimeToString(Reading reading){
-
-        if(reading.referralMessageSendTime != null){
-            reading.referralMessageSendTimeString = reading.referralMessageSendTime.toString();
+        if(reading == null){
+            throw new IllegalArgumentException();
         }
 
-        if(reading.dateTimeTaken != null){
-            reading.dateTimeTakenString = reading.dateTimeTaken.toString();
+        reading.convertStringToDateZonedTime();
+        reading.setSymptoms(reading.symptoms);
+
+        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
+
+        if (patient != null) {
+            reading.setPatient(patient);
+            readingRepository.save(reading);
         }
 
-        if(reading.dateUploadedToServer != null){
-            reading.dateUploadedToServerString = reading.dateUploadedToServer.toString();
-        }
+        this.readingRepository.save(reading);
 
-        if(reading.dateRecheckVitalsNeeded != null){
-            reading.dateRecheckVitalsNeededString = reading.dateRecheckVitalsNeeded.toString();
-        }
+        System.out.println("Reading: "  + reading.toString());
+
+        return reading;
 
     }
 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = "ID not found")
+    @ExceptionHandler(IllegalArgumentException.class)
+    public void illegalExceptionHandler(){}
 
 }

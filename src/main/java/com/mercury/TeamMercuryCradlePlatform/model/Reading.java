@@ -336,7 +336,6 @@ public class Reading {
                 && dateRecheckVitalsNeeded.isBefore(ZonedDateTime.now());
     }
 
-    @JsonIgnore
 //    public long getMinutesUntilNeedRecheckVitals() {
 //        if (!isNeedRecheckVitals()) {
 //            throw new UnsupportedOperationException("No number of minutes for no recheck");
@@ -352,6 +351,50 @@ public class Reading {
 
 
 
+    @JsonIgnore
+    public void convertStringToDateZonedTime(){
+
+        if(referralMessageSendTimeString != null && !referralMessageSendTimeString.isEmpty()){
+            referralMessageSendTime = ZonedDateTime.parse(referralMessageSendTimeString);
+        }
+
+        if(dateTimeTakenString != null && !dateTimeTakenString.isEmpty()){
+            dateTimeTaken = ZonedDateTime.parse(dateTimeTakenString);
+        }
+
+        if(dateUploadedToServerString != null && !dateUploadedToServerString.isEmpty()){
+            dateUploadedToServer = ZonedDateTime.parse(dateUploadedToServerString);
+        }
+
+        if(dateRecheckVitalsNeededString != null && !dateRecheckVitalsNeededString.isEmpty()){
+            dateRecheckVitalsNeeded = ZonedDateTime.parse(dateRecheckVitalsNeededString);
+        }
+
+    }
+
+    @JsonIgnore
+    public void convertZonedDateTimeToString(){
+
+        if(referralMessageSendTime != null){
+            referralMessageSendTimeString = referralMessageSendTime.toString();
+        }
+
+        if(dateTimeTaken != null){
+            dateTimeTakenString = dateTimeTaken.toString();
+        }
+
+        if(dateUploadedToServer != null){
+            dateUploadedToServerString = dateUploadedToServer.toString();
+        }
+
+        if(dateRecheckVitalsNeeded != null){
+            dateRecheckVitalsNeededString = dateRecheckVitalsNeeded.toString();
+        }
+
+    }
+
+
+    @JsonIgnore
     private void setSymptomsString(List<String> symptoms){
         this.symptomsString = String.join(",", symptoms);
     }
@@ -505,5 +548,14 @@ public class Reading {
     @JsonIgnore
     public void setReferral(Referral referral) {
         this.referral = referral;
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString(){
+        return firstName + " " + lastName + ", " + ageYears +
+                "\n" + " " + gestationalAgeUnit + ": " + gestationalAgeValue +
+                "\n" + symptoms.toString() +
+                "\n" + bpSystolic + "/" + bpDiastolic + " "  + heartRateBPM + "BPM";
     }
 }

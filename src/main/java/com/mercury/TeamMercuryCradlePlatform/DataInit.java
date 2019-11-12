@@ -78,13 +78,25 @@ public class DataInit implements CommandLineRunner {
                 ZonedDateTime.of(LocalDateTime.of( 2019,7,5,19,30), ZoneId.systemDefault()));
         reading4.dateUploadedToServer = reading4.dateTimeTaken;
 
-        List<Reading> readings = Arrays.asList(reading, reading2, reading3, reading4);
+        Reading reading5 = new Reading("Bobby", "Frown", 80,
+                Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION, Strings.SYMPTOM_BLEEDING),
+                GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "0",
+                150, 100, 180,
+                ZonedDateTime.of(LocalDateTime.of( 2019,1,4, 1,15), ZoneId.systemDefault()));
+        reading5.dateUploadedToServer = reading5.dateTimeTaken;
 
-        patient1.addAllReadings(readings);
-        readings.forEach(r -> r.setPatient(patient1));
+        List<Reading> patient1Readings = Arrays.asList(reading, reading2, reading3, reading4);
+        List<Reading> patient2Readings = Collections.singletonList(reading5);
+
+        patient1.addAllReadings(patient1Readings);
+        patient1Readings.forEach(r -> r.setPatient(patient1));
+
+        patient2.addAllReadings(patient2Readings);
+        patient2Readings.forEach(r -> r.setPatient(patient2));
 
         patientRepository.saveAll(Arrays.asList(patient1, patient2, patient3));
-        readingRepository.saveAll(readings);
+        readingRepository.saveAll(patient1Readings);
+        readingRepository.saveAll(patient2Readings);
 
     }
 }
