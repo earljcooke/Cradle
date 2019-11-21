@@ -88,14 +88,20 @@
                     session.setAttribute("firstName",reading.firstName);
                     session.setAttribute("lastName", reading.lastName);
                     session.setAttribute("ageYears", reading.ageYears);
+                    session.setAttribute("symptoms", reading.symptomsString);
                     session.setAttribute("bpSystolic", reading.bpSystolic);
                     session.setAttribute("bpDiastolic", reading.bpDiastolic);
                     session.setAttribute("heartRateBPM", reading.heartRateBPM);
+                    session.setAttribute("dateTimeTaken", reading.dateTimeTaken.toString());
+                    session.setAttribute("gestationalAgeUnit", reading.gestationalAgeUnit);
+                    session.setAttribute("gestationalAgeValue", reading.gestationalAgeValue);
+
                     session.setAttribute("analysis", ReadingAnalysis.analyze(reading).name());
                 %>
-                <a href="${pageContext.request.contextPath}/referral/addReferral">
-                    <button type="button" id="secondaryButton" onclick="triggerButton()">Send referral</button>
-                </a>
+
+                <button type="button" id="secondaryButton" onclick="triggerButton()">
+                    Send referral
+                </button>
             </p>
 
 
@@ -106,7 +112,7 @@
             <p> Follow-up <%= reading.isFlaggedForFollowup()? "recommended" : "not recommended"%></p>
 
             <button type="button" onclick="editButton()"> Edit </button>
-            <form action="${pageContext.request.contextPath}/reading/analysis/save" method="post">
+            <form name="ReadingForm" action="${pageContext.request.contextPath}/reading/analysis/save" method="post">
                 <input type="hidden" name="firstName" value="<%=reading.firstName%>"/>
                 <input type="hidden" name="lastName" value="<%=reading.lastName%>"/>
                 <input type="hidden" name="ageYears" value="<%=reading.ageYears%>"/>
@@ -116,8 +122,9 @@
                 <input type="hidden" name="bpSystolic" value="<%=reading.bpSystolic%>"/>
                 <input type="hidden" name="bpDiastolic" value="<%=reading.bpDiastolic%>"/>
                 <input type="hidden" name="heartRateBPM" value="<%=reading.heartRateBPM%>"/>
-                <input type="hidden" name="dateTimeTaken" value="<%=reading.dateTimeTaken.toString()%>">
-                <button type="submit" id="primaryButton"> Save </button>
+                <input type="hidden" name="dateTimeTaken" value="<%=reading.dateTimeTaken.toString()%>"/>
+                <input type="hidden" name="saveByReferral" id="saveByReferral" value="">
+                <button type="submit" id="primaryButton" > Save </button>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
@@ -138,6 +145,7 @@
         }
 
         function triggerButton() {
+            document.getElementById('saveByReferral').value = 'true';
             document.getElementById('primaryButton').click();
         }
 

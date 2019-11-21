@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <%@ include file="../navbar/navbar.jspf" %>
+    <%@ include file="../navbar.jspf" %>
     <div class="content-container">
         <div class="content-header">
             Add new Patient

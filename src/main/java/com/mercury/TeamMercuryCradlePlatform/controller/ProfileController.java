@@ -1,5 +1,9 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
 
+import com.mercury.TeamMercuryCradlePlatform.authentication.UserLogin;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,7 +34,6 @@ public class ProfileController {
     @PreAuthorize("#id == authentication.getPrincipal().getUserId()")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getUserInfo(@PathVariable("id") Integer id, Model model) {
-
         User user = userRepository.findByUserId(id);
         ModelAndView modelAndView = new ModelAndView("/profile");
 
@@ -41,6 +44,8 @@ public class ProfileController {
 
         return modelAndView;
     }
+
+
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     public ModelAndView getEditUserPage(@PathVariable("id") Integer id) {

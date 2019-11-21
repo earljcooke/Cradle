@@ -13,6 +13,12 @@
     ArrayList<Integer> complReferralList = (ArrayList<Integer>) request.getAttribute("complReferralList");
     ArrayList<Integer> pregnantList = (ArrayList<Integer>) request.getAttribute("pregnantList");
     ArrayList<Integer> pregnantHelpedList = (ArrayList<Integer>) request.getAttribute("pregnantHelpedList");
+
+    ArrayList<Integer> greenList = (ArrayList<Integer>) request.getAttribute("green");
+    ArrayList<Integer> yellowUpList = (ArrayList<Integer>) request.getAttribute("yellowUp");
+    ArrayList<Integer> yellowDownList = (ArrayList<Integer>) request.getAttribute("yellowDown");
+    ArrayList<Integer> redUpList = (ArrayList<Integer>) request.getAttribute("redUp");
+    ArrayList<Integer> redDownList = (ArrayList<Integer>) request.getAttribute("redDown");
 %>
 
 <head>
@@ -66,10 +72,28 @@
         <% for (int i=0; i<pregnantHelpedList.size(); i++) { %>
         data[<%= i %>] = "<%= pregnantHelpedList.get(i)%>";
         <% } %>
+    } else if (type === 5) {
+        <% for (int i=0; i<greenList.size(); i++) { %>
+        data[<%= i %>] = "<%= greenList.get(i)%>";
+        <% } %>
+    } else if (type === 6) {
+        <% for (int i=0; i<yellowUpList.size(); i++) { %>
+        data[<%= i %>] = "<%= yellowUpList.get(i)%>";
+        <% } %>
+    } else if (type === 7) {
+        <% for (int i=0; i<yellowDownList.size(); i++) { %>
+        data[<%= i %>] = "<%= yellowDownList.get(i)%>";
+        <% } %>
+    } else if (type === 8) {
+        <% for (int i=0; i<redUpList.size(); i++) { %>
+        data[<%= i %>] = "<%= redUpList.get(i)%>";
+        <% } %>
+    } else if (type === 9) {
+        <% for (int i=0; i<redDownList.size(); i++) { %>
+        data[<%= i %>] = "<%= redDownList.get(i)%>";
+        <% } %>
     }
-
-
-    return data;
+        return data;
 }</script>
 
 <br>
@@ -146,7 +170,7 @@
                 labels: getStandardLabels(),
                 datasets: [{
                     label: 'Green, per Month',
-                    data: [15, 8, 5, 3, 6, 13, 4, 1,4 ,11, 3, 7, 10],
+                    data: getData(5),
                     pointBackgroundColor: 'rgb(211,255,205)',
                     borderColor: 'rgb(36,118,41)',
                     pointBorderColor: 'rgb(36,118,41)',
@@ -156,7 +180,7 @@
                 },
                     {
                         label: 'Yellow down, per Month',
-                        data: [24, 22, 16, 15, 27, 32, 11, 28, 19, 18, 19, 25],
+                        data: getData(7),
                         pointBackgroundColor: 'rgb(255,244,162)',
                         borderColor: 'rgb(226,226,35)',
                         pointBorderColor: 'rgb(226,226,35)',
@@ -166,7 +190,7 @@
                     },
                     {
                         label: 'Yellow up, per Month',
-                        data: [25, 18, 20, 15, 12, 7, 23, 16, 12, 8, 6, 5],
+                        data: getData(6),
                         pointBackgroundColor: 'rgb(255,211,144)',
                         borderColor: 'rgb(226,155,33)',
                         pointBorderColor: 'rgb(226,155,33)',
@@ -176,7 +200,7 @@
                     },
                     {
                         label: 'Red down, per Month',
-                        data: [14, 8, 15, 13, 10, 7, 16, 24, 22, 17, 25, 18],
+                        data: getData(9),
                         pointBackgroundColor: 'rgb(255,226,247)',
                         borderColor: 'rgb(174,61,172)',
                         pointBorderColor: 'rgb(174,61,172)',
@@ -186,7 +210,7 @@
                     },
                     {
                         label: 'Red up, per Month',
-                        data: [3,4,5,2,5,7,7,6,5,2,5,7],
+                        data: getData(8),
                         pointBackgroundColor: 'rgb(255,135,134)',
                         borderColor: 'rgb(182,33,50)',
                         pointBorderColor: 'rgb(182,33,50)',

@@ -34,7 +34,7 @@
 </script>
 
 <body>
-    <%@ include file="../navbar/navbar.jspf" %>
+    <%@ include file="../navbar.jspf" %>
     <div class="row">
         <div class="col-sm-3">Attestation:</div>
         <div class="col-sm-8"><%= patient.getAttestationID()%></div>

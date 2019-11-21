@@ -26,7 +26,8 @@ public class AndroidReading {
     private int manuallyChangeOcrResults;
     private String pathToPhoto;
     private String patientId;
-    private String patientName;
+    private String patientFirstName;
+    private String patientLastName;
     private Long readingId;
     private List<String> symptoms =  new ArrayList<>();
     private float totalOcrSeconds;
@@ -168,12 +169,20 @@ public class AndroidReading {
         this.patientId = patientId;
     }
 
-    public String getPatientName() {
-        return patientName;
+    public String getPatientFirstName() {
+        return patientFirstName;
     }
 
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
+    public void setPatientFirstName(String patientFirstName) {
+        this.patientFirstName = patientFirstName;
+    }
+
+    public String getPatientLastName() {
+        return patientLastName;
+    }
+
+    public void setPatientLastName(String patientLastName) {
+        this.patientLastName = patientLastName;
     }
 
     public Long getReadingId() {

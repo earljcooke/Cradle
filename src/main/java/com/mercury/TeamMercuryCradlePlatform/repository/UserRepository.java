@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByUserId(Integer userid);
     public List<User> findAll();
+    public User findByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.roles LIKE %?1%")
     public ArrayList<User> findAllByRole(String role);

@@ -2,6 +2,8 @@ package com.mercury.TeamMercuryCradlePlatform;
 
 public class Strings{
 
+    public static final String ADMIN_EMAIL = "admin@test.com";
+
     public static final String ANALYSIS_NONE = "No vital signs entered";
     public static final String ANALYSIS_GREEN = "Patient is likely healthy";
     public static final String ANALYSIS_YELLOW_UP = "Raised BP" ;
@@ -27,6 +29,11 @@ public class Strings{
     public static final String GESTATION_UNIT_WEEKS = "Weeks";
     public static final String GESTATION_UNIT_MONTHS = "Months";
     public static final String GESTATION_UNIT_NOT_PREGNANT = "Not Pregnant";
+
+    public static final String MONTH_DIGIT_ZERO = "0";
+    public static final String FIRST_OF_JANUARY = "-01-01";
+    public static final String FIRST_DAY_OF_MONTH = "-01";
+    public static final String MONTH_DELIMITER = "-";
 
 //    public static final String VHT = "VHT";
 //    public static final String HEALTH_WORKER = "HEALTH_WORKER";

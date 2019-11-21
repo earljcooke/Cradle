@@ -1,6 +1,12 @@
 <%@ page language="java"
 contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
+
+<%@ page import="java.util.*" %>
+<%@ page import="com.mercury.TeamMercuryCradlePlatform.Strings" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +65,8 @@ pageEncoding="ISO-8859-1"%>
 function SendMail() {
     var sub= "Error " + document.getElementById("code").innerHTML;
     var bod = "Please see error trace: \n" + document.getElementById("trace").innerHTML;
-    var link = "mailto:ynabokov@sfu.ca"
+	var adminEmail = "<%= Strings.ADMIN_EMAIL %>";
+	var link = "mailto:" + adminEmail
              + "?subject=" + encodeURI(sub)
              + "&body=" + encodeURI(bod)
     ;

@@ -24,6 +24,11 @@ public class Patient {
     private Integer ageYears = null;
     private String country = null;
     private String location = null;
+    private Sex sex = null;
+    private GestationalAgeUnit gestationalAgeUnit = null;
+//    private List<String> medicalHistory = null;
+//    private List<String> drugHistory = new ArrayList<>();
+//    private List<String> symptoms = null;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="patient_Id", referencedColumnName = "patient_Id")
@@ -35,12 +40,13 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String attestationID, String firstName, String lastName, String country, String location) {
+    public Patient(String attestationID, String firstName, String lastName, String country, String location, Integer ageYears) {
         setAttestationID(attestationID);
         setFirstName(firstName);
         setLastName(lastName);
         setCountry(country);
         setLocation(location);
+        setAgeYears(ageYears);
     }
 
     // TODO: dont really need this, delete it later
@@ -58,6 +64,7 @@ public class Patient {
         setLastName(patient.getLastName());
         setCountry(patient.getCountry());
         setLocation(patient.getLocation());
+        setAgeYears(patient.getAgeYears());
     }
 
     // Ideas used from https://www.baeldung.com/java-pad-string
@@ -140,6 +147,22 @@ public class Patient {
         this.readings.addAll(readingList);
     }
 
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public GestationalAgeUnit getGestationalAgeUnit() {
+        return gestationalAgeUnit;
+    }
+
+    public void setGestationalAgeUnit(GestationalAgeUnit gestationalAgeUnit) {
+        this.gestationalAgeUnit = gestationalAgeUnit;
+    }
+
 
     public Referral getReferral() {
         return referral;
@@ -148,6 +171,5 @@ public class Patient {
     public void setReferral(Referral referral) {
         this.referral = referral;
     }
-
 
 }

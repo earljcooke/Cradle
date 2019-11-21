@@ -33,18 +33,13 @@
         </div>
         <div class="content-body">
             <div class="table-container">
-                <input class="form-control w-25" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search" aria-label="Search">
-                <table id="readingsTable" class="table table-striped">
+                <table id="referralTable" class="table table-striped">
                     <thead>
                     <tr>
                         <td scope="col">Referral ID</td>
                         <td scope="col">Name</td>
                         <td scope="col">Age</td>
-                        <td scope="col">Zone Number</td>
-                        <td scope="col">Block Number</td>
-                        <td scope="col">Tank Number</td>
-                        <td scope="col">Village Number</td>
-                        <td scope="col">Household Number</td>
+                        <td scope="col">Sex</td>
                         <td scope="col">Referred Health Centre</td>
                         <td scope="col">VHT Name</td>
                         <td scope="col"></td>
@@ -55,19 +50,15 @@
                 <c:forEach items="<%=referralList%>" var = "referral">
                     <tr>
                         <td>${referral.referralId}</td>
-                        <td>${referral.firstName} ${referral.firstName} </td>
+                        <td>${referral.firstName} ${referral.lastName} </td>
                         <td>${referral.ageYears}</td>
-                        <td>${referral.zoneNumber}</td>
-                        <td>${referral.blockNumber}</td>
-                        <td>${referral.tankNumber}</td>
-                        <td>${referral.villageNumber}</td>
-                        <td>${referral.householdNumber}</td>
+                        <td>${referral.sex}</td>
                         <td>${referral.referredHealthCentre}</td>
                         <td>${referral.vhtName}</td>
                         <td>
-    <%--                        <form action="${pageContext.request.contextPath}/referral/${referral.referralId}" method="post">--%>
-    <%--                            <button type="submit" class="btn btn-secondary" name="info">Info</button>--%>
-    <%--                        </form>--%>
+                            <form action="${pageContext.request.contextPath}/referral/info/${referral.referralId}" method="get">
+                                <button type="submit" class="btn btn-secondary" name="info">Info</button>
+                            </form>
                         </td>
                         <td>
                             <form action="${pageContext.request.contextPath}/referral/close/${referral.referralId}" method="post">

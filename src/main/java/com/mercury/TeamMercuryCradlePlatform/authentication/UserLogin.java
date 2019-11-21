@@ -36,6 +36,10 @@ public class UserLogin implements UserDetails {
         return this.user.getUserId().toString();
     }
 
+    public String getUserEmail() {
+        return this.user.getEmail();
+    }
+
     public Integer getUserId() {
         return this.user.getUserId();
     }

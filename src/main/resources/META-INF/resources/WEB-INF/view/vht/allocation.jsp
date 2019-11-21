@@ -43,17 +43,17 @@
     <br>
 
     <div style="text-align:center;" >
-            <select id = "firstVHT" name="firstVHT" class="btn btn-primary dropdown-toggle btn-select btn-lg">
+        <label for="firstVHT"></label><select id = "firstVHT" name="firstVHT" class="btn btn-primary dropdown-toggle btn-select btn-lg">
                 <c:forEach items="<%=listOfVHT%>" var = "vht">
-                    <option>${vht.userId} - ${vht.firstName} ${vht.lastName}</option>
+                    <option>${vht.email} - ${vht.firstName} ${vht.lastName}</option>
                 </c:forEach>
             </select>
 
             <div class="divider"> &nbsp; TO &nbsp; </div>
 
-            <select id = "secondVHT" name="secondVHT"  class="btn btn-primary dropdown-toggle btn-select btn-lg">
+        <label for="secondVHT"></label><select id = "secondVHT" name="secondVHT" class="btn btn-primary dropdown-toggle btn-select btn-lg">
                 <c:forEach items="<%=listOfVHT%>" var = "vht">
-                    <option>${vht.userId} - ${vht.firstName} ${vht.lastName}</option>
+                    <option>${vht.email} - ${vht.firstName} ${vht.lastName}</option>
                 </c:forEach>
             </select>
     </div>

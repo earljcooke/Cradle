@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <%@ include file="../navbar/navbar.jspf" %>
+    <%@ include file="../navbar.jspf" %>
     <p>Patient Deleted!</p>
     <p><a href="${pageContext.request.contextPath}/patient/patientlist"><button>Return to Patient List</button></a></p>
 

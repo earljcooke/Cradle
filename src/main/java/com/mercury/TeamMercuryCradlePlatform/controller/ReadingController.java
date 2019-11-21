@@ -1,12 +1,14 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
 
-import com.mercury.TeamMercuryCradlePlatform.model.GestationalAgeUnit;
-import com.mercury.TeamMercuryCradlePlatform.model.Patient;
-import com.mercury.TeamMercuryCradlePlatform.model.Reading;
+import com.mercury.TeamMercuryCradlePlatform.model.*;
 
+import com.mercury.TeamMercuryCradlePlatform.repository.AnalysisRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 
+import com.mercury.TeamMercuryCradlePlatform.repository.SupervisorRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,10 +25,15 @@ public class ReadingController {
 
     private PatientRepository patientRepository;
     private ReadingRepository readingRepository;
+    private AnalysisRepository analysisRepository;
+    private SupervisorRepository supervisorRepository;
 
-    ReadingController(PatientRepository patientRepository, ReadingRepository readingRepository){
+    ReadingController(PatientRepository patientRepository, ReadingRepository readingRepository,
+                      AnalysisRepository analysisRepository, SupervisorRepository supervisorRepository){
         this.patientRepository = patientRepository;
         this.readingRepository = readingRepository;
+        this.analysisRepository = analysisRepository;
+        this.supervisorRepository = supervisorRepository;
     }
 
     // Create a new reading
@@ -54,7 +61,9 @@ public class ReadingController {
 
     // Save the reading to the db
     @RequestMapping(value = "/analysis/save", method = RequestMethod.POST)
-    public ModelAndView saveReadingToDB(Reading reading, @RequestParam(value = "dateTimeTaken") String timeTaken, @RequestParam(value = "gestationalAgeUnit") String value) {
+    public ModelAndView saveReadingToDB(Reading reading, @RequestParam(value = "dateTimeTaken") String timeTaken,
+                                        @RequestParam(value = "gestationalAgeUnit") String value,
+                                        @RequestParam(value = "saveByReferral") String saveByRef) {
 
         // Need to manually set these fields again otherwise it saves it as null in db
         reading.gestationalAgeUnit = GestationalAgeUnit.valueOf(value);
@@ -64,23 +73,35 @@ public class ReadingController {
         // If a patient exists with the same first, last and age then link this reading to the existing patient, else create new patient
         Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
 
-        if (patient != null) {
-            reading.setPatient(patient);
-            readingRepository.save(reading);
-        } else {
-            reading.setPatient(new Patient(reading));
-            readingRepository.save(reading);
+        if (patient == null) {
+            patient = new Patient(reading);
+            patientRepository.save(patient);
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = userDetails.getUsername();
+            SupervisorPatientPair supervisorPatientPair = new SupervisorPatientPair(username, patient.getPatientId().toString());
+            supervisorRepository.save(supervisorPatientPair);
         }
 
+        reading.setPatient(patient);
+        Analysis analysis = new Analysis(reading);
+
+        readingRepository.save(reading);
+        analysisRepository.save(analysis);
+
+        if(saveByRef.equalsIgnoreCase("true")){
+            return new ModelAndView("/referral/addReferral");
+        }
         return setUpAllReadingModel();
     }
 
     // Update a reading
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public ModelAndView updateReadingInDB(@PathVariable(value = "id") long id, Reading reading, @RequestParam(value = "otherSymptoms", defaultValue = "")  String otherSymptoms) {
+    public ModelAndView updateReadingInDB(@PathVariable(value = "id") long id, Reading reading,
+                                          @RequestParam(value = "otherSymptoms", defaultValue = "")  String otherSymptoms) {
 
         System.out.println("update");
         Reading dbReading = readingRepository.findByReadingId(id);
+        Analysis dbAnalysis = analysisRepository.findByReading(dbReading);
 
         reading.readingId = id;
         reading.setSymptomsList(otherSymptoms);
@@ -91,9 +112,12 @@ public class ReadingController {
 
         if (patient != null) {
             reading.setPatient(patient);
-            readingRepository.save(reading);
         }
 
+
+        Analysis analysis = new Analysis(reading);
+        analysis.analysisId = dbAnalysis.getAnalysisId();
+        this.analysisRepository.save(analysis);
         this.readingRepository.save(reading);
         return setUpAllReadingModel();
     }
@@ -132,7 +156,9 @@ public class ReadingController {
     // Delete a reading with the given id
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public ModelAndView deleteReadingWithId(@PathVariable long id){
-        this.readingRepository.delete(this.readingRepository.findByReadingId(id));
+        Reading deletedReading = this.readingRepository.findByReadingId(id);
+        this.analysisRepository.delete(this.analysisRepository.findByReading(deletedReading));
+        this.readingRepository.delete(deletedReading);
         return setUpAllReadingModel();
     }
 

@@ -19,16 +19,16 @@ public interface ReadingRepository extends CrudRepository<Reading, Long> {
                                                                                                           Integer bpSystolic, Integer bpDiastolic,
                                                                                                           Integer heartRateBPM);
 
+    public Reading findTopByFirstNameAndLastNameAndAgeYearsAndBpSystolicAndBpDiastolicAndHeartRateBPMOrderByDateTimeTakenDesc(String firstName,
+                                                                                                          String lastName, Integer ageYears,
+                                                                                                          Integer bpSystolic, Integer bpDiastolic,
+                                                                                                          Integer heartRateBPM);
+
     @Query( value = "SELECT COUNT(*) FROM reading WHERE data_time_taken >= ?1 AND data_time_taken < ?2", nativeQuery = true)
     public Integer findNumberOfReadingsPerMonth(String monthFirstDay, String nextMonthFirstDay);
 
     @Query( value = "SELECT COUNT(*) FROM reading WHERE data_time_taken >= ?1 AND data_time_taken < ?2  AND gestational_age_unit <> 0",
             nativeQuery = true)
     public Integer findNumberOfPregnantWomenPerMonth(String monthFirstDay, String nextMonthFirstDay);
-
-    @Query( value = "SELECT COUNT(*) FROM reading r INNER JOIN referral ref ON r.reading_id = ref.reading_id" +
-            " WHERE r.data_time_taken >=?1 AND r.data_time_taken < ?2 AND r.gestational_age_unit <> 0",
-            nativeQuery = true)
-    public Integer findNumberOfReferredPregnantWomenPerMonth(String monthFirstDay, String nextMonthFirstDay);
 
 }

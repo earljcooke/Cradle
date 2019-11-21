@@ -13,4 +13,9 @@ public interface ReferralRepository extends CrudRepository<Referral, Long> {
 
     @Query( value = "SELECT COUNT(*) FROM referral WHERE date_time_sent >= ?1 AND date_time_sent < ?2", nativeQuery = true)
     public Integer findNumberOfReferralsPerMonth(String monthFirstDay, String nextMonthFirstDay);
+
+    @Query( value = "SELECT COUNT(*) FROM referral ref " +
+            "WHERE ref.date_time_sent >=?1 AND ref.date_time_sent < ?2 AND ref.is_pregnant <> 0",
+            nativeQuery = true)
+    public Integer findNumberOfReferredPregnantWomenPerMonth(String monthFirstDay, String nextMonthFirstDay);
 }

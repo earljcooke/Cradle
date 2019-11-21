@@ -15,11 +15,11 @@ public class UserLoginDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override  //Finds user with matching ID
+    @Override  //Finds user with matching email
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUserId(Integer.valueOf(s));
+        //User user = this.userRepository.findByUserId(Integer.valueOf(s));
+        User user = this.userRepository.findByEmail(s);
         UserLogin userLogin = new UserLogin(user);
-
         return userLogin;
     }
 }

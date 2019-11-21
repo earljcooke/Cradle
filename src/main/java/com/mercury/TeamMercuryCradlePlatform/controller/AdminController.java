@@ -63,16 +63,22 @@ public class AdminController {
     @RequestMapping(value = "/submitRegistration", method = RequestMethod.POST)
     public @ResponseBody ModelAndView submitRegistration(User user, @RequestParam String password,
             @RequestParam String roles) {
-        User newUser = new User(user, password);
-        newUser.setEncodedPassword(newUser.getPassword());
-        newUser.setRole(roles);
-        userRepository.save(newUser);
 
-        emailAdmin.sendRegistrationEmail(password, newUser);
+        if(userRepository.findByEmail(user.getEmail()) != null) {
+            System.out.println("user repository is called");
+            return new ModelAndView("admin/registration").addObject("message", "error");
+        } else {
+                User newUser = new User(user, password);
+                newUser.setEncodedPassword(newUser.getPassword());
+                newUser.setRole(roles);
 
-        ModelAndView modelAndView = new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
-        modelAndView.addObject("user", user);
-        return modelAndView;
+                userRepository.save(newUser);
+
+                emailAdmin.sendRegistrationEmail(password, newUser);
+                ModelAndView modelAndView = new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
+                modelAndView.addObject("user", user);
+                return modelAndView;
+        }
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)

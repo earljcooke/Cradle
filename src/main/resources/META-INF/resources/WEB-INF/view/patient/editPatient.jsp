@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <%@ include file="../navbar/navbar.jspf" %>
+    <%@ include file="../navbar.jspf" %>
 
     <form action="${pageContext.request.contextPath}/patient/submitPatient" method="post">
         <div class="container w-100" style="padding: 10px">

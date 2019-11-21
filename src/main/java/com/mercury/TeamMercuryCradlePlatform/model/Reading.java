@@ -53,7 +53,6 @@ public class Reading {
     private Patient patient;
 
     public Patient getPatient() {
-        patient.setAttestationID("123");
         return patient;
     }
 
@@ -113,8 +112,8 @@ public class Reading {
     }
 
     public Reading(AndroidReading reading) {
-        this.firstName = reading.getPatientName();
-        //this.lastName = reading.lastName;
+        this.firstName = reading.getPatientFirstName();
+        this.lastName = reading.getPatientLastName();
         this.ageYears = reading.getAgeYears();
         this.symptomsString = reading.getSymptoms().toString();
         this.gestationalAgeUnit = reading.getGestationalAgeUnit();
@@ -458,5 +457,9 @@ public class Reading {
 
     public void setReferral(Referral referral) {
         this.referral = referral;
+    }
+
+    public ZonedDateTime getDateTimeTaken() {
+        return dateTimeTaken;
     }
 }

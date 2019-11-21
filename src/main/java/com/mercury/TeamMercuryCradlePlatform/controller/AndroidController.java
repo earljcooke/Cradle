@@ -173,7 +173,7 @@ public class AndroidController {
         AndroidReading androidReading = mapper.readValue(file, AndroidReading.class);
 
         Reading reading = new Reading(androidReading);
-        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(reading.firstName, reading.lastName, reading.ageYears);
+        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(androidReading.getPatientFirstName(), androidReading.getPatientLastName(), androidReading.getAgeYears());
 
         if(patient != null) {
             reading.setPatient(patient);

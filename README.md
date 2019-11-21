@@ -1,6 +1,6 @@
 # CRADLE VSA SUPPORT APP
 
-![Cradle Logo](https://csil-git1.cs.surrey.sfu.ca/373-20197-Mercury/cradleplatform/raw/readme-update/src/main/resources/META-INF/resources/static/images/readme/Cradle-4-logo.png)
+![Cradle Logo](src/main/resources/META-INF/resources/static/images/readme/Cradle-4-logo.png)
 
 ## Overview
 
