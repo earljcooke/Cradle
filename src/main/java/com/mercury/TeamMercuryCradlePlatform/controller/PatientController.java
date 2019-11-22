@@ -19,7 +19,7 @@ import static java.lang.System.exit;
 
 @Controller
 @Service
-@RequestMapping(path="/patient")
+@RequestMapping(path = "/patient")
 public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/addPatient", method = RequestMethod.GET)
-    public ModelAndView addPatientPage(){
+    public ModelAndView addPatientPage() {
         return new ModelAndView("/patient/addPatient");
     }
 
@@ -54,8 +54,9 @@ public class PatientController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ModelAndView deletePatient(Patient patient) {
         patientRepository.deleteById(patient.getPatientId());
-        ModelAndView modelAndView = new ModelAndView("/patient/deleted");
-        modelAndView.addObject("patient", patient);
+        List<Patient> patientlist = this.patientRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("/patient/patientlist");
+        modelAndView.addObject("patientList", patientlist);
         return modelAndView;
     }
 
@@ -72,6 +73,7 @@ public class PatientController {
      *
      * If patient already exists in repository, edit the patient in the repository.
      * Otherwise, add new patient to repository
+     * 
      * @param patient
      * @return
      */
@@ -86,22 +88,24 @@ public class PatientController {
             }
         } else if (action.equals("add")) {
             patientRepository.save(patient);
-            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
             String username = userDetails.getUsername();
-            SupervisorPatientPair supervisorPatientPair = new SupervisorPatientPair(username, patient.getPatientId().toString());
+            SupervisorPatientPair supervisorPatientPair = new SupervisorPatientPair(username,
+                    patient.getPatientId().toString());
             supervisorRepository.save(supervisorPatientPair);
         } else {
             exit(1);
         }
-        ModelAndView modelAndView = new ModelAndView("/patient/saved");
+
+        List<Patient> patientlist = this.patientRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("/patient/patientlist");
+        modelAndView.addObject("patientList", patientlist);
         return modelAndView;
     }
 
-
-    @GetMapping(path="/add")
-    public @ResponseBody
-    String addNewPatient (@RequestParam String firstName,
-                          @RequestParam String lastName) {
+    @GetMapping(path = "/add")
+    public @ResponseBody String addNewPatient(@RequestParam String firstName, @RequestParam String lastName) {
         Patient patient = new Patient();
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
@@ -113,19 +117,17 @@ public class PatientController {
     @RequestMapping("/all")
     public String getAllPatients() {
 
-        //return patientRepository.findAll();
+        // return patientRepository.findAll();
         return "PatientTable";
     }
 
-    @GetMapping(path="/filter")
-    public @ResponseBody
-    List<Patient> findAllPatientByFirstName(@RequestParam String firstName){
+    @GetMapping(path = "/filter")
+    public @ResponseBody List<Patient> findAllPatientByFirstName(@RequestParam String firstName) {
         return patientRepository.findAllByFirstNameLike(firstName);
     }
 
-    @GetMapping(path="filter/{lastName}")
-    public @ResponseBody
-    List<Patient> findAllPatientByLastName(@PathVariable(value="lastName") String lastName){
+    @GetMapping(path = "filter/{lastName}")
+    public @ResponseBody List<Patient> findAllPatientByLastName(@PathVariable(value = "lastName") String lastName) {
         return patientRepository.findAllByLastNameLike(lastName);
     }
 }

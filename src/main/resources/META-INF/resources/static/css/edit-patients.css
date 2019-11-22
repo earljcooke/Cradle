@@ -71,12 +71,6 @@
   cursor: pointer;
 }
 
-.btn-delete:hover {
-  cursor: pointer;
-  color: rgb(30, 128, 111);
-  border-color: rgb(29, 124, 108);
-}
-
 .round {
   position: relative;
   margin-left: 15px;
@@ -92,10 +86,6 @@
   position: absolute;
   top: 0;
   width: 28px;
-}
-
-.round label:hover {
-  background-color: rgba(36, 155, 135, 0.151);
 }
 
 .form-check-label {

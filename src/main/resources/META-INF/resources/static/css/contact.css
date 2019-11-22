@@ -33,6 +33,11 @@
   font-size: 20px;
 }
 
+.btn-send:hover {
+  background-color: rgb(36, 155, 135);
+  cursor: pointer;
+}
+
 .contact-field {
   width: 100%;
   border: 0;

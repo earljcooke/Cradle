@@ -28,3 +28,9 @@
 .table-row-id {
   color: rgb(14, 177, 136) !important;
 }
+
+.btn-no-style {
+  border: none;
+  background-color: transparent;
+  padding: 0px;
+}

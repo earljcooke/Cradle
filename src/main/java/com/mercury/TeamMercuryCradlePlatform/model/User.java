@@ -1,5 +1,6 @@
 package com.mercury.TeamMercuryCradlePlatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -106,6 +107,7 @@ public class User {
         this.password = password;
     }
 
+    @JsonIgnore
     public void setEncodedPassword(String password) {
         this.password = encodePassword(password);
     }
@@ -139,10 +141,12 @@ public class User {
         return roles;
     }
 
+    @JsonIgnore
     public void setRole(String roles) {
         this.roles = roles;
     }
 
+    @JsonIgnore
     public List<String> getRoles() {
         if(this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));
@@ -151,23 +155,28 @@ public class User {
         }
     }
 
+    @JsonIgnore
     public String getRolesAsString() {
         return this.roles;
     }
 
+    @JsonIgnore
     public String encodePassword(String password) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder.encode(password);
     }
 
+    @JsonIgnore
     public boolean isVHT(){
         return getRoles().stream().anyMatch(str -> str.trim().equals(Role.VHT.toString()));
     }
 
+    @JsonIgnore
     public boolean isHealthWorker(){
         return getRoles().stream().anyMatch(str -> str.trim().equals(Role.HEALTH_WORKER.toString()));
     }
 
+    @JsonIgnore
     public boolean isAdmin(){
         return getRoles().stream().anyMatch(str -> str.trim().equals(Role.ADMIN.toString()));
     }

@@ -28,3 +28,8 @@
   color: white;
   font-size: 20px;
 }
+
+.btn-edit:hover {
+  background-color: rgb(36, 155, 135);
+  cursor: pointer;
+}

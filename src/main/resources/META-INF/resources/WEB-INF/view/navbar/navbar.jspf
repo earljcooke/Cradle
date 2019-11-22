@@ -5,24 +5,23 @@
 
     <ul>
         <li class="navbar-list"><a class="nav-link" href="/admin/index"><span
-                class="glyphicon glyphicon-signal nav-link-icon"></span>Dashboard</a></li>
+                class="glyphicon glyphicon-home nav-link-icon"></span>Dashboard</a></li>
         <li class="navbar-list"><a class="nav-link" href="/admin/users"><span
                 class="glyphicon glyphicon-search nav-link-icon"></span>View Users</a></li>
-        <li class="navbar-list">
-            <a class="nav-link" href="/admin/registration"><span class="glyphicon glyphicon-user nav-link-icon"></span>Register
-                Users</a>
-        </li>
-    </ul>
-
-    <ul>
         <li class="navbar-list"><a class="nav-link" href="/patient/patientlist"><span
-                class="glyphicon glyphicon-user nav-link-icon"></span>Patients</a></li>
-        <li class="navbar-list"><a class="nav-link" href="/reading/create"><span
-                class="glyphicon glyphicon-file nav-link-icon"></span>New Reading</a></li>
+        class="glyphicon glyphicon-user nav-link-icon"></span>View Patients</a></li>
         <li class="navbar-list"><a class="nav-link" href="/referral/referralList"><span
-                class="glyphicon glyphicon-file nav-link-icon"></span>Referrals</a></li>
-        <li class="navbar-list"><a class="nav-link" href="/vht/allocation"><span class="glyphicon glyphicon-user nav-link-icon"></span>Patient Allocation</a></li>
-        <li class="navbar-list"><a class="nav-link" href="/vht/genreport"><span class="glyphicon glyphicon-dashboard nav-link-icon"></span>Reports</a></li>
+                class="glyphicon glyphicon-file nav-link-icon"></span>View Referrals</a></li>
+        <li class="navbar-list">
+            <a class="nav-link" href="/admin/registration"><span class="glyphicon glyphicon-user nav-link-icon"></span>Create
+                User</a>
+        </li>
+        
+        <li class="navbar-list"><a class="nav-link" href="/reading/create"><span
+                class="glyphicon glyphicon-file nav-link-icon"></span>Create Reading</a></li>
+                <li class="navbar-list"><a class="nav-link" href="/vht/genreport"><span class="glyphicon glyphicon-signal nav-link-icon"></span>Reports</a></li>
+        <li class="navbar-list"><a class="nav-link" href="/vht/allocation"><span class="glyphicon glyphicon-refresh nav-link-icon"></span>Allocation</a></li>
+
         <li class="navbar-list"><a class="nav-link" href="/admin/education"><span
                 class="glyphicon glyphicon-folder-open nav-link-icon"></span>Education</a></li>
         <%if (request.getRemoteUser() != null) {%>

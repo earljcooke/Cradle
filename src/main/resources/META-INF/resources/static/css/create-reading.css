@@ -1,17 +1,6 @@
 @media screen and (max-width: 1600px) {
-  .btn-save {
+  .btn-submit {
     font-size: 14px !important;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    padding-left: 25px !important;
-    padding-right: 25px !important;
-  }
-  .btn-delete {
-    font-size: 14px !important;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    padding-left: 18px !important;
-    padding-right: 18px !important;
   }
   .round label:after {
     width: 8px !important;
@@ -20,39 +9,27 @@
     height: 25px !important;
     width: 25px !important;
   }
-  .edit-users-container {
+  .create-reading-container {
     margin-right: 20% !important;
   }
 }
 
-.edit-users-container {
+.create-reading-container {
   background-color: white;
   margin-top: 50px;
   margin-left: 50px;
-  margin-right: 40%;
+  margin-right: 10%;
   padding: 50px;
   box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.404);
   border: none !important;
 }
 
-.edit-users-label {
+.create-reading-label {
   font-weight: bold;
 }
 
-.btn-delete {
-  background: none;
-  box-shadow: none;
-  border-radius: 30px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 25px;
-  padding-right: 25px;
-  color: rgb(27, 194, 166);
-  border: 1px solid rgb(27, 194, 166);
-  font-size: 20px;
-}
-
-.btn-save {
+.btn-submit {
+  margin-top: 35px;
   border: 0;
   background: none;
   box-shadow: none;
@@ -66,15 +43,32 @@
   font-size: 20px;
 }
 
-.btn-save:hover {
+.btn-submit:hover {
   background-color: rgb(36, 155, 135);
   cursor: pointer;
 }
 
-.btn-delete:hover {
-  cursor: pointer;
-  color: rgb(30, 128, 111);
-  border-color: rgb(29, 124, 108);
+.round label:hover {
+  background-color: rgba(36, 155, 135, 0.151);
+}
+
+.reading-field {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.979);
+  padding-top: 5px;
+}
+
+.reading-textarea {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.979);
+  padding-top: 5px;
+  resize: none;
 }
 
 .round {
@@ -92,10 +86,6 @@
   position: absolute;
   top: 0;
   width: 28px;
-}
-
-.round label:hover {
-  background-color: rgba(36, 155, 135, 0.151);
 }
 
 .form-check-label {
@@ -129,13 +119,4 @@
 
 .round input[type="checkbox"]:checked + label:after {
   opacity: 1;
-}
-
-.edit-field {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.979);
-  padding-top: 5px;
 }

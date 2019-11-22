@@ -45,8 +45,6 @@ public class ProfileController {
         return modelAndView;
     }
 
-
-
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     public ModelAndView getEditUserPage(@PathVariable("id") Integer id) {
         User user = this.userRepository.findByUserId(id);

@@ -7,15 +7,12 @@
 <head>
 
     <meta charset="utf-8">
-    <title>ReferralList</title>
+    <title>Referral List</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
+    <link rel='stylesheet' href="/css/view-referrals.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </head>
 
@@ -24,55 +21,55 @@
 %>
 
 <body>
-<div class="main-container">
-    <%@ include file="../navbar/navbar.jspf" %>
+    <div class="main-container">
 
-    <div class="content-container">
-        <div class="content-header">
-            Referral
-        </div>
-        <div class="content-body">
-            <div class="table-container">
-                <table id="referralTable" class="table table-striped">
+            <%@ include file="../navbar/navbar.jspf" %>
+        
+                <div class="content-container">
+                <div class="content-header">
+                    View Referrals
+                </div>
+                <div class="content-body">
+                    <div class="table-container">
+                    <table class="table view-users-table">
                     <thead>
                     <tr>
-                        <td scope="col">Referral ID</td>
-                        <td scope="col">Name</td>
-                        <td scope="col">Age</td>
-                        <td scope="col">Sex</td>
-                        <td scope="col">Referred Health Centre</td>
-                        <td scope="col">VHT Name</td>
-                        <td scope="col"></td>
-                        <td scope="col"></td>
+                        <th scope="col">REFERRAL ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">AGE</th>
+                        <th scope="col">SEX</th>
+                        <th scope="col">REFERRED HEALTH CENTRE</th>
+                        <th scope="col">VHT NAME</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
-                <tbody>
-                <c:forEach items="<%=referralList%>" var = "referral">
-                    <tr>
-                        <td>${referral.referralId}</td>
-                        <td>${referral.firstName} ${referral.lastName} </td>
-                        <td>${referral.ageYears}</td>
-                        <td>${referral.sex}</td>
-                        <td>${referral.referredHealthCentre}</td>
-                        <td>${referral.vhtName}</td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/referral/info/${referral.referralId}" method="get">
-                                <button type="submit" class="btn btn-secondary" name="info">Info</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/referral/close/${referral.referralId}" method="post">
-                                <button type="submit" class="btn btn-secondary" name="delete" onclick="return confirm('Do you want to close this referral?');">Close</button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
+                    <tbody>
+                    <c:forEach items="<%=referralList%>" var = "referral">
+                        <tr>
+                            <td class="table-row-id">${referral.referralId}</td>
+                            <td>${referral.firstName} ${referral.lastName} </td>
+                            <td>${referral.ageYears}</td>
+                            <td>${referral.sex}</td>
+                            <td>${referral.referredHealthCentre}</td>
+                            <td>${referral.vhtName}</td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/referral/info/${referral.referralId}" class="glyphicon glyphicon-search table-icon" title="More Details"></a>
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/referral/close/${referral.referralId}" method="post">
+                                    <button type="submit" class="btn-no-style glyphicon glyphicon-trash table-icon" name="delete" title="Delete" onclick="return confirm('Do you want to delete this referral?');"></button>
+                                </form>
+                            </td>
+        
+        
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 </body>
 

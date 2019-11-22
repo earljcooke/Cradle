@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.roles LIKE %?1%")
     public ArrayList<User> findAllByRole(String role);
+
+    public Boolean existsByEmail(String email);
 }

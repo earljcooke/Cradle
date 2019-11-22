@@ -5,6 +5,7 @@ toastr.options = {
   fadeIn: 300,
   fadeOut: 1000,
   timeOut: 8000,
+  allowHtml: true,
   extendedTimeOut: 1000
 };
 
