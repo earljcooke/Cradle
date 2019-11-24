@@ -58,17 +58,17 @@
             <div class="row">
                 <div class="col">
                     <label for="firstName">First Name: </label>
-                    <input required type="text" class="form-control" id="firstName" name="firstName" disabled
+                    <input required type="text" class="form-control" id="firstName" name="firstName"
                            value="<%=firstName%>"><br>
                 </div>
                 <div class="col">
                     <label for="lastName">Last Name: </label>
-                    <input required type="text" class="form-control" id="lastName" name="lastName" disabled
+                    <input required type="text" class="form-control" id="lastName" name="lastName"
                            value="<%=lastName%>"><br>
                 </div>
                 <div class="col">
                     <label for="ageYears">Age: </label>
-                    <input required type="number" class="form-control" id="ageYears" name="ageYears" disabled
+                    <input required type="number" class="form-control" id="ageYears" name="ageYears"
                            value="<%=ageYears%>"><br>
                 </div>
                 <div class="col">
@@ -80,6 +80,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <div class="row">
                 <div class="col">
@@ -98,22 +99,22 @@
             <div class="row">
                 <div class="col">
                     <label for="bpSystolic">Blood Pressure Systolic: </label>
-                    <input type="number" class="form-control" id="bpSystolic" name="bpSystolic" disabled
+                    <input type="number" class="form-control" id="bpSystolic" name="bpSystolic"
                            value="<%=bpSystolic%>">
                 </div>
                 <div class="col">
                     <label for="bpDiastolic">Blood Pressure Diastolic: </label>
-                    <input type="number" class="form-control" id="bpDiastolic" name="bpDiastolic" disabled
+                    <input type="number" class="form-control" id="bpDiastolic" name="bpDiastolic"
                            value="<%=bpDiastolic%>">
                 </div>
                 <div class="col">
                     <label for="heartRateBPM">Heart Rate: </label>
-                    <input type="number" class="form-control" id="heartRateBPM" name="heartRateBPM" disabled
+                    <input type="number" class="form-control" id="heartRateBPM" name="heartRateBPM"
                            value="<%=heartRateBPM%>">
                 </div>
                 <div class="col">
                     <label for="analysis">Reading Analysis: </label>
-                    <input type="text" class="form-control" id="analysis" name="analysis" disabled
+                    <input type="text" class="form-control" id="analysis" name="analysis"
                            value="<%=analysis%>">
                 </div>
             </div>
@@ -132,7 +133,7 @@
         <%--other message--%>
         <div class="form-group">
             <label for="otherInfoMessage">Other Information and Messages: </label>
-            <input required type="text" class="form-control" id="otherInfoMessage" name="otherInfoMessage"><br>
+            <input type="text" class="form-control" id="otherInfoMessage" name="otherInfoMessage"><br>
         </div>
 
         <button type="submit" value="Submit"> Submit</button>

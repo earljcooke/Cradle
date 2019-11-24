@@ -1,11 +1,15 @@
 package com.mercury.TeamMercuryCradlePlatform.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import com.mercury.TeamMercuryCradlePlatform.model.Util;
 
+import javax.persistence.Entity;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,6 +21,7 @@ public class AndroidReading {
     private Integer bpSystolic;
     private ZonedDateTime dateLastSaved;
     private ZonedDateTime dateRecheckVitalsNeeded;
+    //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy@HH:mm:ss.SSSZ")
     private ZonedDateTime dateTimeTaken;
     private String deviceInfo;
     private GestationalAgeUnit gestationalAgeUnit;
@@ -38,6 +43,36 @@ public class AndroidReading {
     public List<Long> retestOfPreviousReadingIds;
 
     public AndroidReading() {
+
+    }
+
+    public AndroidReading(Reading reading) {
+        this.ageYears = reading.ageYears;
+        this.appVersion = "NA";
+        this.bpDiastolic = reading.bpDiastolic;
+        this.bpSystolic = reading.bpSystolic;
+        this.dateLastSaved = reading.dateLastSaved;
+        this.dateRecheckVitalsNeeded = reading.dateRecheckVitalsNeeded;
+        this.dateTimeTaken = null;
+        //this.dateTimeTaken = reading.dateTimeTaken;
+        this.deviceInfo = "Na";
+        this.gestationalAgeUnit = reading.gestationalAgeUnit;
+        this.gestationalAgeValue = reading.gestationalAgeValue;
+        this.heartRateBPM = reading.heartRateBPM;
+        this.isFlaggedForFollowup = reading.isFlaggedForFollowup();
+        this.manuallyChangeOcrResults = 0;
+        this.pathToPhoto = "NA";
+        this.patientId = reading.getPatientId().toString();
+        this.patientFirstName = reading.getFirstName();
+        this.patientLastName = reading.getLastName();
+        this.readingId = reading.readingId;
+        this.symptoms =  Arrays.asList(reading.symptomsString.split("\\s*,\\s*"));
+        this.totalOcrSeconds = 0;
+        this.vhtName = "NA";
+        this.region = "NA";
+        this.ocrEnabled = null;
+        this.uploadImages = null;
+        this.retestOfPreviousReadingIds = reading.retestOfPreviousReadingIds;
 
     }
 

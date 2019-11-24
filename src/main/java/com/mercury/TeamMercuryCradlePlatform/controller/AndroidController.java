@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.key.ZonedDateTimeKeyDeserializer;
 import com.google.gson.Gson;
 import com.mercury.TeamMercuryCradlePlatform.model.AndroidReading;
 import com.mercury.TeamMercuryCradlePlatform.model.Patient;
@@ -34,6 +36,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
@@ -85,11 +90,22 @@ public class AndroidController {
     public String getReadingsByPatientId(@PathVariable Long id) {
         Patient patient = patientRepository.findByPatientId(id);
         List<Reading> readings = readingRepository.findReadingsByPatient(patient);
+        List<AndroidReading> androidReadings = new ArrayList<>();
+
+        for(int i = 0; i < readings.size(); i++) {
+            AndroidReading androidReading = new AndroidReading(readings.get(i));
+            androidReadings.add(androidReading);
+        }
 
         ObjectMapper mapper = new ObjectMapper();
+        //JavaTimeModule module = new JavaTimeModule();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.registerModule(new JavaTimeModule());
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm");
+        mapper.findAndRegisterModules();
         try {
-            return mapper.writeValueAsString(readings);
+            return mapper.writeValueAsString(androidReadings);
+            //return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(androidReadings);
         }
         catch (JsonProcessingException e) {
             e.printStackTrace();

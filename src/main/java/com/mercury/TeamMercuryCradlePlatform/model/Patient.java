@@ -1,5 +1,7 @@
 package com.mercury.TeamMercuryCradlePlatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.ArrayList;
@@ -24,7 +26,9 @@ public class Patient {
     private Integer ageYears = null;
     private String country = null;
     private String location = null;
+    @JsonIgnore
     private Sex sex = null;
+    @JsonIgnore
     private GestationalAgeUnit gestationalAgeUnit = null;
 //    private List<String> medicalHistory = null;
 //    private List<String> drugHistory = new ArrayList<>();
@@ -35,6 +39,7 @@ public class Patient {
     private List<Reading> readings = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE}, mappedBy = "patient")
+    @JsonIgnore
     private Referral referral;
 
     public Patient() {
@@ -114,11 +119,15 @@ public class Patient {
 //        } else if (attestationID.length() > ATTESTATION_ID_LENGTH) {
 //            attestationID = NOT_APPLICABLE;
 //        }
+
         if (attestationID.length() == ATTESTATION_ID_LENGTH) {
+            System.out.println("TRUE");
             this.attestationID = attestationID;
-            return;
+        } else {
+            System.out.println("FALSE");
+            this.attestationID = NOT_APPLICABLE;
         }
-        this.attestationID = NOT_APPLICABLE;
+
     }
     public void setAgeYears(Integer ageYears) {
         this.ageYears = ageYears;

@@ -53,6 +53,7 @@ public class Reading {
     private Patient patient;
 
     public Patient getPatient() {
+        //patient.setAttestationID("123");
         return patient;
     }
 
