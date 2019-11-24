@@ -48,6 +48,24 @@
     font-size: 20px;
 }
 
+.btn-generic small {
+    font-size: 15px;
+}
+
+.btn-med {
+    border: 0;
+    box-shadow: none;
+    border-radius: 30px;
+    padding: 5px 35px;
+    background: navy none;
+    color: white;
+    font-size: 15px;
+}
+
+.btn-red {
+    background: maroon;
+}
+
 .edit-patient-container {
     background-color: white;
     margin-top: 50px;

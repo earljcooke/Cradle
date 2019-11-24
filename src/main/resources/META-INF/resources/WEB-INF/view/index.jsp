@@ -59,25 +59,24 @@
             <div class="form-group">
               <div class="login-field-container">
                 <input
-                  class="login-field"
+                  class="login-field form-control"
                   id="username"
                   name="username"
-                  type="text"
-                  class="form-control"
-                  placeholder="Username"
+                  type="email"
+                  placeholder="Email"
+                  required
                   autofocus
                 />
               </div>
 
               <div class="login-field-container">
                 <input
-                  class="login-field"
-                  `
+                  class="login-field form-control"
                   id="password"
                   name="password"
                   type="password"
-                  class="form-control"
                   placeholder="Password"
+                  required
                 />
               </div>
 

@@ -125,3 +125,7 @@
   opacity: 0.6;
   color: #6d6d6d;
 }
+
+.reading-field-readonly {
+  margin-top: 6px;
+}

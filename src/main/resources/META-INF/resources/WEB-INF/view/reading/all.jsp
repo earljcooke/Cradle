@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Patients</title>
+    <title>Readings</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/patient.css" />
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
@@ -28,6 +28,7 @@
 </script>
 <%
     List<Reading> readingList = (List<Reading>) request.getAttribute("readingList");
+    String title = (String) request.getAttribute("title");
 %>
 <body>
 
@@ -36,7 +37,7 @@
 
     <div class="content-container">
         <div class="content-header">
-            Readings
+            Readings <%=title != null ? title : ""%>
         </div>
         <div class="content-body">
             <div class="table-container">

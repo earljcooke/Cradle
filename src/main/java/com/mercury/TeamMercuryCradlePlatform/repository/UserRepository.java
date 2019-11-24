@@ -11,12 +11,15 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    public User findByUserId(Integer userid);
-    public List<User> findAll();
-    public User findByEmail(String email);
+    User findByUserId(Integer userid);
+    List<User> findAll();
+    User findByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.roles LIKE %?1%")
-    public ArrayList<User> findAllByRole(String role);
+    ArrayList<User> findAllByRole(String role);
 
-    public Boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
+
+    @Query("select u from User u where u.userId <> ?1")
+    List<User> findAllNotMe(Integer userId);
 }

@@ -32,12 +32,6 @@ public class StatisticsController {
 
     @RequestMapping(value = "/blood-pressure-graph/{id}", method = RequestMethod.GET)
     public ModelAndView bloodPressureGraph(@PathVariable Long id){
-
-        System.out.println("Patient ID " + id);
-
-        ModelAndView modelAndView = new ModelAndView("/statistics/bloodPressureGraph");
-
-
         Patient patient = this.patientRepository.findByPatientId(id);
         List<Reading> readingList = this.readingRepository.findReadingsByPatient(patient);
 
@@ -58,13 +52,17 @@ public class StatisticsController {
         int numbYellow = analysisRepository.countAllByIsYellowEqualsAndPatient(true, patient);
         int numbRed = analysisRepository.countAllByIsRedEqualsAndPatient(true, patient);
 
-        modelAndView.addObject("dateArr", dateArr);
-        modelAndView.addObject("systolicArr", systolicArr);
-        modelAndView.addObject("diastolicArr", diastolicArr);
-        modelAndView.addObject("heartRateArr", heartRateArr);
-        modelAndView.addObject("data", Arrays.asList(numbGreen, numbYellow, numbRed));
+        return new ModelAndView("/statistics/bloodPressureGraph")
+                .addObject("dateArr", dateArr)
+                .addObject("systolicArr", systolicArr)
+                .addObject("diastolicArr", diastolicArr)
+                .addObject("heartRateArr", heartRateArr)
+                .addObject("data", Arrays.asList(numbGreen, numbYellow, numbRed))
+                .addObject("title", getStatsTitle(patient));
+    }
 
-        return modelAndView;
+    private String getStatsTitle(Patient patient) {
+        return " for " + patient.getFirstName() + " " + patient.getLastName();
     }
 
 }

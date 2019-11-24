@@ -1,22 +1,15 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
 
-import com.mercury.TeamMercuryCradlePlatform.authentication.UserLogin;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercury.TeamMercuryCradlePlatform.model.User;
 import com.mercury.TeamMercuryCradlePlatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/profile")
@@ -55,13 +48,13 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/{id}/save", method = RequestMethod.POST)
-    public ModelAndView getSavedUserPage(@PathVariable("id") Integer id, User user, @RequestParam(value = "roles", defaultValue = "") String roles) {
+    public RedirectView getSavedUserPage(@PathVariable("id") Integer id, User user, @RequestParam(value = "roles", defaultValue = "") String roles) {
 
         user.setRole(roles);
         this.userRepository.save(user);
 
-        ModelAndView modelAndView = new ModelAndView("/profile/save");
-        return modelAndView;
+        String url = "/profile/" + id;
+        return new RedirectView(url);
     }
 
 }

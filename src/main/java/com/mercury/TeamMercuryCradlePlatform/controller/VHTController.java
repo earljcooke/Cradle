@@ -1,4 +1,6 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
+import com.mercury.TeamMercuryCradlePlatform.model.Patient;
+import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import com.mercury.TeamMercuryCradlePlatform.model.StatsCollector;
 import com.mercury.TeamMercuryCradlePlatform.model.VHTPair;
 import com.mercury.TeamMercuryCradlePlatform.repository.*;
@@ -9,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class VHTController {
@@ -73,6 +77,10 @@ public class VHTController {
 
         supervisorRepository.updateVHT(oldVhtId, newVhtId);
 
-        return new ModelAndView("/patient/patientlist");
+        List<Reading> readings = this.readingRepository.findAll();
+        for(Reading r : readings){
+            r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
+        }
+        return new ModelAndView("/reading/all").addObject("readingList", readings);
     }
 }

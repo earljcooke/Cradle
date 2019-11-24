@@ -104,3 +104,7 @@ body {
 .content-body {
   padding: 50px;
 }
+
+strong {
+  font-weight: bold;
+}

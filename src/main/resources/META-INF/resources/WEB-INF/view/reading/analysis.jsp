@@ -15,7 +15,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Reading</title>
+    <title>Reading Analysis</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>

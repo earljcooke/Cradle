@@ -6,8 +6,6 @@ import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 public interface AnalysisRepository extends CrudRepository<Analysis, Long> {

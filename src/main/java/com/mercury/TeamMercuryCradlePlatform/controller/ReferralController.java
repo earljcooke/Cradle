@@ -3,6 +3,7 @@ package com.mercury.TeamMercuryCradlePlatform.controller;
 import com.mercury.TeamMercuryCradlePlatform.model.Patient;
 import com.mercury.TeamMercuryCradlePlatform.model.Referral;
 import com.mercury.TeamMercuryCradlePlatform.model.Reading;
+import com.mercury.TeamMercuryCradlePlatform.model.comparators.ReferralSortByAssessmentStatus;
 import com.mercury.TeamMercuryCradlePlatform.repository.PatientRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReadingRepository;
 import com.mercury.TeamMercuryCradlePlatform.repository.ReferralRepository;
@@ -57,6 +58,7 @@ public class ReferralController {
     @RequestMapping(value = "/referralList", method = RequestMethod.GET)
     public ModelAndView ReferralListPage() {
         List<Referral> referralList = this.referralRepository.findAll();
+        referralList.sort(new ReferralSortByAssessmentStatus());
         ModelAndView modelAndView = new ModelAndView("/referral/referralList");
         modelAndView.addObject("referralList", referralList);
         return modelAndView;
@@ -79,6 +81,7 @@ public class ReferralController {
         referralRepository.save(referral);
 
         List<Referral> referralList = this.referralRepository.findAll();
+        referralList.sort(new ReferralSortByAssessmentStatus());
         ModelAndView modelAndView = new ModelAndView("/referral/referralList");
         modelAndView.addObject("referralList", referralList);
         return modelAndView;
@@ -86,11 +89,9 @@ public class ReferralController {
 
     @RequestMapping(value = "/close/{id}", method = RequestMethod.POST)
     public ModelAndView deleteReferralById(@PathVariable Long id){
-//        Referral referral = this.referralRepository.findByReferralId(id);
-//        Reading reading = referral.getReading();
-//        reading.setReferral(null);
         this.referralRepository.delete(this.referralRepository.findByReferralId(id));
         List<Referral> referralList = this.referralRepository.findAll();
+        referralList.sort(new ReferralSortByAssessmentStatus());
         ModelAndView modelAndView = new ModelAndView("/referral/referralList");
         modelAndView.addObject("referralList", referralList);
         return modelAndView;

@@ -125,3 +125,7 @@
   opacity: 0.6;
   color: #6d6d6d;
 }
+
+.reading-field-uneditable {
+  padding-top: 5px;
+}

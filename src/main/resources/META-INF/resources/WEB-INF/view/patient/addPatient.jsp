@@ -7,7 +7,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>AddPatient</title>
+    <title>Add Patient</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>

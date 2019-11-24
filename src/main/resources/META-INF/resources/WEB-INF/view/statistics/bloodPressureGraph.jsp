@@ -10,11 +10,12 @@
     List<Integer>diastolicArr = (List<Integer>) request.getAttribute("diastolicArr");
     List<Integer> heartRateArr = (List<Integer>) request.getAttribute("heartRateArr");
     List<Integer> data = (List<Integer>) request.getAttribute("data");
+    String title = (String) request.getAttribute("title");
 %>
 
 <head>
     <meta charset="ISO-8859-1" />
-    <title>Cradle</title>
+    <title>Statistics</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
@@ -45,12 +46,12 @@
     ></script>
 </head>
 
-<body>">
+<body>
 <div class="main-container">
     <%@ include file="../navbar/navbar.jspf" %>
     <div class="content-container">
         <div class="content-header">
-            Statistics
+            Statistics <%=title != null ? title : ""%>
         </div>
         <div class="content-body">
             <div class="summary-container">

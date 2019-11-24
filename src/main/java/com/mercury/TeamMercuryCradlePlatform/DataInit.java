@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +43,7 @@ public class DataInit implements CommandLineRunner {
         List<User> users = Arrays.asList(admin, vht, healthWorker);
         userRepository.saveAll(users);
 
-        Patient patient1 = new Patient("48300027403","Abbor", "Kakooza","Uganda", "Lira", 29);
+        Patient patient1 = new Patient("48300027403","Abbo", "Kakooza","Uganda", "Lira", 29);
         Patient patient2 = new Patient("00159694421","Achen", "Kakooza", "Uganda", "Lira", 36);
         Patient patient3 = new Patient("39231011111","Dembe", "Kitumba", "Uganda", "Kiboga", 19);
         Patient patient4 = new Patient("32349476091","Namono", "Mbira", "Uganda", "Kiboga", 80);
@@ -156,8 +155,17 @@ public class DataInit implements CommandLineRunner {
         Analysis analysis2 = new Analysis(reading2);
         Analysis analysis3 = new Analysis(reading3);
         Analysis analysis4 = new Analysis(reading4);
+        Analysis analysis5 = new Analysis(reading5);
+        Analysis analysis6 = new Analysis(reading6);
+        Analysis analysis7 = new Analysis(reading7);
+        Analysis analysis8 = new Analysis(reading8);
+        Analysis analysis9 = new Analysis(reading9);
+        Analysis analysis10 = new Analysis(reading10);
+        Analysis analysis11 = new Analysis(reading11);
+        Analysis analysis12 = new Analysis(reading12);
 
-        List<Analysis> analyses = Arrays.asList(analysis1, analysis2, analysis3, analysis4);
+        List<Analysis> analyses = Arrays.asList(analysis1, analysis2, analysis3, analysis4, analysis5, analysis6,
+                analysis7, analysis8, analysis9, analysis10, analysis11, analysis12);
 
         patientRepository.saveAll(patients);
 
@@ -176,19 +184,34 @@ public class DataInit implements CommandLineRunner {
 
         Referral referral2 = new Referral("Kizza", "Alupo", 76,
                 Sex.FEMALE, "Dembe", "Rakai Health Centre", 170, 127, 139,
-                ZonedDateTime.of(LocalDate.of( 2019,6,1), LocalTime.of(4,0), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,6,1), LocalTime.of(4,0), ZoneId.systemDefault()),
+                4, 1, "", "", "");
 
         Referral referral3 = new Referral("Kahinda", "Otafiire", 26,
                 Sex.FEMALE, "Sam", "Lira Health Centre", 180, 130, 98,
-                ZonedDateTime.of(LocalDate.of( 2019,1,12), LocalTime.of(17,49), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,1,12), LocalTime.of(17,49), ZoneId.systemDefault()),
+                7, 2, "Emergency", "", "");
 
         List<Referral> referrals = Arrays.asList(referral1,referral2, referral3);
         referralRepository.saveAll(referrals);
 
+        // Check that every patient has his/her supervisor (the person who creates the first record of the patient)
         SupervisorPatientPair supervisorPatientPair1 = new SupervisorPatientPair("test@test.com", patient1.getPatientId().toString());
         SupervisorPatientPair supervisorPatientPair2 = new SupervisorPatientPair("test@test.com", patient2.getPatientId().toString());
         SupervisorPatientPair supervisorPatientPair3 = new SupervisorPatientPair("test@test.com", patient3.getPatientId().toString());
-        supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair1, supervisorPatientPair2, supervisorPatientPair3));
+        SupervisorPatientPair supervisorPatientPair4 = new SupervisorPatientPair("test@test.com", patient4.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair5 = new SupervisorPatientPair("test2@test.com", patient5.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair6 = new SupervisorPatientPair("test2@test.com", patient6.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair7 = new SupervisorPatientPair("test2@test.com", patient7.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair8 = new SupervisorPatientPair("test2@test.com", patient8.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair9 = new SupervisorPatientPair("test3@test.com", patient9.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair10 = new SupervisorPatientPair("test3@test.com", patient10.getPatientId().toString());
+        SupervisorPatientPair supervisorPatientPair11 = new SupervisorPatientPair("test3@test.com", patient11.getPatientId().toString());
 
+        supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair1, supervisorPatientPair2,
+                supervisorPatientPair3, supervisorPatientPair4));
+        supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair5, supervisorPatientPair6,
+                supervisorPatientPair7, supervisorPatientPair8));
+        supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair9, supervisorPatientPair10, supervisorPatientPair11));
     }
 }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1"/>
-    <title>Cradle</title>
+    <title>Register</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="/css/register-user.css"/>
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
@@ -81,7 +81,7 @@
                             <label for="email"
                                    class="col-md-4 col-form-label text-md-right register-users-label">EMAIL</label>
                             <div class="col-md-6">
-                                <input type="text" id="email" class="register-field" name="email" placeholder="Email" required>
+                                <input type="email" id="email" class="register-field" name="email" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group row">

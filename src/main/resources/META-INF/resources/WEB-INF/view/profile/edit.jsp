@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Users</title>
+    <title>Edit Profile</title>
 
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
@@ -27,7 +27,7 @@
     <%@ include file="../navbar/navbar.jspf" %>
     <div class="content-container">
         <div class="content-header">
-            Edit Users
+            Edit Profile
         </div>
 
         <div class="edit-users-container">
@@ -66,7 +66,7 @@
                 <div class="form-group row">
                     <label for="email" class="col-md-4 col-form-label text-md-right edit-users-label">EMAIL</label>
                     <div class="col-md-6">
-                        <input required type="text" id="email" class="edit-field" name="email" value="<%=postUser.getEmail()%>">
+                        <input required type="email" id="email" class="edit-field" name="email" value="<%=postUser.getEmail()%>">
                     </div>
                 </div>
                 <div class="form-group row">

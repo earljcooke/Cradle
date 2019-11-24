@@ -9,7 +9,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   (String)request.getAttribute("phoneNumber"); %>
   <head>
     <meta charset="ISO-8859-1" />
-    <title>Cradle</title>
+    <title>Contact</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/contact.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />

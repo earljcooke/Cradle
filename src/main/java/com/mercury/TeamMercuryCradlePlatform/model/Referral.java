@@ -98,65 +98,68 @@ public class Referral {
     @Column(name = "isPregnant")
     private Boolean isPregnant = true;
 
+    @Column(name = "isAssessed")
+    private Boolean isAssessed = false;
+
 
     public Referral() {
     }
 
     public Referral(String firstName, String lastName, Integer ageYears, Sex sex, String vhtName, String referredHealthCentre, Integer bpSystolic, Integer bpDiastolic, Integer heartRateBPM) {
-        this.referredHealthCentre = referredHealthCentre;
-        this.vhtName = vhtName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ageYears = ageYears;
-        this.sex = sex;
-        this.bpSystolic = bpSystolic;
-        this.bpDiastolic = bpDiastolic;
-        this.heartRateBPM = heartRateBPM;
+        setReferredHealthCentre(referredHealthCentre);
+        setVhtName(vhtName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAgeYears(ageYears);
+        setSex(sex);
+        setBpSystolic(bpSystolic);
+        setBpDiastolic(bpDiastolic);
+        setHeartRateBPM(heartRateBPM);
     }
 
     public Referral(String firstName, String lastName, Integer ageYears, Sex sex, String vhtName, String referredHealthCentre, Integer bpSystolic, Integer bpDiastolic, Integer heartRateBPM, ZonedDateTime dateTimeSent) {
-        this.referredHealthCentre = referredHealthCentre;
-        this.vhtName = vhtName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ageYears = ageYears;
-        this.sex = sex;
-        this.bpSystolic = bpSystolic;
-        this.bpDiastolic = bpDiastolic;
-        this.heartRateBPM = heartRateBPM;
-        this.dateTimeSent = dateTimeSent;
+        setReferredHealthCentre(referredHealthCentre);
+        setDateTimeSent(dateTimeSent);
+        setVhtName(vhtName);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAgeYears(ageYears);
+        setSex(sex);
+        setBpSystolic(bpSystolic);
+        setBpDiastolic(bpDiastolic);
+        setHeartRateBPM(heartRateBPM);
     }
 
-    public Referral(String referredHealthCentre,
-                    ZonedDateTime dateTimeSent,
-                    String vhtName,
-                    String reasonOfReferral,
-                    String actionAlreadyTaken,
-                    String otherInformationMessage,
-                    Integer bpSystolic,
-                    Integer bpDiastolic,
-                    Integer heartRateBPM,
-                    String firstName,
+    public Referral(String firstName,
                     String lastName,
                     Integer ageYears,
                     Sex sex,
+                    String vhtName,
+                    String referredHealthCentre,
+                    Integer bpSystolic,
+                    Integer bpDiastolic,
+                    Integer heartRateBPM,
+                    ZonedDateTime dateTimeSent,
                     Integer zoneNumber,
-                    Integer villageNumber) {
-        this.referredHealthCentre = referredHealthCentre;
-        this.dateTimeSent = dateTimeSent;
-        this.vhtName = vhtName;
-        this.reasonOfReferral = reasonOfReferral;
-        this.actionAlreadyTaken = actionAlreadyTaken;
-        this.otherInformationMessage = otherInformationMessage;
-        this.bpSystolic = bpSystolic;
-        this.bpDiastolic = bpDiastolic;
-        this.heartRateBPM = heartRateBPM;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ageYears = ageYears;
-        this.sex = sex;
-        this.zoneNumber = zoneNumber;
-        this.villageNumber = villageNumber;
+                    Integer villageNumber,
+                    String reasonOfReferral,
+                    String actionAlreadyTaken,
+                    String otherInformationMessage) {
+        setReferredHealthCentre(referredHealthCentre);
+        setDateTimeSent(dateTimeSent);
+        setVhtName(vhtName);
+        setReasonOfReferral(reasonOfReferral);
+        setActionAlreadyTaken(actionAlreadyTaken);
+        setOtherInformationMessage(otherInformationMessage);
+        setBpSystolic(bpSystolic);
+        setBpDiastolic(bpDiastolic);
+        setHeartRateBPM(heartRateBPM);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAgeYears(ageYears);
+        setSex(sex);
+        setZoneNumber(zoneNumber);
+        setVillageNumber(villageNumber);
     }
 
 
@@ -169,14 +172,24 @@ public class Referral {
     }
 
     public String getReferredHealthCentre() {
+        if (referredHealthCentre == null) {
+            return "None";
+        }
         return referredHealthCentre;
     }
 
     public void setReferredHealthCentre(String referredHealthCentre) {
-        this.referredHealthCentre = referredHealthCentre;
+        if (referredHealthCentre == null) {
+            this.referredHealthCentre = "None";
+        } else {
+            this.referredHealthCentre = referredHealthCentre;
+        }
     }
 
     public ZonedDateTime getDateTimeSent() {
+        if (dateTimeSent == null) {
+            return ZonedDateTime.now();
+        }
         return dateTimeSent;
     }
 
@@ -185,108 +198,209 @@ public class Referral {
     }
 
     public String getVhtName() {
+        if (vhtName == null) {
+            return "None";
+        }
         return vhtName;
     }
 
     public void setVhtName(String vhtName) {
-        this.vhtName = vhtName;
+        if (vhtName == null) {
+            this.vhtName = "None";
+        } else {
+            this.vhtName = vhtName;
+        }
     }
 
     public String getReasonOfReferral() {
+        if (reasonOfReferral == null) {
+            return "None";
+        }
         return reasonOfReferral;
     }
 
     public void setReasonOfReferral(String reasonOfReferral) {
-        this.reasonOfReferral = reasonOfReferral;
+        if (reasonOfReferral == null || reasonOfReferral.isEmpty()) {
+            this.reasonOfReferral = "None";
+        } else {
+            this.reasonOfReferral = reasonOfReferral;
+        }
     }
 
     public String getActionAlreadyTaken() {
+        if (actionAlreadyTaken == null) {
+            return "None";
+        }
         return actionAlreadyTaken;
     }
 
     public void setActionAlreadyTaken(String actionAlreadyTaken) {
-        this.actionAlreadyTaken = actionAlreadyTaken;
+        if (actionAlreadyTaken == null || actionAlreadyTaken.isEmpty()) {
+            this.actionAlreadyTaken = "None";
+        } else {
+            this.actionAlreadyTaken = actionAlreadyTaken;
+        }
     }
 
     public String getOtherInformationMessage() {
+        if (otherInformationMessage == null) {
+            return "None";
+        }
         return otherInformationMessage;
     }
 
     public void setOtherInformationMessage(String otherInformationMessage) {
-        this.otherInformationMessage = otherInformationMessage;
+        if (otherInformationMessage == null || otherInformationMessage.isEmpty()) {
+            this.otherInformationMessage = "None";
+        } else {
+            this.otherInformationMessage = otherInformationMessage;
+        }
     }
 
     public Integer getBpSystolic() {
+        if (bpSystolic == null) {
+            return 0;
+        }
         return bpSystolic;
     }
 
     public void setBpSystolic(Integer bpSystolic) {
-        this.bpSystolic = bpSystolic;
+        if (bpSystolic == null) {
+            this.bpSystolic = 0;
+        } else {
+            this.bpSystolic = bpSystolic;
+        }
     }
 
     public Integer getBpDiastolic() {
+        if (bpDiastolic == null) {
+            return 0;
+        }
         return bpDiastolic;
     }
 
     public void setBpDiastolic(Integer bpDiastolic) {
-        this.bpDiastolic = bpDiastolic;
+        if (bpDiastolic == null) {
+            this.bpDiastolic = 0;
+        } else {
+            this.bpDiastolic = bpDiastolic;
+        }
     }
 
     public Integer getHeartRateBPM() {
+        if (heartRateBPM == null) {
+            return 0;
+        }
         return heartRateBPM;
     }
 
     public void setHeartRateBPM(Integer heartRateBPM) {
-        this.heartRateBPM = heartRateBPM;
+        if (heartRateBPM == null) {
+            this.heartRateBPM = 0;
+        } else {
+            this.heartRateBPM = heartRateBPM;
+        }
     }
 
     public String getFirstName() {
+        if (firstName == null) {
+            return "None";
+        }
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (firstName == null) {
+            this.firstName = "None";
+        } else {
+            this.firstName = firstName;
+        }
     }
 
     public String getLastName() {
+        if (lastName == null) {
+            return "None";
+        }
         return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (lastName == null) {
+            this.lastName = "None";
+        } else {
+            this.lastName = lastName;
+        }
     }
 
     public Integer getAgeYears() {
+        if (ageYears == null) {
+            return 0;
+        }
         return ageYears;
     }
 
     public void setAgeYears(Integer ageYears) {
-        this.ageYears = ageYears;
+        if (ageYears == null) {
+            this.ageYears = 0;
+        } else {
+            this.ageYears = ageYears;
+        }
     }
 
     public Sex getSex() {
+        if (sex == null) {
+            return Sex.FEMALE;
+        }
         return sex;
     }
 
     public void setSex(Sex sex) {
-        this.sex = sex;
+        if (sex == null) {
+            this.sex = Sex.FEMALE;
+        } else {
+            this.sex = sex;
+        }
     }
 
     public Integer getZoneNumber() {
+        if (zoneNumber == null) {
+            return 0;
+        }
         return zoneNumber;
     }
 
     public void setZoneNumber(Integer zoneNumber) {
-        this.zoneNumber = zoneNumber;
-
+        if (zoneNumber == null) {
+            this.zoneNumber = 0;
+        } else {
+            this.zoneNumber = zoneNumber;
+        }
     }
 
     public Integer getVillageNumber() {
+        if (villageNumber == null) {
+            return 0;
+        }
         return villageNumber;
     }
 
     public void setVillageNumber(Integer villageNumber) {
-        this.villageNumber = villageNumber;
+        if (villageNumber == null) {
+            this.villageNumber = 0;
+        } else {
+            this.villageNumber = villageNumber;
+        }
     }
 
+    public Boolean getIsPregnant() {
+        return isPregnant;
+    }
+
+    public Boolean getIsAssessed() {
+        return isAssessed;
+    }
+
+    public void setIsAssessed(Boolean assessed) {
+        isAssessed = assessed;
+    }
 }

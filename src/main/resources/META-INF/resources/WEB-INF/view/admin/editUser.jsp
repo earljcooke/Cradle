@@ -25,126 +25,110 @@
 <div class="main-container">
     <%@ include file="../navbar/navbar.jspf" %>
 
-    <div class="content-container">
+      <div class="content-container">
         <div class="content-header">
-            Edit Users
+          Edit Users
         </div>
 
-        <div class="edit-users-container">
+            <div class="edit-users-container">
 
-            <form id="editForm" action="${pageContext.request.contextPath}/admin/users/edit" method="post">
-                <label>
-                    <input hidden required type="text" name="userId" value="<%=postUser.getUserId()%>">
-                </label>
-                <div class="form-group row">
-                    <label for="firstName" class="col-md-4 col-form-label text-md-right edit-users-label">FIRST
-                        NAME</label>
-                    <div class="col-md-6">
-                        <input required type="text" id="firstName" class="edit-field" name="firstName"
-                               value="<%=postUser.getFirstName()%>">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="lastName" class="col-md-4 col-form-label text-md-right edit-users-label">LAST
-                        NAME</label>
-                    <div class="col-md-6">
-                        <input required type="text" id="lastName" class="edit-field" name="lastName"
-                               value="<%=postUser.getLastName()%>">
-                    </div>
-                </div>
-
-                <div hidden class="form-group row">
-                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                    <div class="col-md-6">
-                        <input required type="password" id="password" class="form-control" name="password"
-                               value="<%=postUser.getPassword()%>">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right edit-users-label">EMAIL</label>
-                    <div class="col-md-6">
-                        <input required type="text" id="email" class="edit-field" name="email"
-                               value="<%=postUser.getEmail()%>">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="phoneNumber" class="col-md-4 col-form-label text-md-right edit-users-label">PHONE
-                        #</label>
-                    <div class="col-md-6">
-                        <input type="text" id="phoneNumber" class="edit-field" name="phoneNumber"
-                               value="<%=postUser.getPhoneNumber()%>">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-4 col-form-label text-md-right edit-users-label">ROLES</label>
-                    <div class="col-md-6 col-form-label">
-                        <div class="form-check form-check-inline">
-                            <div class="round">
-                                <c:if test="<%= postUser.isVHT() %>">
-                                    <input checked class="form-check-input" type="checkbox" name="roles"
-                                           id="inlineCheck1" value="VHT" class="edit-checkbox">
-                                </c:if>
-                                <c:if test="<%= !postUser.isVHT() %>">
-                                    <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck1"
-                                           value="VHT" class="edit-checkbox">
-                                </c:if>
-                                <label for="inlineCheck1"></label>
+                    <form id="editForm" action="${pageContext.request.contextPath}/admin/users/edit" method = "post">
+                        <label>
+                            <input hidden required type="text" name="userId" value="<%=postUser.getUserId()%>">
+                        </label>
+                        <div class="form-group row">
+                            <label for="firstName" class="col-md-4 col-form-label text-md-right edit-users-label">FIRST NAME</label>
+                            <div class="col-md-6">
+                                <input required type="text" id="firstName" class="edit-field" name="firstName" value="<%=postUser.getFirstName()%>">
                             </div>
-                            <label class="form-check-label" for="inlineCheck1">VHT</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <div class="round">
-                                <c:if test="<%= postUser.isHealthWorker() %>">
-                                    <input checked class="form-check-input" type="checkbox" name="roles"
-                                           id="inlineCheck2" value="HEALTHWORKER" class="edit-checkbox">
-                                </c:if>
-                                <c:if test="<%= !postUser.isHealthWorker() %>">
-                                    <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck2"
-                                           value="HEALTHWORKER" class="edit-checkbox">
-                                </c:if>
-                                <label for="inlineCheck2"></label>
+
+                        <div class="form-group row">
+                            <label for="lastName" class="col-md-4 col-form-label text-md-right edit-users-label">LAST NAME</label>
+                            <div class="col-md-6">
+                                <input required type="text" id="lastName" class="edit-field" name="lastName" value="<%=postUser.getLastName()%>">
                             </div>
-                            <label class="form-check-label" for="inlineCheck2">Health Worker</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <div class="round">
-                                <c:if test="<%= postUser.isAdmin() %>">
-                                    <input checked class="form-check-input" type="checkbox" name="roles"
-                                           id="inlineCheck3" value="ADMIN" class="edit-checkbox">
-                                </c:if>
-                                <c:if test="<%= !postUser.isAdmin() %>">
-                                    <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck3"
-                                           value="ADMIN" class="edit-checkbox">
-                                </c:if>
-                                <label for="inlineCheck3"></label>
+
+                        <div hidden class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                            <div class="col-md-6">
+                                <input required type="password" id="password" class="form-control" name="password" value="<%=postUser.getPassword()%>">
                             </div>
-                            <label class="form-check-label" for="inlineCheck3">Admin</label>
                         </div>
-                    </div>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-            <div class="row col-md-6 offset-md-4">
-                <div class="col sm-2">
-                    <form id="deleteForm"
-                          action="${pageContext.request.contextPath}/admin/users/delete/<%=postUser.getUserId()%>"
-                          method="post">
-                        <button type="submit" form="deleteForm" onclick="return deleteAlertBox()" class="btn-delete">
-                            Delete
-                        </button>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right edit-users-label">EMAIL</label>
+                            <div class="col-md-6">
+                                <input required type="email" id="email" class="edit-field" name="email" value="<%=postUser.getEmail()%>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phoneNumber" class="col-md-4 col-form-label text-md-right edit-users-label">PHONE #</label>
+                            <div class="col-md-6">
+                                <input type="text" id="phoneNumber" class="edit-field" name="phoneNumber" value="<%=postUser.getPhoneNumber()%>">
+                            </div>
+                          </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right edit-users-label" style="margin-top: 10px">ROLES</label>
+                            <div class="col-md-6 col-form-label">
+                                <div class="form-check form-check-inline">
+                                    <div class="round">
+                                    <c:if test="<%= postUser.isVHT() %>">
+                                        <input checked class="form-check-input" type="checkbox" name="roles" id="inlineCheck1" value="VHT" class="edit-checkbox">
+                                    </c:if>
+                                    <c:if test="<%= !postUser.isVHT() %>">
+                                        <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck1" value="VHT" class="edit-checkbox">
+                                    </c:if>
+                                    <label for="inlineCheck1"></label>
+                                    </div>
+                                    <label class="form-check-label" for="inlineCheck1">VHT</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <div class="round">
+                                    <c:if test="<%= postUser.isHealthWorker() %>">
+                                        <input checked class="form-check-input" type="checkbox" name="roles" id="inlineCheck2" value="HEALTHWORKER" class="edit-checkbox">
+                                    </c:if>
+                                    <c:if test="<%= !postUser.isHealthWorker() %>">
+                                        <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck2" value="HEALTHWORKER" class="edit-checkbox">
+                                    </c:if>
+                                    <label for="inlineCheck2"></label>
+                                    </div>
+                                    <label class="form-check-label" for="inlineCheck2">Health Worker</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <div class="round">
+                                    <c:if test="<%= postUser.isAdmin() %>">
+                                        <input checked class="form-check-input" type="checkbox" name="roles" id="inlineCheck3" value="ADMIN" class="edit-checkbox">
+                                    </c:if>
+                                    <c:if test="<%= !postUser.isAdmin() %>">
+                                        <input class="form-check-input" type="checkbox" name="roles" id="inlineCheck3" value="ADMIN" class="edit-checkbox">
+                                    </c:if>
+                                    <label for="inlineCheck3"></label>
+                                    </div>
+                                    <label class="form-check-label" for="inlineCheck3">Admin</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type = "hidden" name = "${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
-                </div>
-                <div class="col sm-2">
-                    <button type="submit" form="editForm" onclick="return rolesCheckbox()" class="btn-save">
-                        Save
-                    </button>
-                </div>
+                    <div class="row col-md-6 offset-md-4">
+                        <div class="col sm-2">
+                            <form id="deleteForm" action="${pageContext.request.contextPath}/admin/users/delete/<%=postUser.getUserId()%>" method = "post">
+                                <button type="submit" form="deleteForm" onclick="return deleteAlertBox()" class="btn-delete">
+                                    Delete
+                                </button>
+                                <input type = "hidden" name = "${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                        </div>
+                        <div class="col sm-2">
+                            <button type="submit" form="editForm" onclick="return rolesCheckbox()" class="btn-save">
+                                Save
+                            </button>
+                        </div>
+                    </div>
             </div>
         </div>
-    </div>
 </div>
 
 
