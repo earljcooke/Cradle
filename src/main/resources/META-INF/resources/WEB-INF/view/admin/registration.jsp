@@ -123,7 +123,7 @@
                         </div>
                         <div class="col-md-6 offset-md-6">
                             <div class="offset-md-2">
-                                <button type="submit" class="btn-register" onclick="registerMessage()">
+                                <button type="submit" class="btn-register">
                                     Register
                                 </button>
                             </div>

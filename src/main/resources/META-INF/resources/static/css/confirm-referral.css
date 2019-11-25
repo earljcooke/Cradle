@@ -1,0 +1,43 @@
+.btn-submit {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: rgb(27, 194, 166);
+  color: white;
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+
+.btn-submit:hover {
+  background-color: rgb(36, 155, 135);
+  cursor: pointer;
+}
+
+.details-container {
+  background-color: white;
+  padding: 30px;
+  box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.404);
+  border: none !important;
+  margin-bottom: 50px;
+}
+
+.details-header {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.referral-label {
+  font-weight: bold;
+}
+
+.details-container-header {
+  font-size: 30px;
+  color: black;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
