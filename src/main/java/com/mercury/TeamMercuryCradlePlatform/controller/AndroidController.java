@@ -92,8 +92,8 @@ public class AndroidController {
         List<Reading> readings = readingRepository.findReadingsByPatient(patient);
         List<AndroidReading> androidReadings = new ArrayList<>();
 
-        for (Reading reading : readings) {
-            AndroidReading androidReading = new AndroidReading(reading);
+        for(int i = 0; i < readings.size(); i++) {
+            AndroidReading androidReading = new AndroidReading(readings.get(i));
             androidReadings.add(androidReading);
         }
 
