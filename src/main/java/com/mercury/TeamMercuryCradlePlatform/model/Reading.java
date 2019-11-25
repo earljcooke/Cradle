@@ -55,7 +55,7 @@ public class Reading {
     @Column(name = "reading_id") public Long readingId;
     public ZonedDateTime dateLastSaved;
 
-    @ManyToOne(cascade =  CascadeType.REMOVE)
+    @ManyToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "patient_Id", referencedColumnName = "patient_Id")
     private Patient patient;
 
@@ -94,8 +94,7 @@ public class Reading {
 
     // retest & follow-up
     @Transient public List<Long> retestOfPreviousReadingIds;   // oldest first
-    @JsonIgnore
-    @Column(name = "date_recheck_vitals_needed") public ZonedDateTime dateRecheckVitalsNeeded;
+    @Transient public ZonedDateTime dateRecheckVitalsNeeded;
     @Transient private Boolean isFlaggedForFollowup;
 
     // referrals
