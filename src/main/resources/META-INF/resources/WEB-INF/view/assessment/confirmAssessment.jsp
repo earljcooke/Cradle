@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/css/patient.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/create-reading.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -40,63 +41,64 @@
                 Confirm Assessment
             </div>
             <div class="content-body" style="padding: 25px">
-                <div class="container w-100 mt-4">
-                    <h2>Diagnosis</h2>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <p> <%= assessment.getDiagnosis()%></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br>
-
-                    <h2>List of medications</h2>
-                    <c:forEach items="<%=medications%>" var = "medication">
+                <div class="create-reading-container">
+                    <div class="container w-100 mt-4">
+                        <h2>Diagnosis</h2>
                         <div class="container">
                             <div class="row">
-                                <div class="col-sm">
-                                    <p> <strong> Name: </strong> ${medication.medicationName}</p>
-                                    <p> <strong> Dose: </strong> ${medication.dose}</p>
-                                    <p> <strong> Dose Units: </strong> ${medication.doseUnits}</p>
-                                    <p> <strong> Period Of Consumption: </strong> ${medication.periodOfConsumption} </p>
-                                    <p> <strong> Side Effects:  </strong> ${medication.sideEffects}  </p>
-                                    <hr>
+                                <div class="col">
+                                    <p> <%= assessment.getDiagnosis()%></p>
                                 </div>
                             </div>
                         </div>
-                    </c:forEach>
 
-                    <%if (medications.size() == 0) {%>
-                         <p style="color: darkred; font-weight: bold;">     No medication was prescribed! </p>
-                    <%} %>
+                        <br>
 
-                    <br>
+                        <h2>List of medications</h2>
+                        <c:forEach items="<%=medications%>" var = "medication">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p> <strong> Name: </strong> ${medication.medicationName}</p>
+                                        <p> <strong> Dose: </strong> ${medication.dose}</p>
+                                        <p> <strong> Dose Units: </strong> ${medication.doseUnits}</p>
+                                        <p> <strong> Period Of Consumption: </strong> ${medication.periodOfConsumption} </p>
+                                        <p> <strong> Side Effects:  </strong> ${medication.sideEffects}  </p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
 
-                    <h2>Notes</h2>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <p> <%= assessment.getNotes()%></p>
+                        <%if (medications.size() == 0) {%>
+                        <p style="color: darkred; font-weight: bold;">     No medication was prescribed! </p>
+                        <%} %>
+
+                        <br>
+
+                        <h2>Notes</h2>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <p> <%= assessment.getNotes()%></p>
+                                </div>
                             </div>
                         </div>
+
+                        <br>
+
+                        <form action="${pageContext.request.contextPath}/assessment/assessmentSaved" method="post">
+                            <input type="hidden" name="diagnosis" value="<%=assessment.getDiagnosis()%>"/>
+                            <input type="hidden" name="notes" value="<%=assessment.getNotes()%>"/>
+                            <input type="hidden" id="referralId" name="referralId" value="<%=referralId%>"/>
+
+                            <button type="button" class="btn-med" onclick="editButton()"> Edit </button>
+                            <button type="submit" class="btn-generic" style="font-size: 15px" onclick="addHidMed()"> Save </button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
                     </div>
-
-                    <br>
-
-                    <form action="${pageContext.request.contextPath}/assessment/assessmentSaved" method="post">
-                        <input type="hidden" name="diagnosis" value="<%=assessment.getDiagnosis()%>"/>
-                        <input type="hidden" name="notes" value="<%=assessment.getNotes()%>"/>
-                        <input type="hidden" id="referralId" name="referralId" value="<%=referralId%>"/>
-
-
-
-                        <button type="button" class="btn-med" onclick="editButton()"> Edit </button>
-                        <button type="submit" class="btn-generic" style="font-size: 15px" onclick="addHidMed()"> Save </button>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </form>
                 </div>
+
             </div>
         </div>
     </div>

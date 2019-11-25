@@ -1,5 +1,5 @@
-<%@ page import="com.mercury.TeamMercuryCradlePlatform.model.Referral" %> <%@
-taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.mercury.TeamMercuryCradlePlatform.model.Referral" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <title>Confirm Referral</title>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/view-referral-info.css" />
+    <link rel="stylesheet" href="/css/confirm-referral.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -22,65 +22,140 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <body>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-    <%@ include file="../navbar/navbar.jspf" %>
-    <div class="container w-100 mt-4">
-      <h2>Personal Information</h2>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <p>
-              <%= "Name: " + referral.getFirstName() + " " +
-              referral.getLastName()%>
-            </p>
-            <p><%= "Age: " + referral.getAgeYears()%></p>
-            <p><%= "Sex: " + referral.getSex()%></p>
-          </div>
-        </div>
-      </div>
-      <h2>Referred Health Centre</h2>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <p><%= "Date: " + referral.getDateTimeSent()%></p>
-            <p><%= "VHT Name: " + referral.getVhtName()%></p>
-            <p>
-              <%= "Referred Health Centre: " +
-              referral.getReferredHealthCentre()%>
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <h2>Address Information</h2>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <p><%= "Zone Number: " + referral.getZoneNumber()%></p>
-            <p><%= "Village Number: " + referral.getVillageNumber()%></p>
-          </div>
-        </div>
-      </div>
-      <h2>Blood Pressure and Heart Rate</h2>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <p>
-              <%= "BP: " + referral.getBpSystolic() + "/" +
-              referral.getBpDiastolic()%>
-            </p>
-            <p><%= "HR: " + referral.getHeartRateBPM() %></p>
-          </div>
-        </div>
-      </div>
 
-      <h2>Reason of Referral</h2>
-      <p><%=referral.getReasonOfReferral()%></p>
-      <h2>Action Already Taken</h2>
-      <p><%=referral.getActionAlreadyTaken()%></p>
-      <h2>Other Messages</h2>
-      <p><%=referral.getOtherInformationMessage()%></p>
+    <div class="main-container">
 
-      <form
+      <%@ include file="../navbar/navbar.jspf" %>
+  
+      <div class="content-container">
+          <div class="content-header">
+            Confirm Referral Details
+          </div>
+          <div class="content-body">
+              <div class="details-container-header">Personal Details</div>
+              <div class="details-container">
+                  <div class="form-group row">
+                  <div class="col-sm-6">
+                  <div class="details-header">
+                      Personal Info
+                  </div>
+    
+
+                  <div class="form-group row">
+                          <span class="col-sm-4 referral-label text-md-left">NAME</span>
+                          <span class ="col-sm-7"><%= referral.getFirstName() + " " + referral.getLastName()%></span>
+                  </div>
+
+                  <div class="form-group row">
+                          <span class="col-sm-4 referral-label text-md-left">AGE</span>
+                          <span class ="col-sm-7"><%= referral.getAgeYears()%></span>
+                  </div>
+
+                  <div class="form-group row">
+                          <span class="col-sm-4 referral-label text-md-left">SEX</span>
+                          <span class ="col-sm-7"><%= referral.getSex()%></span>
+                  </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                          <div class="details-header">
+                              Address Info
+                          </div>
+                          <div class="form-group row">
+                                  <span class="col-sm-4 referral-label text-md-left">ZONE #</span>
+                                  <span class ="col-sm-7 "><%= referral.getZoneNumber()%></span>
+                          </div>
+      
+                          <div class="form-group row">
+                                  <span class="col-sm-4 referral-label text-md-left">VILLAGE #</span>
+                                  <span class ="col-sm-7"><%= referral.getVillageNumber()%></span>
+                          </div>
+                  </div>
+
+                  
+
+                  </div>
+              </div>
+
+              <div class="details-container-header">Status</div>
+              <div class="details-container">
+                      <div class="form-group row">
+
+
+                      <div class="col-sm-6">
+                      <div class="details-header">
+                          Reading Info
+                      </div>
+  
+                      <div class="form-group row">
+                              <span class="col-sm-4 referral-label text-md-left">BLOOD PRESSURE</span>
+                              <span class ="col-sm-7"><%= referral.getBpSystolic() + "/" + referral.getBpDiastolic()%></span>
+                      </div>
+  
+                      <div class="form-group row">
+                              <span class="col-sm-4 referral-label text-md-left">HEART RATE</span>
+                              <span class ="col-sm-7"><%= referral.getHeartRateBPM()%></span>
+                      </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                          <div class="details-header">
+                              Referred Health Centre
+                          </div>
+                          <div class="form-group row">
+                                  <span class="col-sm-4 referral-label text-md-left">VHT NAME</span>
+                                  <span class ="col-sm-7"><%= referral.getVhtName()%></span>
+                          </div>
+      
+                          <div class="form-group row">
+                                  <span class="col-sm-4 referral-label text-md-left">HEALTH CENTRE</span>
+                                  <span class ="col-sm-7"><%= referral.getReferredHealthCentre()%></span>
+                          </div>
+      
+                          <div class="form-group row">
+                                  <span class="col-sm-4 referral-label text-md-left">DATE</span>
+                                  <span class ="col-sm-7"><%= referral.getDateTimeSent()%></span>
+                          </div>
+                  </div>
+  
+
+                          </div>
+                  </div>
+
+
+                  <div class="details-container-header">Description</div>
+                <div class="details-container">
+                        <div class="form-group row">
+    
+                        <div class="col-sm-12">
+                                <div class="details-header">
+                                    Notes
+                                </div>
+                                <div class="form-group row">
+                                        <span class="col-sm-2 referral-label text-md-left">REASON OF REFERRAL</span>
+                                        <span class ="col-sm-10"><%=referral.getReasonOfReferral()%></span>
+                                </div>
+            
+                                <div class="form-group row">
+                                        <span class="col-sm-2 referral-label text-md-left">ACTION TAKEN</span>
+                                        <span class ="col-sm-10"><%=referral.getActionAlreadyTaken()%></span>
+                                </div>
+    
+                                <div class="form-group row">
+                                        <span class="col-sm-2 referral-label text-md-left">OTHER</span>
+                                        <span class ="col-sm-10"><%=referral.getOtherInformationMessage()%></span>
+                                </div>
+                        </div>
+                        </div>
+                        </div>
+
+              
+
+              
+                  </div>
+
+                  <form
         action="${pageContext.request.contextPath}/referral/referralSaved"
         method="post"
       >
@@ -151,14 +226,19 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
           value="<%=referral.getOtherInformationMessage()%>"
         />
 
-        <button type="submit">Save</button>
-        <input
-          type="hidden"
-          name="${_csrf.parameterName}"
-          value="${_csrf.token}"
-        />
-      </form>
-    </div>
+        <div class="col-md-3 offset-md-9">
+            <div class="offset-md-2">
+                <button type="submit" class="btn-submit">
+                    Submit
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+      </div>
+  </div>
+</div>
   </body>
 
   <script
@@ -176,4 +256,5 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"
   ></script>
+
 </html>

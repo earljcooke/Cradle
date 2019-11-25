@@ -60,32 +60,24 @@
             General Reports
         </div>
         <div class="content-body">
-            <%--<button class="collapsible">CRADLE readings recorded</button>--%>
             <div class="report-container">
-
                 <div class="report-header">
                     Cradle Readings Per Month
                 </div>
-                <canvas id="readingGraph" height="100"></canvas>
+                <canvas id="readingGraph"></canvas>
             </div>
-            <%--<button class="collapsible">Referrals</button>--%>
             <div class="report-container">
                 <div class="report-header">
                     Referrals Per Month
                 </div>
-
                 <canvas id="referralGraph" height="100"></canvas>
-
             </div>
-            <%--<button class="collapsible">Traffic light colours recorded</button>--%>
             <div class="report-container">
                 <div class="report-header">
                     Early Warning Indicators Per Month
                 </div>
                 <canvas id="trafficLightsGraph" height="100"></canvas>
-
             </div>
-            <%--<button class="collapsible">Pregnant women</button>--%>
             <div class="report-container">
                 <div class="report-header">
                     Pregnant Women Per Month

@@ -76,28 +76,10 @@
                     <h2> Advice</h2>
                 </div>
                 <div class="row">
-                    <c:choose>
-                    <c:when test="<%= ReadingAnalysis.analyze(reading).isGreen() %>">
                     <p> <%=ReadingAnalysis.analyze(reading).getBriefText()%>
-                        </c:when>
-                        <c:when test="<%= ReadingAnalysis.analyze(reading).isYellow() %>">
-                    <p> <%=Strings.RECHECK_15%>
-                        </c:when>
-                        <c:otherwise>
-                    <p> <%=Strings.RECHECK_NOW%>
-                        </c:otherwise>
-                        </c:choose>
                 </div>
                 <div class="row">
                     <div class="custom-control custom-switch">
-                        <c:choose>
-                            <c:when test="<%= ReadingAnalysis.analyze(reading).isYellow() %>">
-                                <input checked type="checkbox" class="custom-control-input" id="recheckVitals15">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="checkbox" class="custom-control-input" id="recheckVitals15">
-                            </c:otherwise>
-                        </c:choose>
                         <input type="checkbox" class="custom-control-input" id="recheckVitals15">
                         <label class="custom-control-label" for="recheckVitals15"> Recheck vitals in 15 minutes (after
                             save)</label>
@@ -105,51 +87,16 @@
                 </div>
                 <div class="row">
                     <div class="custom-control custom-switch">
-                        <c:choose>
-                            <c:when test="<%= ReadingAnalysis.analyze(reading).isRed() %>">
-                                <input checked type="checkbox" class="custom-control-input" id="recheckVitalsNow">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="checkbox" class="custom-control-input" id="recheckVitalsNow">
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="checkbox" class="custom-control-input" id="recheckVitalsNow">
                         <label class="custom-control-label" for="recheckVitalsNow">Recheck vitals now(after
                             save)</label>
                     </div>
                 </div>
-                <div class="row">
-                    <h2> Not referred</h2>
-                </div>
-                <div class="row mt-2">
-                    <div class="col">
-                        <p><%= ReadingAnalysis.analyze(reading).isReferralToHealthCentreRecommended() ? "Referral recommended" : "Referral not recommended"%>
-                            <%
-                                session.setAttribute("firstName", reading.firstName);
-                                session.setAttribute("lastName", reading.lastName);
-                                session.setAttribute("ageYears", reading.ageYears);
-                                session.setAttribute("symptoms", reading.symptomsString);
-                                session.setAttribute("bpSystolic", reading.bpSystolic);
-                                session.setAttribute("bpDiastolic", reading.bpDiastolic);
-                                session.setAttribute("heartRateBPM", reading.heartRateBPM);
-                                session.setAttribute("dateTimeTaken", reading.dateTimeTaken.toString());
-                                session.setAttribute("gestationalAgeUnit", reading.gestationalAgeUnit);
-                                session.setAttribute("gestationalAgeValue", reading.gestationalAgeValue);
-                                session.setAttribute("analysis", ReadingAnalysis.analyze(reading).name());
-                            %>
-                        </p>
-                    </div>
-                    <div class="col">
-                        <button class="btn-generic" type="button" id="secondaryButton" onclick="triggerButton()">
-                            Send referral
-                        </button>
-                    </div>
-                </div>
+
                 <div class="container mt-4">
-                    <div class="row m-2">
-                        <button class="btn-generic" type="button" onclick="editButton()"> Edit</button>
-                    </div>
                     <div class="m-2">
-                        <form name="ReadingForm" action="${pageContext.request.contextPath}/reading/analysis/save"
+                        <form name="ReadingForm"
+                              action="${pageContext.request.contextPath}/reading/retest/analysis/save"
                               method="post">
                             <input type="hidden" name="firstName" value="<%=reading.firstName%>"/>
                             <input type="hidden" name="lastName" value="<%=reading.lastName%>"/>

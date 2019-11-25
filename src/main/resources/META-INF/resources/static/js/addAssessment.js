@@ -30,7 +30,7 @@ function addMed() {
     nameInput.id = nameIndex;
     nameInput.type = 'text';
     nameInput.name = nameIndex;
-    nameInput.className = "form-control";
+    nameInput.className = "reading-field";
     nameInput.required = true;
     var nameLabel = document.createElement('label');
     nameLabel.setAttribute("for", nameIndex);
@@ -41,7 +41,7 @@ function addMed() {
     doseInput.id = doseIndex;
     doseInput.type = 'number';
     doseInput.name = doseIndex;
-    doseInput.className = "form-control";
+    doseInput.className = "reading-field";
     doseInput.step = "0.01";
     doseInput.min = "0";
     doseInput.required = true;
@@ -54,7 +54,7 @@ function addMed() {
     unitsInput.id = unitsIndex;
     unitsInput.type = 'text';
     unitsInput.name = unitsIndex;
-    unitsInput.className = "form-control";
+    unitsInput.className = "reading-field";
     unitsInput.required = true;
     unitsInput.placeholder = "e.g., pills per day or mg";
     var unitsLabel = document.createElement('label');
@@ -66,11 +66,12 @@ function addMed() {
     periodInput.id = periodIndex;
     periodInput.type = 'number';
     periodInput.name = periodIndex;
-    periodInput.className = "form-control";
+    periodInput.className = "reading-field";
     periodInput.min = "0";
     periodInput.required = true;
     var periodLabel = document.createElement('label');
     periodLabel.setAttribute("for", periodIndex);
+    periodLabel.className = "period_small";
     periodLabel.innerHTML = "Period of medication's consumption (in days)";
 
     var sideInput = document.createElement('input');
@@ -78,7 +79,7 @@ function addMed() {
     sideInput.id = sideIndex;
     sideInput.type = 'text';
     sideInput.name = sideIndex;
-    sideInput.className = "form-control";
+    sideInput.className = "reading-field side-no-border";
     sideInput.placeholder = "You can put side effects here";
     var sideLabel = document.createElement('label');
     sideLabel.setAttribute("for", sideIndex);

@@ -13,7 +13,9 @@ public class Assessment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long assessmentId;
 
+    @Column(name="diagnosis",columnDefinition="LONGTEXT")
     private String diagnosis = null;
+    @Column(name="notes",columnDefinition="TEXT")
     private String notes = null;
     private LocalDate dateCreated = LocalDate.now();
 

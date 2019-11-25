@@ -55,11 +55,6 @@ public class AdminController {
         return new ModelAndView("/reading/all").addObject("readingList", readings);
     }
 
-    @GetMapping("/education")
-    public String educationPage() {
-        return "admin/education";
-    }
-
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public @ResponseBody ModelAndView registrationPage() {
         return new ModelAndView("admin/registration");
@@ -102,7 +97,7 @@ public class AdminController {
         ContactService contactService = new ContactService();
         contactService.sendMessage(contactMethod, email, phoneNumber, subject, message);
 
-        return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
+        return getAllUsers();
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
@@ -113,7 +108,7 @@ public class AdminController {
 
         this.userRepository.save(user);
 
-        return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
+        return getAllUsers();
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
@@ -127,7 +122,7 @@ public class AdminController {
     public ModelAndView deleteUserWithId(@PathVariable int id) {
         this.userRepository.delete(this.userRepository.findByUserId(id));
 
-        return new ModelAndView("/admin/users").addObject("users", this.userRepository.findAll());
+        return getAllUsers();
     }
 
 }

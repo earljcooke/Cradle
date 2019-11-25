@@ -121,10 +121,8 @@ public class Patient {
 //        }
 
         if (attestationID.length() == ATTESTATION_ID_LENGTH) {
-            System.out.println("TRUE");
             this.attestationID = attestationID;
         } else {
-            System.out.println("FALSE");
             this.attestationID = NOT_APPLICABLE;
         }
 

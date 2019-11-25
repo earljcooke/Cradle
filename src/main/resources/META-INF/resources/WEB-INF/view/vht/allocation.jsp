@@ -48,13 +48,13 @@
         <div class="container-allocation">
 
             <div class="container">
-                <form id="allocationForm" action="${pageContext.request.contextPath}/submitAllocation"
+                <form id="allocationForm" action="${pageContext.request.contextPath}/vht/submitAllocation"
                       method="post">
                     <div class="form-group row">
                         <label for="firstVHT"
                                class="col-md-4 col-form-label text-md-right register-users-label">ALLOCATE FROM</label>
                         <div class="col-md-4 col-form-label text-md-right">
-                            <select id="firstVHT" name="firstVHT">
+                            <select id="firstVHT" name="firstVHT" class="form-control">
                                 <c:forEach items="<%=listOfVHT%>" var="vht">
                                     <option>${vht.email} - ${vht.firstName} ${vht.lastName}</option>
                                 </c:forEach>
@@ -66,7 +66,7 @@
                         <label for="secondVHT"
                                class="col-md-4 col-form-label text-md-right register-users-label">ALLOCATE TO</label>
                         <div class="col-md-4  col-form-label text-md-right ">
-                            <select id="secondVHT" name="secondVHT">
+                            <select id="secondVHT" name="secondVHT" class="form-control">
                                 <c:forEach items="<%=listOfVHT%>" var="vht">
                                     <option>${vht.email} - ${vht.firstName} ${vht.lastName}</option>
                                 </c:forEach>
@@ -86,7 +86,7 @@
 
                 <button id="mig_confirm" type="submit" form="allocationForm" class="btn-confirm"
                         onclick="return confirmAllocation()" value="Submit">
-                    CONFIRM
+                    Confirm
                 </button>
 
             </div>

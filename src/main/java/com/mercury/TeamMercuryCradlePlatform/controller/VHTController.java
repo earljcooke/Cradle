@@ -1,4 +1,5 @@
 package com.mercury.TeamMercuryCradlePlatform.controller;
+
 import com.mercury.TeamMercuryCradlePlatform.model.Patient;
 import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import com.mercury.TeamMercuryCradlePlatform.model.StatsCollector;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping("vht")
 public class VHTController {
 
     @Autowired
@@ -35,25 +37,36 @@ public class VHTController {
         this.analysisRepository = analysisRepository;
 
         this.statsCollector = new StatsCollector(LocalDate.now(),
-                this.readingRepository,this.referralRepository, this.analysisRepository);
+                this.readingRepository, this.referralRepository, this.analysisRepository);
     }
 
-    @GetMapping("/vht/report")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView viewAllReadings() {
+        List<Reading> readings = this.readingRepository.findAll();
+
+        for (Reading r : readings) {
+            r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
+        }
+
+        return new ModelAndView("/reading/all").addObject("readingList", readings);
+    }
+
+    @GetMapping("/report")
     public String report() {
         return "vht/report";
     }
 
-    @RequestMapping(value = "/vht/genreport", method = RequestMethod.GET)
+    @RequestMapping(value = "/genreport", method = RequestMethod.GET)
     public ModelAndView genReport() {
         ModelAndView reportDataSets = new ModelAndView("/vht/genreport");
-        ArrayList<ArrayList<Integer>> statsCollections =  statsCollector.collectYearlyStats();
+        ArrayList<ArrayList<Integer>> statsCollections = statsCollector.collectYearlyStats();
 
         String[] dataCollectionNames = {"readingList", "referralList", "complReferralList", "pregnantList",
                 "pregnantHelpedList", "green", "yellowUp", "yellowDown", "redUp", "redDown"};
 
         if (statsCollections.size() != dataCollectionNames.length) {
             System.out.println("INCONSISTENCY IN DATA!");
-            return  reportDataSets;
+            return reportDataSets;
         }
 
         for (int i = 0; i < statsCollections.size(); i++) {
@@ -63,7 +76,7 @@ public class VHTController {
         return reportDataSets;
     }
 
-    @RequestMapping(value = "/vht/allocation", method = RequestMethod.GET)
+    @RequestMapping(value = "/allocation", method = RequestMethod.GET)
     public ModelAndView getListOfVHT() {
         return new ModelAndView("/vht/allocation").addObject("listOfVHT", this.userRepository.findAllByRole("VHT"));
     }
@@ -78,9 +91,15 @@ public class VHTController {
         supervisorRepository.updateVHT(oldVhtId, newVhtId);
 
         List<Reading> readings = this.readingRepository.findAll();
-        for(Reading r : readings){
+        for (Reading r : readings) {
             r.symptoms = new ArrayList<>(Arrays.asList(r.symptomsString.split(",")));
         }
         return new ModelAndView("/reading/all").addObject("readingList", readings);
     }
+
+    @GetMapping("/education")
+    public String educationPage() {
+        return "/vht/education";
+    }
+
 }
