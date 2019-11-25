@@ -20,8 +20,9 @@
   margin-left: 50px;
   margin-right: 10%;
   padding: 50px;
-  box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.404);
-  border: none !important;
+  box-shadow: 2px 2px 2px -2px rgba(0, 0, 0, 0.404);
+  border-radius: 10px;
+  border: 1px solid rgba(63, 63, 63, 0.137);
 }
 
 .create-reading-label {
@@ -43,6 +44,10 @@
   font-size: 20px;
 }
 
+.btn-font-size {
+  font-size: 18px !important;
+}
+
 .btn-submit:hover {
   background-color: rgb(36, 155, 135);
   cursor: pointer;
@@ -59,6 +64,14 @@
   background: transparent;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.979);
   padding-top: 5px;
+}
+
+.side-no-border {
+  border-bottom: 0 !important;
+}
+
+.period_small {
+  font-size: 12px;
 }
 
 .reading-textarea {

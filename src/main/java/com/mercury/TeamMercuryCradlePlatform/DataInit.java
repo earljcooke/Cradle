@@ -20,27 +20,35 @@ public class DataInit implements CommandLineRunner {
     private SupervisorRepository supervisorRepository;
     private ReferralRepository referralRepository;
     private AnalysisRepository analysisRepository;
+    private AssessmentRepository assessmentRepository;
+    private MedicationRepository medicationRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public DataInit(UserRepository userRepository, PatientRepository patientRepository,
                     ReadingRepository readingRepository, SupervisorRepository supervisorRepository,
-                    ReferralRepository referralRepository, AnalysisRepository analysisRepository) {
+                    ReferralRepository referralRepository, AnalysisRepository analysisRepository,
+                    AssessmentRepository assessmentRepository, MedicationRepository medicationRepository) {
         this.userRepository = userRepository;
         this.patientRepository = patientRepository;
         this.readingRepository = readingRepository;
         this.supervisorRepository = supervisorRepository;
         this.referralRepository = referralRepository;
         this.analysisRepository = analysisRepository;
+        this.assessmentRepository = assessmentRepository;
+        this.medicationRepository = medicationRepository;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
     public void run(String... args) {
-        User admin = new User(bCryptPasswordEncoder.encode("1234"), "John", "Lee", "test@test.com", "ADMIN", "1234567890");
-        User vht = new User(bCryptPasswordEncoder.encode("1234"), "Yoon", "Lee", "test2@test.com","VHT,ADMIN,HEALTHWORKER", "9999999999");
+        User admin = new User(bCryptPasswordEncoder.encode("1234"), "John", "Lee", "test@test.com", "ADMIN", "7781234567");
+        User vht1 = new User(bCryptPasswordEncoder.encode("1234"), "Bob", "Chan", "test2@test.com","VHT", "67712903478");
+        User vht2 = new User(bCryptPasswordEncoder.encode("1234"), "Jimmy", "Nguyen", "test3@test.com","VHT", "6046046046");
+        User vht3 = new User(bCryptPasswordEncoder.encode("1234"), "Patrick", "Smith", "test4@test.com","VHT", "6045183070");
+
         User healthWorker = new User(bCryptPasswordEncoder.encode("1234"), "Megan","Fox", "test3@test.com", "ADMIN,HEALTHWORKER", "0001111111");
 
-        List<User> users = Arrays.asList(admin, vht, healthWorker);
+        List<User> users = Arrays.asList(admin, vht1, vht2, vht3, healthWorker);
         userRepository.saveAll(users);
 
         Patient patient1 = new Patient("48300027403","Abbo", "Kakooza","Uganda", "Lira", 29);
@@ -98,37 +106,37 @@ public class DataInit implements CommandLineRunner {
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "8",
                 170, 127, 139,
-                ZonedDateTime.of(LocalDate.of( 2019,6,1), LocalTime.of(4,0), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,8,3), LocalTime.of(4,0), ZoneId.systemDefault()));
 
         Reading reading8 = new Reading("Jeje", "Kony", 26,
                 Arrays.asList(Strings.SYMPTOM_ABDOMINAL_PAIN, "Leg Pain"),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "3",
                 150, 89, 100,
-                ZonedDateTime.of(LocalDate.of( 2019,2,23), LocalTime.of(5,9), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019, 10,23), LocalTime.of(5,9), ZoneId.systemDefault()));
 
         Reading reading9 = new Reading("Kahinda", "Otafiire", 26,
                 Arrays.asList(Strings.SYMPTOM_HEADACHE, Strings.SYMPTOM_BLURRED_VISION),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "7",
                 180, 130, 98,
-                ZonedDateTime.of(LocalDate.of( 2019,1,12), LocalTime.of(17,49), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,11,12), LocalTime.of(17,49), ZoneId.systemDefault()));
 
         Reading reading10 = new Reading("Kahinda", "Otafiire", 26,
                 Arrays.asList(Strings.SYMPTOM_UNWELL, Strings.SYMPTOM_FEVERISH),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "8",
                 120, 80, 70,
-                ZonedDateTime.of(LocalDate.of( 2019,2,12), LocalTime.of(15,33), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,11,14), LocalTime.of(15,33), ZoneId.systemDefault()));
 
         Reading reading11 = new Reading("Natukunda", "Mbira", 22,
                 Arrays.asList(Strings.SYMPTOM_UNWELL, Strings.SYMPTOM_BLURRED_VISION, Strings.SYMPTOM_ABDOMINAL_PAIN),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_NONE, "0",
                 118, 88, 79,
-                ZonedDateTime.of(LocalDate.of( 2019,12,12), LocalTime.of(23,29), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,11,15), LocalTime.of(23,29), ZoneId.systemDefault()));
 
         Reading reading12 = new Reading("Abbo", "Kakooza", 29,
                 Arrays.asList(Strings.SYMPTOM_BLURRED_VISION),
                 GestationalAgeUnit.GESTATIONAL_AGE_UNITS_MONTHS, "5",
                 122, 100, 90,
-                ZonedDateTime.of(LocalDate.of( 2019,8,27), LocalTime.of(11,47), ZoneId.systemDefault()));
+                ZonedDateTime.of(LocalDate.of( 2019,11,20), LocalTime.of(11,47), ZoneId.systemDefault()));
 
         List<Reading> readings1 = Arrays.asList(reading1, reading2, reading3, reading4, reading12);
         List<Reading> readings2 = Arrays.asList(reading5, reading6);
@@ -181,6 +189,7 @@ public class DataInit implements CommandLineRunner {
         Referral referral1 = new Referral("Achen", "Kakooza", 36,
                 Sex.FEMALE, "Sam", "Lira Health Centre", 178, 150, 127,
                 ZonedDateTime.of(LocalDate.of( 2019,8,2), LocalTime.of(10,23), ZoneId.systemDefault()));
+        referral1.setIsAssessed(true);
 
         Referral referral2 = new Referral("Kizza", "Alupo", 76,
                 Sex.FEMALE, "Dembe", "Rakai Health Centre", 170, 127, 139,
@@ -193,6 +202,8 @@ public class DataInit implements CommandLineRunner {
                 7, 2, "Emergency", "", "");
 
         List<Referral> referrals = Arrays.asList(referral1,referral2, referral3);
+
+
         referralRepository.saveAll(referrals);
 
         // Check that every patient has his/her supervisor (the person who creates the first record of the patient)
@@ -213,5 +224,38 @@ public class DataInit implements CommandLineRunner {
         supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair5, supervisorPatientPair6,
                 supervisorPatientPair7, supervisorPatientPair8));
         supervisorRepository.saveAll(Arrays.asList(supervisorPatientPair9, supervisorPatientPair10, supervisorPatientPair11));
+
+        Medication medication1 = new Medication("Penicillin", 10, "No", "mg", 5.2);
+        medication1.setStartDate(LocalDate.of( 2019,8,2));
+        medication1.calculateFinishDate();
+        Medication medication2 = new Medication("Insulin", 5, "Swelling of your arms and legs.\n" +
+                "Weight gain.\n" +
+                "Low blood sugar (hypoglycemia)", "mg", 1.0);
+        medication2.setStartDate(LocalDate.of( 2019,8,2));
+        medication2.calculateFinishDate();
+        Medication medication3 = new Medication("Aspirin", 5, "rash, " +
+                "gastrointestinal ulcerations, abdominal pain, upset stomach, heartburn", "μg", 3.3);
+        medication3.setStartDate(LocalDate.of( 2019,11,24));
+        medication3.calculateFinishDate();
+
+        String diagnosis = "Assigning a type of diabetes to an individual often depends on the circumstances present" +
+                " at the time of diagnosis, with individuals not necessarily fitting clearly into a single category. " +
+                "For example, some patients cannot be clearly classified as having type 1 or type 2 diabetes. " +
+                "Clinical presentation and disease progression may vary considerably in both types of diabetes." +
+                "The traditional paradigms of type 2 diabetes occurring only in adults and type 1 diabetes only in children" +
+                " are no longer accurate, as both diseases occur in both cohorts.";
+
+        Assessment assessment = new Assessment(diagnosis, "Check the blood test in 3 days", Arrays.asList(medication1, medication2));
+        assessment.setReferral(referral1);
+        assessment.setDateCreated(LocalDate.of( 2019,8,2));
+
+        assessmentRepository.save(assessment);
+        medication1.setAssessment(assessment);
+        medication2.setAssessment(assessment);
+
+        medication1.setPatientId(patient2.getPatientId());
+        medication2.setPatientId(patient2.getPatientId());
+        medication3.setPatientId(patient2.getPatientId());
+        medicationRepository.saveAll( Arrays.asList(medication1, medication2, medication3));
     }
 }

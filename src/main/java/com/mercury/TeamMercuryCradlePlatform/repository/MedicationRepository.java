@@ -9,5 +9,6 @@ import java.util.List;
 public interface MedicationRepository extends CrudRepository<Medication, Long> {
     public List<Medication> findAll();
     public Medication findByMedicationId(Long medicationId);
-    public Medication findByAssessment(Assessment assessment);
+    public List<Medication> findByAssessment(Assessment assessment);
+    public List<Medication> findByPatientIdOrderByMedicationIdDesc(Long patientId);
 }

@@ -6,15 +6,15 @@
 <!DOCTYPE html>
 <html>
 <%
-    Reading reading = (Reading) request.getAttribute("reading");
+    Reading reading = (Reading)request.getAttribute("reading");
 %>
 
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Edit Reading</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/edit-readings.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/edit-readings.css" />
     <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -34,29 +34,23 @@
         <div class="create-reading-container">
             <main class="my-form">
                 <div class="container">
-                    <form action="${pageContext.request.contextPath}/reading/update/<%=reading.readingId%>"
+                    <form action="${pageContext.request.contextPath}/reading/retest/analysis"
                           method="post"
                           id="form">
-
+                        <input hidden required type="text" class="form-control" id="readingId" name="readingId" value="<%=reading.readingId%>">
                         <div class="form-group row">
                             <div class="col-sm-6 row">
-                                <label for="firstName" class="col-sm-4 col-form-label create-reading-label">FIRST
-                                    NAME</label>
+                                <label for="firstName" class="col-sm-4 col-form-label create-reading-label">FIRST NAME</label>
                                 <div class="col-sm-7">
-                                    <div class="reading-field-uneditable"><%=reading.firstName%>
-                                    </div>
-                                    <input hidden required type="text" class="form-control" id="firstName"
-                                           name="firstName" value="<%=reading.firstName%>">
+                                    <div class="reading-field-uneditable"><%=reading.firstName%></div>
+                                    <input hidden required type="text" class="form-control" id="firstName" name="firstName" value="<%=reading.firstName%>">
                                 </div>
                             </div>
                             <div class="col-sm-6 row">
-                                <label for="lastName" class="col-sm-4 offset-sm-1 col-form-label create-reading-label">LAST
-                                    NAME</label>
+                                <label for="lastName" class="col-sm-4 offset-sm-1 col-form-label create-reading-label">LAST NAME</label>
                                 <div class="col-sm-7">
-                                    <div class="reading-field-uneditable"><%=reading.lastName%>
-                                    </div>
-                                    <input hidden required type="text" class="form-control" id="lastName"
-                                           name="lastName" value="<%=reading.lastName%>">
+                                    <div class="reading-field-uneditable"><%=reading.lastName%></div>
+                                    <input hidden required type="text" class="form-control" id="lastName" name="lastName" value="<%=reading.lastName%>">
                                 </div>
                             </div>
                         </div>
@@ -65,28 +59,22 @@
                             <div class="col-sm-6 row">
                                 <label for="ageYears" class="col-sm-4 col-form-label create-reading-label">AGE</label>
                                 <div class="col-sm-7">
-                                    <div class="reading-field-uneditable"><%=reading.ageYears%>
-                                    </div>
-                                    <input hidden required type="number" min="0" class="form-control" id="ageYears"
-                                           name="ageYears" value="<%=reading.ageYears%>">
+                                    <input type="number" id="ageYears" class="reading-field" name="ageYears" placeholder="Age" value="<%=reading.ageYears%>" required min="0" max="120">
+                                    <input hidden required type="number" min="0" class="form-control" name="ageYears" value="<%=reading.ageYears%>">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-6 row">
-                                <label for="gestationalAgeValue" id="gestationalAgeValueLabel"
-                                       class="col-sm-4 col-form-label create-reading-label">GESTATIONAL AGE</label>
+                                <label for="gestationalAgeValue" id="gestationalAgeValueLabel" class="col-sm-4 col-form-label create-reading-label">GESTATIONAL AGE</label>
                                 <div class="col-sm-7">
-                                    <input type="number" id="gestationalAgeValue" class="reading-field"
-                                           name="gestationalAgeValue" placeholder="Gestational Age" value="<%=
+                                    <input type="number" id="gestationalAgeValue" class="reading-field" name="gestationalAgeValue" placeholder="Gestational Age" value="<%=
                                                         reading.gestationalAgeValue%>" min="0" required>
                                 </div>
                             </div>
                             <div class="col-sm-6 row">
-                                <label for="gestationalAgeUnit" id="gestationalAgeUnitLabel"
-                                       class="col-sm-4 offset-sm-1 col-form-label create-reading-label">GESTATIONAL
-                                    UNIT</label>
+                                <label for="gestationalAgeUnit" id="gestationalAgeUnitLabel" class="col-sm-4 offset-sm-1 col-form-label create-reading-label">GESTATIONAL UNIT</label>
                                 <div class="col-sm-7">
                                     <input id="hiddenGestationalUnit" value="<%=reading.gestationalAgeUnit%>" hidden>
                                     <select
@@ -118,6 +106,7 @@
                         </div>
 
 
+
                         <div class="form-group row" id="symptomsSelectorDiv">
                             <div class="col-sm-6 row">
                                 <label class="col-sm-4 col-form-label create-reading-label" style="margin-top: 10px">SYMPTOMS</label>
@@ -125,108 +114,76 @@
                                 <div class="col-md-5 col-form-label">
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck1" value="<%=Strings.SYMPTOM_HEADACHE%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck1" value="<%=Strings.SYMPTOM_HEADACHE%>" class="reading-checkbox">
                                             <label for="inlineCheck1"></label>
                                         </div>
-                                        <label class="form-check-label" for="inlineCheck1"><%=Strings.SYMPTOM_HEADACHE%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck1"><%=Strings.SYMPTOM_HEADACHE%></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck2" value="<%=Strings.SYMPTOM_BLURRED_VISION%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck2" value="<%=Strings.SYMPTOM_BLURRED_VISION%>" class="reading-checkbox">
                                             <label for="inlineCheck2"></label>
                                         </div>
-                                        <label class="form-check-label"
-                                               for="inlineCheck2"><%=Strings.SYMPTOM_BLURRED_VISION%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck2"><%=Strings.SYMPTOM_BLURRED_VISION%></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck3" value="<%=Strings.SYMPTOM_ABDOMINAL_PAIN%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck3" value="<%=Strings.SYMPTOM_ABDOMINAL_PAIN%>" class="reading-checkbox">
                                             <label for="inlineCheck3"></label>
                                         </div>
-                                        <label class="form-check-label"
-                                               for="inlineCheck3"><%=Strings.SYMPTOM_ABDOMINAL_PAIN%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck3"><%=Strings.SYMPTOM_ABDOMINAL_PAIN%></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck4" value="<%=Strings.SYMPTOM_BLEEDING%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck4" value="<%=Strings.SYMPTOM_BLEEDING%>" class="reading-checkbox">
                                             <label for="inlineCheck4"></label>
                                         </div>
-                                        <label class="form-check-label" for="inlineCheck4"><%=Strings.SYMPTOM_BLEEDING%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck4"><%=Strings.SYMPTOM_BLEEDING%></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck5" value="<%=Strings.SYMPTOM_FEVERISH%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck5" value="<%=Strings.SYMPTOM_FEVERISH%>" class="reading-checkbox">
                                             <label for="inlineCheck5"></label>
                                         </div>
-                                        <label class="form-check-label" for="inlineCheck5"><%=Strings.SYMPTOM_FEVERISH%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck5"><%=Strings.SYMPTOM_FEVERISH%></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="round">
-                                            <input class="form-check-input" type="checkbox" name="symptoms"
-                                                   id="inlineCheck6" value="<%=Strings.SYMPTOM_UNWELL%>"
-                                                   class="reading-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="symptoms" id="inlineCheck6" value="<%=Strings.SYMPTOM_UNWELL%>" class="reading-checkbox">
                                             <label for="inlineCheck6"></label>
                                         </div>
-                                        <label class="form-check-label" for="inlineCheck6"><%=Strings.SYMPTOM_UNWELL%>
-                                        </label>
+                                        <label class="form-check-label" for="inlineCheck6"><%=Strings.SYMPTOM_UNWELL%></label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <div id="otherSymptomsDiv" class="col-sm-12 row">
-                                <label for="otherSymptoms" class="col-sm-2 col-form-label create-reading-label">OTHER
-                                    SYMPTOMS</label>
+                            <div class="col-sm-12 row">
+                                <label for="otherSymptoms" class="col-sm-2 col-form-label create-reading-label">OTHER SYMPTOMS</label>
                                 <div class="col-sm-6">
-                                    <textarea rows="2" type="text" id="otherSymptoms" class="reading-textarea"
-                                              name="otherSymptoms" placeholder="Other Symptoms"></textarea>
+                                    <textarea rows="2" type="text" id="otherSymptoms" class="reading-textarea" name="otherSymptoms" placeholder="Other Symptoms"></textarea>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row" style="margin-top: 50px;">
                             <div class="col-sm-4 row">
-                                <label for="bpSystolic"
-                                       class="col-sm-5 col-form-label create-reading-label">SYSTOLIC</label>
+                                <label for="bpSystolic" class="col-sm-5 col-form-label create-reading-label">SYSTOLIC</label>
                                 <div class="col-sm-6">
-                                    <input type="number" id="bpSystolic" class="reading-field" name="bpSystolic"
-                                           placeholder="Systolic" value="<%=reading.bpSystolic%>" required min="50"
-                                           max="210">
+                                    <input type="number" id="bpSystolic" class="reading-field" name="bpSystolic" placeholder="Systolic"  required min="50" max="210">
                                 </div>
                             </div>
                             <div class="col-sm-4 row">
-                                <label for="bpDiastolic"
-                                       class="col-sm-5 offset-sm-1 col-form-label create-reading-label">DIASTOLIC</label>
+                                <label for="bpDiastolic" class="col-sm-5 offset-sm-1 col-form-label create-reading-label">DIASTOLIC</label>
                                 <div class="col-sm-6">
-                                    <input type="number" id="bpDiastolic" class="reading-field" name="bpDiastolic"
-                                           placeholder="Diastolic" value="<%=reading.bpDiastolic%>" required min="30"
-                                           max="120">
+                                    <input type="number" id="bpDiastolic" class="reading-field" name="bpDiastolic" placeholder="Diastolic"  required min="30" max="120">
                                 </div>
                             </div>
                             <div class="col-sm-4 row">
-                                <label for="heartRateBPM"
-                                       class="col-sm-5 offset-sm-1 col-form-label create-reading-label">HEART
-                                    RATE</label>
+                                <label for="heartRateBPM" class="col-sm-5 offset-sm-1 col-form-label create-reading-label">HEART RATE</label>
                                 <div class="col-sm-6">
-                                    <input type="number" id="heartRateBPM" class="reading-field" name="heartRateBPM"
-                                           placeholder="Heart Rate" value="<%=reading.heartRateBPM%>" required min="0"
-                                           max="240">
+                                    <input type="number" id="heartRateBPM" class="reading-field" name="heartRateBPM" placeholder="Heart Rate"  required min="0" max="240">
                                 </div>
                             </div>
                         </div>
@@ -236,6 +193,10 @@
                                 name="${_csrf.parameterName}"
                                 value="${_csrf.token}"
                         />
+
+                        <input type="hidden" name="previousBpSystolic" value="<%=reading.bpSystolic%>"/>
+                        <input type="hidden" name="previousBpDiastolic" value="<%=reading.bpSystolic%>"/>
+                        <input type="hidden" name="previousHeartRateBPM" value="<%=reading.bpSystolic%>"/>
                         <div class="col-md-3 offset-md-9">
                             <div class="offset-md-2">
                                 <button type="submit" class="btn-submit">
@@ -272,7 +233,7 @@
 <script>
     document.addEventListener(
         "DOMContentLoaded",
-        function () {
+        function() {
             loadGestationalAgeUnit();
             loadSymptoms();
             var backButton = document.getElementById("backButtonState");
@@ -293,9 +254,11 @@
 
         if (prevValue === "GESTATIONAL_AGE_UNITS_MONTHS") {
             res = "Months";
-        } else if (prevValue === "GESTATIONAL_AGE_UNITS_WEEKS") {
+        }
+        else if (prevValue === "GESTATIONAL_AGE_UNITS_WEEKS") {
             res = "Weeks"
-        } else {
+        }
+        else {
             res = "Not Pregnant";
         }
 
@@ -341,12 +304,12 @@
         const strUser = e.options[e.selectedIndex].value;
 
         if (strUser === "healthy") {
-            document.getElementById("otherSymptoms").value = "";
             $("#symptomsSelectorDiv input").attr("disabled", true);
             $(".form-check-input").prop("checked", false);
             $("#symptomsSelectorDiv").addClass("disable-input");
             $("#otherSymptomsDiv").addClass("disable-input");
-        } else {
+        }
+        else {
             $("#symptomsSelectorDiv input").removeAttr("disabled");
             $("#symptomsSelectorDiv").removeClass("disable-input");
             $("#otherSymptomsDiv").removeClass("disable-input");
@@ -368,7 +331,8 @@
             $("#gestationalAgeValueLabel").addClass("disable-input");
             $("#gestationalAgeValue").addClass("disable-input");
             $("#gestationalAgeValue").prop("required", false);
-        } else {
+        }
+        else {
             gestValue.disabled = false;
             $("#gestationalAgeValueLabel").removeClass("disable-input");
             $("#gestationalAgeValue").removeClass("disable-input");

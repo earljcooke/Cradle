@@ -18,6 +18,9 @@ public class Strings{
     public static final String BRIEF_ADVICE_RED_UP = "Urgent action needed. Transfer to health centre within 4h. Monitor baby.";
     public static final String BRIEF_ADVICE_RED_DOWN = "Urgent action needed. Get help and assess mother. Immediately transfer to health centre within 1h.";
 
+    public static final String RECHECK_15 = "Recommended rechecking vitals in 15 minutes to confirm reading";
+    public static final String RECHECK_NOW = "Recommended rechecking vitals immediately to confirm reading";
+
     public static final String SYMPTOM_NO_SYMPTOMS = "No Symptoms (patient healthy)";
     public static final String SYMPTOM_HEADACHE = "Headache";
     public static final String SYMPTOM_BLURRED_VISION = "Blurred vision";

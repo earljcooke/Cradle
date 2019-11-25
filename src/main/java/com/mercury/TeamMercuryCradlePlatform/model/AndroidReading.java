@@ -5,6 +5,7 @@ import com.mercury.TeamMercuryCradlePlatform.model.Reading;
 import com.mercury.TeamMercuryCradlePlatform.model.Util;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 //Class model for temporary storing datas from the android app
-public class AndroidReading {
+public class AndroidReading implements Serializable {
     private Integer ageYears;
     private String appVersion;
     private Integer bpDiastolic;

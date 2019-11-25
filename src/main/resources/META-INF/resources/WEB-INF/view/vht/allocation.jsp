@@ -48,7 +48,7 @@
         <div class="container-allocation">
 
             <div class="container">
-                <form id="allocationForm" action="${pageContext.request.contextPath}/submitAllocation"
+                <form id="allocationForm" action="${pageContext.request.contextPath}/vht/submitAllocation"
                       method="post">
                     <div class="form-group row">
                         <label for="firstVHT"

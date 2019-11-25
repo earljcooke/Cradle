@@ -19,6 +19,7 @@ public class Medication {
     private String doseUnits = null;
     private String sideEffects = null;
     private Double dose = .0;
+    private Long patientId = null;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assessment_Id", referencedColumnName = "assessment_Id")
@@ -108,5 +109,13 @@ public class Medication {
 
     public void calculateFinishDate (){
         this.finishDate = this.startDate.plusDays(periodOfConsumption);
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 }

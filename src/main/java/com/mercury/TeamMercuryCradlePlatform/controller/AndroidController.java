@@ -92,20 +92,18 @@ public class AndroidController {
         List<Reading> readings = readingRepository.findReadingsByPatient(patient);
         List<AndroidReading> androidReadings = new ArrayList<>();
 
-        for(int i = 0; i < readings.size(); i++) {
-            AndroidReading androidReading = new AndroidReading(readings.get(i));
+        for (Reading reading : readings) {
+            AndroidReading androidReading = new AndroidReading(reading);
             androidReadings.add(androidReading);
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        //JavaTimeModule module = new JavaTimeModule();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.registerModule(new JavaTimeModule());
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm");
         mapper.findAndRegisterModules();
+
         try {
             return mapper.writeValueAsString(androidReadings);
-            //return  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(androidReadings);
         }
         catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -129,32 +127,12 @@ public class AndroidController {
         return new ResponseEntity<>(reading, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/uploadzip", method=RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadZip(@RequestBody MultipartFile file, HttpServletRequest request) throws IOException {
-        File zip = File.createTempFile(UUID.randomUUID().toString(), "temp");
-        FileOutputStream o = new FileOutputStream(zip);
-        IOUtils.copy(file.getInputStream(), o);
-        o.close();
-
-        String destination = "C:\\Users\\John\\Desktop";
-        try {
-            ZipFile zipFile = new ZipFile(zip);
-            zipFile.extractAll(destination);
-        } catch (ZipException e) {
-            e.printStackTrace();
-        } finally {
-            zip.delete();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestPart(name = "userDataFile") MultipartFile file, HttpServletRequest request) throws IOException {
         Path path = Paths.get(".");
         String pathname = path.toAbsolutePath().toString() + "\\reading";
         File convertFile = new File(pathname + "\\" + file.getOriginalFilename());
-        //boolean res = convertFile.createNewFile();
+
         boolean res = convertFile.getParentFile().mkdirs();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
@@ -164,10 +142,6 @@ public class AndroidController {
             ZipFile zipFile = new ZipFile(convertFile);
             zipFile.extractAll(pathname);
 
-            //File dataFile = new File(pathname + "\\unencrypted\\data.zip");
-            //File dataFile = new File(pathname);
-            //ZipFile dataZipFile = new ZipFile(dataFile);
-            //dataZipFile.extractAll(pathname);
             File dir = new File(pathname);
             for(File f: dir.listFiles()) {
                 if (f.getName().endsWith((".json"))) {
@@ -177,7 +151,6 @@ public class AndroidController {
         } catch (ZipException e) {
             e.printStackTrace();
         } finally {
-            //convertFile.delete();
             FileUtils.cleanDirectory(new File(pathname));
         }
         return new ResponseEntity<>("File uploaded successfully", HttpStatus.OK);
@@ -188,16 +161,7 @@ public class AndroidController {
         mapper.findAndRegisterModules();
         AndroidReading androidReading = mapper.readValue(file, AndroidReading.class);
 
-        Reading reading = new Reading(androidReading);
-        Patient patient = patientRepository.findByFirstNameAndLastNameAndAgeYears(androidReading.getPatientFirstName(), androidReading.getPatientLastName(), androidReading.getAgeYears());
-
-        if(patient != null) {
-            reading.setPatient(patient);
-            readingRepository.save(reading);
-        } else {
-            reading.setPatient(new Patient(reading));
-            readingRepository.save(reading);
-        }
+        TwilioController.createReadingFromAndroid(androidReading, patientRepository, readingRepository);
     }
 }
 

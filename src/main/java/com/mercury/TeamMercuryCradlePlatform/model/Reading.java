@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mercury.TeamMercuryCradlePlatform.Strings;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -29,6 +30,12 @@ public class Reading {
     @Transient public static final int MANUAL_USER_ENTRY_DIASTOLIC = 2;
     @Transient public static final int MANUAL_USER_ENTRY_HEARTRATE = 4;
 
+    public ZonedDateTime getDateRecheckVitalsNeeded() {
+        return this.dateRecheckVitalsNeeded;
+    }
+
+
+
     public class WeeksAndDays {
         public final int weeks;
         public final int days;
@@ -48,7 +55,7 @@ public class Reading {
     @Column(name = "reading_id") public Long readingId;
     public ZonedDateTime dateLastSaved;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade =  CascadeType.REMOVE)
     @JoinColumn(name = "patient_Id", referencedColumnName = "patient_Id")
     private Patient patient;
 
@@ -87,7 +94,7 @@ public class Reading {
 
     // retest & follow-up
     @Transient public List<Long> retestOfPreviousReadingIds;   // oldest first
-    @Transient public ZonedDateTime dateRecheckVitalsNeeded;
+    @Column(name = "date_recheck_vitals_needed") public ZonedDateTime dateRecheckVitalsNeeded;
     @Transient private Boolean isFlaggedForFollowup;
 
     // referrals
@@ -103,6 +110,12 @@ public class Reading {
     @Transient transient private long temporaryFlags = 0;
     @Transient transient public boolean userHasSelectedNoSymptoms;
 
+
+//    public enum Indication{
+//        GREEN,
+//        YELLOW,
+//        RED
+//    }
 
     /**
      * Constructors & Factories
@@ -462,4 +475,5 @@ public class Reading {
     public ZonedDateTime getDateTimeTaken() {
         return dateTimeTaken;
     }
+
 }

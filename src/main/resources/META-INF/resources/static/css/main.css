@@ -40,14 +40,14 @@ body {
   background-color: rgb(14, 177, 136);
   color: white;
   height: 100%;
+  position: relative;
 }
 
 .navbar-title {
   padding-bottom: 20px;
-  border-bottom: 1px solid white;
-  width: 80%;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: rgb(12, 160, 123);
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -93,12 +93,13 @@ body {
   background-color: rgb(243, 243, 243);
   height: 100%;
 }
-
 .content-header {
   font-size: 40px;
-  color: rgb(36, 128, 112);
-  margin-top: 40px;
-  margin-left: 50px;
+  color: rgb(15, 148, 115);
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 50px;
+  background-color: rgb(228, 228, 228);
 }
 
 .content-body {
@@ -107,4 +108,14 @@ body {
 
 strong {
   font-weight: bold;
+}
+
+.footer {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }

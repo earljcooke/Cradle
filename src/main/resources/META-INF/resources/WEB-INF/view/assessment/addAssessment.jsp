@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/css/patient.css" />
+    <link rel="stylesheet" type="text/css" href="/css/create-reading.css" />
     <link rel='stylesheet' href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,9 +26,6 @@
         label{
             font-weight: bold;
         }
-        textarea{
-            resize: none;
-        }
     </style>
 </head>
 <body>
@@ -38,37 +36,45 @@
                 Add Assessment
             </div>
             <div class="content-body" style="padding: 25px">
-                <div class="container w-100">
-                    <form action="${pageContext.request.contextPath}/assessment/confirmAssessment" method="post">
-                        <div class="form-group">
-                            <label for="diagnosis" >Put Diagnosis for <%=referral.getFirstName()%> <%=referral.getLastName()%> </label>
-                            <textarea required="required" class="form-control" name="diagnosis" id="diagnosis" rows="9" maxlength="3000" placeholder="Put Diagnosis Here"></textarea>
-                        </div>
-                        <br>
+                <div class="table-container">
+                    <div class="container w-100">
+                        <form action="${pageContext.request.contextPath}/assessment/confirmAssessment" method="post">
+                            <div class="form-group">
+                                <label for="diagnosis" >Put Diagnosis for <%=referral.getFirstName()%> <%=referral.getLastName()%> </label>
+                                <textarea required="required" class="reading-textarea" name="diagnosis" id="diagnosis" rows="9" maxlength="3000" placeholder="Put Diagnosis Here"></textarea>
+                            </div>
+                            <br>
 
-                        <div id="medication_set"></div>
+                            <div id="medication_set"></div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <button id = "addMedication" class="btn-med" type="button" onclick= addMed() > Add Medication </button>
-                                </div>
-                                <div class="col">
-                                    <button id = "removeMedication" style="visibility: hidden" class="btn-med btn-red" type="button" onclick= removeMed() > Remove Medication </button>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <button id = "addMedication" class="btn-med" type="button" onclick= addMed() > Add Medication </button>
+                                    </div>
+                                    <div class="col">
+                                        <button id = "removeMedication" style="visibility: hidden" class="btn-med btn-red" type="button" onclick= removeMed() > Remove Medication </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="form-group">
-                            <label for="notes" > Notes </label>
-                            <textarea class="form-control" name="notes" id="notes" rows="5" maxlength="1000" placeholder="You can put your additional notes here"></textarea>
-                        </div>
+                            <div class="form-group">
+                                <label for="notes" > Notes </label>
+                                <textarea class="reading-textarea" name="notes" id="notes" rows="5" maxlength="1000"
+                                          placeholder="You can put your additional notes here"></textarea>
+                            </div>
 
-                        <button class="btn-generic" type="submit" value="Submit"> Submit </button>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="hidden" name="referralId" value="<%=referral.getReferralId()%>"/>
-                    </form>
+                            <div class="col-md-3 offset-md-9">
+                                <div class="offset-md-2">
+                                    <button class="btn-submit btn-font-size" type="submit" value="Submit"> Submit </button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="hidden" name="referralId" value="<%=referral.getReferralId()%>"/>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
