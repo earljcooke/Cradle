@@ -94,6 +94,7 @@ public class Reading {
 
     // retest & follow-up
     @Transient public List<Long> retestOfPreviousReadingIds;   // oldest first
+    @JsonIgnore
     @Column(name = "date_recheck_vitals_needed") public ZonedDateTime dateRecheckVitalsNeeded;
     @Transient private Boolean isFlaggedForFollowup;
 
